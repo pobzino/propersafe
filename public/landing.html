@@ -1586,7 +1586,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   </head>
   <body>
-    <div class="page-wrap" id="pageWrap">
     <nav class="nav" aria-label="Primary navigation">
       <div class="container">
         <div class="nav__inner">
@@ -1603,6 +1602,7 @@
       </div>
     </nav>
 
+    <div class="page-wrap" id="pageWrap">
     <main id="top">
       <section class="hero">
         <video class="hero__video" autoplay muted loop playsinline poster="hero-poster.jpg">
@@ -1913,6 +1913,7 @@
         </div>
       </div>
     </footer>
+    </div>
 
     <script>
       const nav = document.querySelector(".nav");
@@ -2107,6 +2108,7 @@
       }
 
       function doClose() {
+        if (!overlay.classList.contains('open')) return;
         overlay.classList.add('closing');
         document.body.style.paddingRight = '';
         document.body.classList.remove('overlay-open');
@@ -2115,6 +2117,8 @@
         const tl = gsap.timeline({
           onComplete: () => {
             overlay.classList.remove('open', 'closing');
+            pageWrap.classList.remove('dimmed');
+            pageWrap.style.filter = '';
           }
         });
 
