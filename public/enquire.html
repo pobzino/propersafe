@@ -687,6 +687,7 @@ html, body {
 <body>
 <script>document.querySelector('.page').classList.toggle('animated', window.self === window.top);</script>
 
+<div class="draft-toast" id="draft-toast">Draft restored — continue where you left off</div>
 <div class="page">
 
   <!-- LEFT PANEL -->
@@ -998,6 +999,110 @@ html, body {
     payment: 'Active build'
   };
 
+  /* ── DRAFT AUTOSAVE ── */
+  const DRAFT_KEY = 'propersafe_enquiry_draft_v1';
+  let draftTimer = null;
+
+  function saveDraft() {
+    const draft = {
+      service: state.service,
+      current: state.current,
+      visited: Array.from(state.visited),
+      done: Array.from(state.done),
+      propLoc: document.getElementById('prop-loc').value,
+      landType: document.getElementById('land-type').value,
+      propVal: document.getElementById('prop-val').value,
+      urgency: document.getElementById('urgency').value,
+      situation: document.getElementById('situation').value,
+      docNotes: document.getElementById('doc-notes').value,
+      fname: document.getElementById('fname').value,
+      lname: document.getElementById('lname').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      base: document.getElementById('base').value,
+      referral: document.getElementById('referral').value,
+      docs: Array.from(document.querySelectorAll('.doc-toggle.has')).map(d => d.dataset.doc)
+    };
+    try { localStorage.setItem(DRAFT_KEY, JSON.stringify(draft)); } catch(e) {}
+  }
+
+  function clearDraft() {
+    try { localStorage.removeItem(DRAFT_KEY); } catch(e) {}
+  }
+
+  function showDraftToast() {
+    const toast = document.getElementById('draft-toast');
+    if (!toast) return;
+    toast.classList.add('visible');
+    setTimeout(() => toast.classList.remove('visible'), 3000);
+  }
+
+  function restoreDraft() {
+    let draft = null;
+    try { draft = JSON.parse(localStorage.getItem(DRAFT_KEY)); } catch(e) {}
+    if (!draft) return false;
+
+    // Restore service
+    if (draft.service) {
+      state.service = draft.service;
+      const cards = document.querySelectorAll('.service-card');
+      const idx = { land: 0, build: 1, payment: 2 }[draft.service];
+      if (idx != null && cards[idx]) {
+        cards[idx].classList.add('selected');
+        document.getElementById('next-0').disabled = false;
+      }
+    }
+
+    // Restore fields
+    const setVal = (id, val) => { const el = document.getElementById(id); if (el && val != null) el.value = val; };
+    setVal('prop-loc', draft.propLoc);
+    setVal('land-type', draft.landType);
+    setVal('prop-val', draft.propVal);
+    setVal('urgency', draft.urgency);
+    setVal('situation', draft.situation);
+    setVal('doc-notes', draft.docNotes);
+    setVal('fname', draft.fname);
+    setVal('lname', draft.lname);
+    setVal('email', draft.email);
+    setVal('phone', draft.phone);
+    setVal('base', draft.base);
+    setVal('referral', draft.referral);
+
+    // Restore documents
+    if (draft.docs && draft.docs.length) {
+      document.querySelectorAll('.doc-toggle').forEach(d => {
+        if (draft.docs.includes(d.dataset.doc)) d.classList.add('has');
+      });
+    }
+
+    // Restore stepper state
+    if (draft.visited) draft.visited.forEach(i => state.visited.add(i));
+    if (draft.done) draft.done.forEach(i => state.done.add(i));
+    if (typeof draft.current === 'number') state.current = draft.current;
+
+    // Jump to restored step
+    refreshStepper();
+    for (let i = 0; i <= 4; i++) {
+      const panel = document.getElementById('panel-' + i);
+      if (panel) panel.classList.toggle('active', i === state.current);
+    }
+    if (state.current === 4) buildReview();
+
+    showDraftToast();
+    return true;
+  }
+
+  function queueDraftSave() {
+    if (draftTimer) clearTimeout(draftTimer);
+    draftTimer = setTimeout(saveDraft, 300);
+  }
+
+  // Attach listeners to all inputs
+  document.querySelectorAll('input, select, textarea').forEach(el => {
+    el.addEventListener('input', queueDraftSave);
+    el.addEventListener('change', saveDraft);
+  });
+
   function esc(str) {
     const div = document.createElement('div');
     div.textContent = str;
@@ -1012,10 +1117,12 @@ html, body {
     setTimeout(() => el.style.transform = '', 120);
     state.service = val;
     document.getElementById('next-0').disabled = false;
+    saveDraft();
   }
 
   function toggleDoc(el) {
     el.classList.toggle('has');
+    saveDraft();
   }
 
   function updateStep(n, cls) {
@@ -1078,6 +1185,7 @@ html, body {
     refreshStepper();
     if (n === 4) buildReview();
     hideGlobalError();
+    saveDraft();
 
     // Scroll right panel to top smoothly
     const rightPanel = document.querySelector('.right-panel');
@@ -1253,12 +1361,16 @@ html, body {
         s.style.transform = 'translateY(0) scale(1)';
       });
       document.getElementById('success-ref').textContent = 'Ref: ' + (data.caseRef || '—');
+      clearDraft();
     } catch (err) {
       showGlobalError(err.message);
       btn.disabled = false;
       btn.innerHTML = 'Submit enquiry →';
     }
   }
+
+  // Restore draft on load (after DOM ready)
+  restoreDraft();
 </script>
 
 </body>
