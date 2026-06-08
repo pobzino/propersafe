@@ -1,6 +1,8 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { NextRequest, NextResponse } from "next/server";
 import { DEFAULT_CHECKS } from "@/lib/utils/checks";
+import { sendEnquiryConfirmation, sendAdminNotification } from "@/lib/email";
+import { sendEnquiryConfirmationWhatsApp } from "@/lib/whatsapp";
 
 export async function POST(request: NextRequest) {
   try {
@@ -115,6 +117,43 @@ export async function POST(request: NextRequest) {
       triggered_by: "system",
       notes: "Enquiry submitted from landing page",
     });
+
+    // Send confirmation email to client
+    const serviceLabel =
+      body.service === "land"
+        ? "Land & Property Validity Check"
+        : body.service === "build"
+        ? "Build Cost Preview"
+        : body.service === "payment"
+        ? "Payment Sanity Check"
+        : "Property Verification";
+
+    await sendEnquiryConfirmation({
+      to: body.email,
+      name: body.firstName,
+      caseRef,
+      service: serviceLabel,
+    }).catch((err) => console.error("[email] confirmation failed:", err));
+
+    // Send admin notification
+    await sendAdminNotification({
+      caseRef,
+      name: `${body.firstName} ${body.lastName || ""}`.trim(),
+      email: body.email,
+      whatsapp: body.whatsapp || null,
+      service: serviceLabel,
+      situation: body.situation || null,
+      urgency: body.urgency || null,
+    }).catch((err) => console.error("[email] admin notify failed:", err));
+
+    // Send WhatsApp confirmation if number provided
+    if (body.whatsapp) {
+      await sendEnquiryConfirmationWhatsApp({
+        to: body.whatsapp,
+        name: body.firstName,
+        caseRef,
+      }).catch((err) => console.error("[whatsapp] failed:", err));
+    }
 
     return NextResponse.json(
       { success: true, caseRef },
