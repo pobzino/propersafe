@@ -997,6 +997,69 @@
         line-height: 1.6;
       }
 
+      .enquiry-cta {
+        padding-top: 8px;
+      }
+      .enquiry-cta__lead {
+        font-size: 18px;
+        font-weight: 300;
+        color: var(--paper-soft);
+        margin-bottom: 28px;
+        line-height: 1.5;
+      }
+      .enquiry-cta__steps {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 36px;
+      }
+      .enquiry-cta__step {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        font-size: 15px;
+        font-weight: 300;
+        color: rgba(255, 249, 239, 0.65);
+        line-height: 1.5;
+      }
+      .enquiry-cta__num {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 0.5px solid rgba(255, 249, 239, 0.2);
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--gold);
+        flex-shrink: 0;
+      }
+      .enquiry-cta__button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        padding: 0 40px;
+        border-radius: 999px;
+        background: var(--paper-soft);
+        color: var(--ink);
+        font-size: 14px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+      .enquiry-cta__button:hover {
+        background: #e8dcc8;
+      }
+      .enquiry-cta__note {
+        margin-top: 16px;
+        font-size: 13px;
+        font-weight: 300;
+        color: rgba(255, 249, 239, 0.35);
+      }
+
       .footer {
         padding: 100px 0 40px;
         background: var(--ink);
@@ -1784,92 +1847,24 @@
           </div>
 
           <div class="enquiry__right">
-            <form class="enquiry-form" id="enquiryForm" novalidate>
-              <fieldset class="field" id="serviceField">
-                <legend>Which service do you need?</legend>
-                <div class="service-options" role="radiogroup" aria-label="Which service do you need?">
-                  <label class="service-option">
-                    <input type="radio" name="service" value="land" required />
-                    <span>Land &amp; Property Validity Check</span>
-                  </label>
-                  <label class="service-option">
-                    <input type="radio" name="service" value="build" required />
-                    <span>Build Cost Preview</span>
-                  </label>
-                  <label class="service-option">
-                    <input type="radio" name="service" value="payment" required />
-                    <span>Payment Sanity Check</span>
-                  </label>
+            <div class="enquiry-cta">
+              <p class="enquiry-cta__lead">Start your enquiry in under 3 minutes.</p>
+              <div class="enquiry-cta__steps">
+                <div class="enquiry-cta__step">
+                  <span class="enquiry-cta__num">1</span>
+                  <span>Describe your property and what you're trying to decide</span>
                 </div>
-                <div class="field-error">Choose one service to continue.</div>
-              </fieldset>
-
-              <div class="form-grid">
-                <div class="field">
-                  <label for="firstName">First name</label>
-                  <input id="firstName" name="firstName" autocomplete="given-name" required />
-                  <div class="field-error">Enter your first name.</div>
+                <div class="enquiry-cta__step">
+                  <span class="enquiry-cta__num">2</span>
+                  <span>Tell us which documents you have — or if you have none</span>
                 </div>
-
-                <div class="field">
-                  <label for="lastName">Last name</label>
-                  <input id="lastName" name="lastName" autocomplete="family-name" />
-                </div>
-
-                <div class="field">
-                  <label for="email">Email address</label>
-                  <input id="email" name="email" type="email" autocomplete="email" required />
-                  <div class="field-error">Enter a valid email address.</div>
-                </div>
-
-                <div class="field">
-                  <label for="whatsapp">WhatsApp number</label>
-                  <input id="whatsapp" name="whatsapp" autocomplete="tel" inputmode="tel" />
-                </div>
-
-                <div class="field">
-                  <label for="based">Where are you based?</label>
-                  <input id="based" name="based" placeholder="e.g. London, UK" />
-                </div>
-
-                <div class="field">
-                  <label for="location">Property location in Abuja</label>
-                  <input id="location" name="location" placeholder="e.g. Gwarinpa, Maitama, Kuje" />
-                </div>
-
-                <div class="field field--full">
-                  <label for="situation">Tell us about your situation</label>
-                  <textarea
-                    id="situation"
-                    name="situation"
-                    required
-                    placeholder="Describe what you're trying to decide, what documents you have, and anything else that feels relevant."
-                  ></textarea>
-                  <div class="field-error">Describe your situation so we can scope the right check.</div>
-                </div>
-
-                <div class="field field--full">
-                  <label for="urgency">How urgent is this?</label>
-                  <select id="urgency" name="urgency">
-                    <option value="">Select urgency</option>
-                    <option>I need this done as soon as possible</option>
-                    <option>Within the next week</option>
-                    <option>Within the next two weeks</option>
-                    <option>Within the next month</option>
-                    <option>Just exploring for now</option>
-                  </select>
+                <div class="enquiry-cta__step">
+                  <span class="enquiry-cta__num">3</span>
+                  <span>We reply within 24 hours with scope, timeline, and fees</span>
                 </div>
               </div>
-
-              <div class="form-footer">
-                <button class="button" type="submit">Submit enquiry →</button>
-                <p>No payment required now. We'll confirm scope and fees before any work begins.</p>
-              </div>
-            </form>
-
-            <div class="success" id="successMessage" role="status" aria-live="polite">
-              <h3>Enquiry received.</h3>
-              <p>We'll review your situation and come back to you within 24 hours. Check your inbox — and your WhatsApp.</p>
+              <button class="enquiry-cta__button" onclick="openEnquiryFrom(this)">Start an enquiry →</button>
+              <p class="enquiry-cta__note">No payment required now. No obligation to proceed.</p>
             </div>
           </div>
         </div>
@@ -1940,98 +1935,7 @@
       }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
       productCards.forEach((card) => cardObserver.observe(card));
 
-      const form = document.getElementById("enquiryForm");
-      const successMessage = document.getElementById("successMessage");
-      const serviceField = document.getElementById("serviceField");
 
-      const requiredFields = [
-        { element: document.getElementById("firstName"), validator: (value) => value.trim().length > 0 },
-        {
-          element: document.getElementById("email"),
-          validator: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()),
-        },
-        { element: document.getElementById("situation"), validator: (value) => value.trim().length > 0 },
-      ];
-
-      function setFieldValidity(element, isValid) {
-        const field = element.closest(".field");
-        if (!field) return;
-        field.classList.toggle("is-invalid", !isValid);
-      }
-
-      function validateService() {
-        const selected = form.querySelector('input[name="service"]:checked');
-        serviceField.classList.toggle("is-invalid", !selected);
-        return Boolean(selected);
-      }
-
-      function validateTextFields() {
-        let allValid = true;
-        requiredFields.forEach(({ element, validator }) => {
-          const isValid = validator(element.value);
-          setFieldValidity(element, isValid);
-          if (!isValid) allValid = false;
-        });
-        return allValid;
-      }
-
-      requiredFields.forEach(({ element, validator }) => {
-        element.addEventListener("input", () => setFieldValidity(element, validator(element.value)));
-      });
-
-      form.querySelectorAll('input[name="service"]').forEach((input) => {
-        input.addEventListener("change", validateService);
-      });
-
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const isServiceValid = validateService();
-        const areFieldsValid = validateTextFields();
-
-        if (!isServiceValid || !areFieldsValid) {
-          const firstInvalid = form.querySelector(".is-invalid");
-          firstInvalid?.scrollIntoView({ behavior: "smooth", block: "center" });
-          return;
-        }
-
-        const submitButton = form.querySelector('button[type="submit"]');
-        const originalText = submitButton.textContent;
-        submitButton.textContent = "Submitting...";
-        submitButton.disabled = true;
-
-        const payload = {
-          service: form.querySelector('input[name="service"]:checked')?.value || null,
-          firstName: document.getElementById("firstName").value.trim(),
-          lastName: document.getElementById("lastName").value.trim() || null,
-          email: document.getElementById("email").value.trim(),
-          whatsapp: document.getElementById("whatsapp").value.trim() || null,
-          location: document.getElementById("based").value.trim() || null,
-          propertyLocation: document.getElementById("location").value.trim() || null,
-          situation: document.getElementById("situation").value.trim(),
-          urgency: document.getElementById("urgency").value || null,
-        };
-
-        try {
-          const response = await fetch("/api/enquire", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          });
-
-          const data = await response.json();
-
-          if (!response.ok || !data.success) {
-            throw new Error(data.error || "Server error");
-          }
-
-          window.location.href = "thanks.html?ref=" + encodeURIComponent(data.caseRef);
-        } catch (err) {
-          submitButton.textContent = originalText;
-          submitButton.disabled = false;
-          alert("Something went wrong. Please try again or email hello@propersafe.ng");
-        }
-      });
     </script>
 
     </div>
