@@ -44,8 +44,8 @@ export default async function InternalLayout({
               <Image
                 src="/logo-light.png"
                 alt="Propersafe"
-                width={148}
-                height={44}
+                width={111}
+                height={33}
                 className="object-contain shrink-0"
                 priority
               />
