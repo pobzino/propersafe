@@ -1570,11 +1570,19 @@
         stroke-width: 1.5;
         fill: none;
       }
-      .page-wrap {
-        transition: filter 1s ease 0.1s;
+      .overlay-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: rgba(15, 14, 10, 0.25);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.8s ease;
       }
-      .page-wrap.dimmed {
-        filter: blur(2px);
+      .overlay-backdrop.visible {
+        opacity: 1;
       }
       body.overlay-open {
         overflow: hidden;
@@ -2029,6 +2037,7 @@
     </div>
 
     <!-- ENQUIRY OVERLAY -->
+    <div class="overlay-backdrop" id="overlayBackdrop"></div>
     <div class="enquiry-overlay" id="enquiryOverlay">
       <div class="reveal-circle" id="revealCircle"></div>
 
@@ -2042,7 +2051,7 @@
 
     <script>
       const overlay = document.getElementById('enquiryOverlay');
-      const pageWrap = document.getElementById('pageWrap');
+      const backdrop = document.getElementById('overlayBackdrop');
       const revealCircle = document.getElementById('revealCircle');
       let isOpen = false;
       let savedScrollY = 0;
@@ -2073,7 +2082,7 @@
 
         overlay.classList.remove('closing');
         overlay.classList.add('open');
-        pageWrap.classList.add('dimmed');
+        backdrop.classList.add('visible');
         document.body.style.paddingRight = scrollbarWidth + 'px';
         document.body.classList.add('overlay-open');
         history.pushState({ enquiry: true }, '', '#enquire');
@@ -2096,7 +2105,7 @@
 
         overlay.classList.remove('closing');
         overlay.classList.add('open');
-        pageWrap.classList.add('dimmed');
+        backdrop.classList.add('visible');
         document.body.style.paddingRight = scrollbarWidth + 'px';
         document.body.classList.add('overlay-open');
         history.pushState({ enquiry: true }, '', '#enquire');
@@ -2110,6 +2119,7 @@
       function doClose() {
         if (!overlay.classList.contains('open')) return;
         overlay.classList.add('closing');
+        backdrop.classList.remove('visible');
         document.body.style.paddingRight = '';
         document.body.classList.remove('overlay-open');
         window.scrollTo(0, savedScrollY);
@@ -2117,8 +2127,6 @@
         const tl = gsap.timeline({
           onComplete: () => {
             overlay.classList.remove('open', 'closing');
-            pageWrap.classList.remove('dimmed');
-            pageWrap.style.filter = '';
           }
         });
 
@@ -2128,13 +2136,6 @@
           duration: 1.1,
           ease: 'power2.inOut'
         }, 0);
-
-        // Page unblurs as circle disappears
-        tl.to(pageWrap, {
-          filter: 'blur(0px)',
-          duration: 0.6,
-          ease: 'power2.out'
-        }, 0.7);
       }
 
       function closeEnquiry() {
