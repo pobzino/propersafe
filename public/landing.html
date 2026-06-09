@@ -304,9 +304,8 @@
         font-family: "Cormorant Garamond", var(--serif);
         font-size: clamp(44px, 5.5vw, 80px);
         font-weight: 200;
-        line-height: 0.98;
+        line-height: 1.05;
         letter-spacing: -0.01em;
-        white-space: nowrap;
         text-shadow: 0 2px 20px rgba(12,10,8,0.50);
       }
       .hero h1 .accent {
@@ -446,10 +445,69 @@
         font-size: 18px;
       }
 
-      .problem {
-        background: var(--paper);
+      .independence {
+        background: var(--paper-soft);
         color: var(--ink);
-        padding: 92px 0 0;
+        padding: 88px 0;
+      }
+
+      .independence-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+        gap: clamp(40px, 6vw, 88px);
+        align-items: start;
+      }
+
+      .independence-intro h2 {
+        font-family: "Cormorant Garamond", var(--serif);
+        font-size: clamp(2rem, 3.8vw, 3.1rem);
+        font-weight: 200;
+        line-height: 1.06;
+        letter-spacing: -0.02em;
+        max-width: none;
+      }
+
+      .independence-principles {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .principle {
+        display: grid;
+        grid-template-columns: 42px 1fr;
+        gap: 20px;
+        padding: 28px 0;
+        border-top: 0.5px solid rgba(21, 18, 14, 0.1);
+      }
+
+      .principle:last-child {
+        padding-bottom: 0;
+      }
+
+      .principle__num {
+        font-family: "Cormorant Garamond", var(--serif);
+        font-size: 1.35rem;
+        font-style: italic;
+        font-weight: 200;
+        color: var(--gold-dark);
+        line-height: 1;
+        padding-top: 2px;
+      }
+
+      .principle h3 {
+        font-family: "Cormorant Garamond", var(--serif);
+        font-size: 1.35rem;
+        font-weight: 400;
+        line-height: 1.15;
+        margin-bottom: 8px;
+      }
+
+      .principle p {
+        font-size: 15px;
+        font-weight: 300;
+        color: var(--muted);
+        line-height: 1.7;
+        margin: 0;
       }
 
       .problem-label {
@@ -472,29 +530,6 @@
         background: var(--gold);
       }
 
-      .problem-top {
-        display: grid;
-        grid-template-columns: 1.15fr 1fr;
-        gap: 5rem;
-        align-items: start;
-        padding-bottom: 4rem;
-        border-bottom: 0.5px solid rgba(21, 18, 14, 0.10);
-      }
-
-      .problem h2 {
-        font-family: "Cormorant Garamond", var(--serif);
-        font-size: clamp(2.2rem, 4vw, 3.4rem);
-        font-weight: 200;
-        line-height: 1.05;
-        letter-spacing: -0.02em;
-        color: var(--ink);
-      }
-
-      .problem h2 em {
-        font-style: italic;
-        color: var(--gold);
-      }
-
       .problem-body {
         font-size: 1.05rem;
         font-weight: 300;
@@ -505,7 +540,7 @@
       .products {
         background: var(--ink);
         color: var(--paper-soft);
-        padding: 120px 0 160px;
+        padding: 120px 0 100px;
       }
 
       .products__head {
@@ -1213,11 +1248,15 @@
 
       @media (max-width: 1040px) {
         .hero__panel,
-        .problem-top,
+        .independence-inner,
         .section-head,
         .enquiry__inner {
           grid-template-columns: 1fr;
           gap: 48px;
+        }
+
+        .independence-intro h2 {
+          max-width: none;
         }
 
         .hero h1 {
@@ -1372,22 +1411,17 @@
           font-size: 16px;
         }
 
-        .problem {
-          padding: 64px 0 0;
+        .independence {
+          padding: 64px 0;
         }
 
-        .problem-top {
-          gap: 1.5rem;
-          padding-bottom: 2.5rem;
+        .independence-inner {
+          gap: 40px;
         }
 
-        .problem h2 {
-          font-size: clamp(1.6rem, 5.5vw, 2.2rem);
-        }
-
-        .problem-body {
-          font-size: 1rem;
-          line-height: 1.7;
+        .independence-intro h2 {
+          font-size: 32px;
+          line-height: 1.1;
         }
 
         .products {
@@ -1627,6 +1661,91 @@
       @media (max-width: 720px) {
         .overlay-close { top: 16px; right: 20px; }
       }
+
+      /* ── PRELIMINARY ASSESSMENT ── */
+      .assessment {
+        background: var(--paper-soft);
+        padding: 60px 0 100px;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .assessment-card {
+        background: var(--charcoal);
+        color: var(--paper-soft);
+        padding: 80px 60px;
+        border-radius: 12px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 60px;
+        align-items: center;
+        border: 1px solid rgba(255, 249, 239, 0.08);
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.2);
+      }
+      .assessment-card__eyebrow {
+        color: var(--gold);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+      .assessment-card__title {
+        font-family: "Cormorant Garamond", var(--serif);
+        font-size: clamp(32px, 4vw, 48px);
+        font-weight: 200;
+        line-height: 1.1;
+        margin-bottom: 24px;
+      }
+      .assessment-card__title .accent {
+        display: block;
+        font-style: italic;
+        color: #c4a574;
+        font-weight: 400;
+      }
+      .assessment-card__text {
+        color: rgba(255, 249, 239, 0.6);
+        font-size: 18px;
+        font-weight: 300;
+        max-width: 520px;
+        line-height: 1.6;
+      }
+      .button--gold {
+        background: var(--gold);
+        border-color: var(--gold);
+        color: white;
+        padding: 0 40px;
+        height: 56px;
+        font-weight: 600;
+        font-size: 15px;
+      }
+      .button--gold:hover {
+        background: var(--gold-dark);
+        border-color: var(--gold-dark);
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 900px) {
+        .assessment {
+          padding: 60px 0;
+        }
+        .assessment-card {
+          grid-template-columns: 1fr;
+          padding: 48px 24px;
+          gap: 32px;
+          text-align: left;
+        }
+        .assessment-card__text {
+          margin: 0;
+          font-size: 16px;
+        }
+        .assessment-card__action .button {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      .product-card__name { margin-bottom: 0.5rem; }
+      .product-card__price { font-size: 14px; font-weight: 600; color: var(--gold); margin-bottom: 1.5rem; letter-spacing: 0.05em; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   </head>
@@ -1635,7 +1754,7 @@
       <div class="container">
         <div class="nav__inner">
           <a class="logo" href="#top" aria-label="Propersafe home">
-            <img src="/logo-dark.png" alt="Propersafe" style="height: 33px; width: auto; object-fit: contain;" />
+            <img src="logo-dark.png" alt="Propersafe" style="height: 33px; width: auto; object-fit: contain;" />
           </a>
           <div class="nav__links">
             <a href="#products">Services</a>
@@ -1658,12 +1777,11 @@
           <p class="eyebrow">Abuja · Diaspora Property Verification</p>
           <h1>Your contact says the land is fine. <span class="accent">Let's make sure.</span></h1>
           <p class="hero__text">
-            Propersafe coordinates the right property professionals to verify land, check contractor invoices, and
-            preview build costs — so you can make decisions with clarity, not hope.
+            Propersafe coordinates the right property professionals to verify land, check contractor invoices, and preview build costs — so you can make decisions with clarity, not hope.
           </p>
           <div class="hero__actions">
-            <a class="button" href="#enquire" onclick="openEnquiryFrom(this); return false;">Start an enquiry</a>
-            <a class="button button--ghost" href="#products">See what we check →</a>
+            <a class="button" href="/risk-calculator">Check your risk score</a>
+            <a class="button button--ghost" href="#enquire" onclick="openEnquiryFrom(this); return false;">Start an enquiry →</a>
           </div>
         </div>
         <div class="hero__scroll"><span>Scroll</span></div>
@@ -1684,22 +1802,53 @@
         </div>
       </section>
 
-      <section class="section problem">
+      <section class="section independence" id="independence">
         <div class="container">
-          <div class="problem-inner">
-            <div class="problem-label">The problem</div>
-
-            <div class="problem-top">
-              <h2>Diaspora Nigerians lose millions to property decisions made without <em>the right information.</em></h2>
-              <p class="problem-body">
-                You're in London. The land is in Gwarinpa. Your cousin says the seller is trustworthy. Your contractor
-                sends an invoice for ₦8 million. You have no way to verify any of it — and no one in the room is working
-                for you.<br><br>
+          <div class="independence-inner">
+            <div class="independence-intro">
+              <div class="problem-label">On your side</div>
+              <h2>We are not realtors. We are not developers. We work exclusively for you.</h2>
+              <p class="problem-body" style="margin-top: 2rem;">
+                You're in London. The land is in Gwarinpa. Your cousin says the seller is trustworthy. Your contractor sends an invoice for ₦8 million. You have no way to verify any of it — and no one in the room is working for you.<br><br>
                 That's what Propersafe fixes. We're not a marketplace. We're not an estate agent. We work exclusively for the buyer.
               </p>
             </div>
+            <div class="independence-principles">
+              <article class="principle">
+                <span class="principle__num">01</span>
+                <div>
+                  <h3>No Commissions</h3>
+                  <p>We do not take a cut from the sale. Our only loyalty is to your risk report. If the deal is bad, we tell you.</p>
+                </div>
+              </article>
+              <article class="principle">
+                <span class="principle__num">02</span>
+                <div>
+                  <h3>No Fund Handling</h3>
+                  <p>We never touch your purchase or contractor funds. You pay us for the truth; you pay the seller only when verified.</p>
+                </div>
+              </article>
+              <article class="principle">
+                <span class="principle__num">03</span>
+                <div>
+                  <h3>Clinical Independence</h3>
+                  <p>Unlike family or agents, we use surveyors and legal auditors. We provide data, not opinions.</p>
+                </div>
+              </article>
+            </div>
+          </div>
 
-
+          <div class="assessment-card" style="margin-top: 5rem; margin-bottom: 0;">
+            <div class="assessment-card__content">
+              <p class="assessment-card__eyebrow">Preliminary Diagnostic</p>
+              <h2 class="assessment-card__title">2026 Diaspora Property <span class="accent">Risk Assessment</span></h2>
+              <p class="assessment-card__text">
+                Not ready for a full audit? Identify potential "family traps," title red flags, and contractor padding in under 2 minutes.
+              </p>
+            </div>
+            <div class="assessment-card__action">
+              <a class="button button--gold" href="/risk-calculator">Start Risk Check →</a>
+            </div>
           </div>
         </div>
       </section>
@@ -1714,10 +1863,10 @@
             <div class="product-card__top">
               <span class="product-card__num">01</span>
               <p class="product-card__quote">"I'm about to buy land from someone. I need to know if it's safe."</p>
-              <h3 class="product-card__name">Land &amp; Property Validity Check</h3>
+              <h3 class="product-card__name">Property Title &amp; Document Audit</h3>
+              <p class="product-card__price">From £350</p>
               <p class="product-card__desc">
-                Before you commit any money, we coordinate a full title and document review. Lawyer review, AGIS and FCDA
-                registry search, court and litigation search, C of O and R of O verification, and authority checks.
+                We deploy legal auditors to verify AGIS and FCDA registry records, court litigation history, and C of O authenticity. We don't take the seller's word; we verify the source.
               </p>
             </div>
             <div class="product-card__footer">
@@ -1729,10 +1878,10 @@
             <div class="product-card__top">
               <span class="product-card__num">02</span>
               <p class="product-card__quote">"My contractor says it'll cost ₦40 million. I have no idea if that's realistic."</p>
-              <h3 class="product-card__name">Build Cost Preview</h3>
+              <h3 class="product-card__name">Construction Cost Audit</h3>
+              <p class="product-card__price">From £250</p>
               <p class="product-card__desc">
-                We commission a qualified quantity surveyor for an itemised breakdown, realistic material prices, hidden
-                costs, payment milestones, and optionally a shortlist of vetted suppliers.
+                A qualified Quantity Surveyor (QS) reviews your contractor's quote against current Abuja market rates. We identify "padding" and hidden costs before you overpay.
               </p>
             </div>
             <div class="product-card__footer">
@@ -1744,10 +1893,10 @@
             <div class="product-card__top">
               <span class="product-card__num">03</span>
               <p class="product-card__quote">"My contractor is asking for ₦6 million for stage two. I don't know if the work is actually done."</p>
-              <h3 class="product-card__name">Payment Sanity Check</h3>
+              <h3 class="product-card__name">Milestone &amp; Payment Audit</h3>
+              <p class="product-card__price">From £150</p>
               <p class="product-card__desc">
-                Independent QS assessment of payment requests. Site visits when warranted. Clear recommendations before
-                money moves.
+                Don't release funds based on photos alone. We send site engineers to verify that work matches the invoice. Only pay for what is actually built.
               </p>
             </div>
             <div class="product-card__footer">
@@ -1849,7 +1998,7 @@
             <a class="logo" href="#top" aria-label="Propersafe home">
               <img src="/logo-dark.png" alt="Propersafe" style="height: 33px; width: auto; object-fit: contain;" />
             </a>
-            <p>Abuja property verification for diaspora Nigerians. Not a realtor. Not a developer. On your side.</p>
+            <p>Independent property verification for diaspora Nigerians. We are not realtors or developers. We provide the professional distance required for a safe transaction.</p>
           </div>
 
           <div class="footer__col">
@@ -1857,7 +2006,7 @@
             <ul>
               <li><a href="#products">Land &amp; Property Validity Check</a></li>
               <li><a href="#products">Build Cost Preview</a></li>
-              <li><a href="#products">Payment Sanity Check</a></li>
+              <li><a href="#products">Payment Release Check</a></li>
             </ul>
           </div>
 
@@ -1865,6 +2014,7 @@
             <h4>Company</h4>
             <ul>
               <li><a href="#top">Home</a></li>
+              <li><a href="/risk-calculator">Risk Assessment</a></li>
               <li><a href="#enquire" onclick="openEnquiryFrom(this); return false;">Contact</a></li>
               <li><a href="#enquire" onclick="openEnquiryFrom(this); return false;">Enquiry form</a></li>
               <li><a href="/client-login">Client portal</a></li>
@@ -1920,7 +2070,7 @@
         <button class="overlay-close" onclick="closeEnquiry()" aria-label="Close enquiry form">
           <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>
-        <iframe src="/enquire.html" title="Submit an enquiry" id="enquiryFrame"></iframe>
+        <iframe src="enquire.html" title="Submit an enquiry" id="enquiryFrame" allow="autoplay"></iframe>
       </div>
     </div>
 

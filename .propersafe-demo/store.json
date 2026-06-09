@@ -1,0 +1,67 @@
+{
+  "cases": [
+    {
+      "case_ref": "PS-20260607-83E3ED",
+      "status": "report_ready",
+      "service_type": "Abuja Buyer Risk Report",
+      "risk_rating": "unrated",
+      "recommendation": "pause",
+      "created_at": "2026-06-07T08:24:51.527Z",
+      "first_name": "Ada",
+      "last_name": "Okafor",
+      "email": "ada@example.com",
+      "whatsapp": "+447700900123",
+      "based_in": "London, UK",
+      "property_type": "Land",
+      "property_location": "Gwarinpa",
+      "seller_name": "Sample Homes Ltd",
+      "asking_price": "₦45m",
+      "payment_deadline": "Friday",
+      "situation": "I am considering buying an Abuja plot and want the documents checked before sending a deposit.",
+      "admin_notes": null,
+      "id": "b9d35e47-2f78-4c41-9865-c17aaf661943"
+    }
+  ],
+  "documents": [],
+  "tasks": [
+    {
+      "case_id": "b9d35e47-2f78-4c41-9865-c17aaf661943",
+      "task_type": "lawyer_review",
+      "title": "Review supplied title documents",
+      "status": "submitted",
+      "token": "cce36c11930449998b4b40471dfae3e5",
+      "assigned_name": "Princess Denedo",
+      "assigned_email": "princess@example.com",
+      "due_date": null,
+      "created_at": "2026-06-07T08:25:57.408Z",
+      "id": "33b4cb95-5f1b-4ab3-a706-c95c94be86d0"
+    }
+  ],
+  "findings": [
+    {
+      "task_id": "33b4cb95-5f1b-4ab3-a706-c95c94be86d0",
+      "case_id": "b9d35e47-2f78-4c41-9865-c17aaf661943",
+      "summary": "Documents were reviewed. Seller authority evidence is incomplete and registry confirmation is still required before payment.",
+      "red_flags": "No AGIS/FCTA search result attached. Seller authority needs stronger evidence.",
+      "missing_items": "Registry search result, seller ID/company authority, updated survey confirmation.",
+      "recommendation": "Pause until missing evidence is provided and verified.",
+      "submitted_at": "2026-06-07T08:27:06.072Z",
+      "id": "9cbaee14-3c0e-4bc1-93ad-0214ca066d68"
+    }
+  ],
+  "reports": [
+    {
+      "case_id": "b9d35e47-2f78-4c41-9865-c17aaf661943",
+      "status": "final",
+      "property_summary": "Land purchase enquiry for a plot in Gwarinpa from Sample Homes Ltd at ₦45m.",
+      "checks_completed": "Initial lawyer document review completed. Registry and seller authority evidence remain outstanding.",
+      "findings_summary": "Documents reviewed show enough concern to pause before deposit. AGIS/FCTA search result has not been supplied.",
+      "red_flags": "Missing registry confirmation and incomplete seller authority evidence.",
+      "missing_evidence": "AGIS/FCTA search result, seller authority documents, updated survey confirmation.",
+      "next_steps": "Do not release deposit. Request missing evidence and complete registry search first.",
+      "recommendation": "pause",
+      "created_at": "2026-06-07T08:28:04.609Z",
+      "id": "2c247b49-eab0-4d41-af38-6b7fde832068"
+    }
+  ]
+}

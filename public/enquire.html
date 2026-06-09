@@ -56,19 +56,80 @@ html, body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ── DRAFT TOAST ── */
+.draft-toast {
+  position: fixed;
+  top: 1.25rem;
+  left: 50%;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.55rem 1.1rem 0.55rem 0.85rem;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  color: var(--cream-dim);
+  background: rgba(20, 18, 14, 0.88);
+  border: 0.5px solid var(--gold-border);
+  border-radius: 100px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-10px);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.draft-toast::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(201, 164, 106, 0.45);
+}
+.draft-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 /* ── LEFT PANEL ── */
 .left-panel {
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(160,120,64,0.04) 0%, transparent 70%),
-    var(--ink-2);
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-right: 0.5px solid var(--cream-ghost);
   position: sticky;
   top: 0;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3rem;
+  overflow: hidden;
+  border-right: 0.5px solid var(--cream-ghost);
+  background: var(--ink-2);
+}
+.panel-video-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.panel-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.38;
+  filter: grayscale(0.4) contrast(1.15);
+}
+.panel-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(15, 14, 10, 0.5) 0%, rgba(15, 14, 10, 0.2) 40%, rgba(15, 14, 10, 0.8) 100%),
+    linear-gradient(to right, var(--ink-2) 0%, transparent 55%);
+  z-index: 1;
+}
+.left-panel > *:not(.panel-video-container) {
+  position: relative;
+  z-index: 2;
 }
 .left-logo {
   display: flex;
@@ -669,9 +730,18 @@ html, body {
   .left-panel {
     position: static;
     height: auto;
+    min-height: 320px;
     padding: 2rem 1.5rem;
     border-right: none;
     border-bottom: 0.5px solid var(--cream-ghost);
+  }
+  .draft-toast {
+    top: auto;
+    bottom: 1.25rem;
+    transform: translateX(-50%) translateY(10px);
+  }
+  .draft-toast.visible {
+    transform: translateX(-50%) translateY(0);
   }
   .left-checks { display: none; }
   .left-footer { display: none; }
@@ -687,31 +757,38 @@ html, body {
 <body>
 <script>document.querySelector('.page').classList.toggle('animated', window.self === window.top);</script>
 
-<div class="draft-toast" id="draft-toast">Draft restored — continue where you left off</div>
+<div class="draft-toast" id="draft-toast">Picked up where you left off</div>
 <div class="page">
 
   <!-- LEFT PANEL -->
   <div class="left-panel">
-    <a class="left-logo" href="#" onclick="return false;">
-      <img src="/logo-dark.png" alt="Propersafe" />
+    <div class="panel-video-container" aria-hidden="true">
+      <video class="panel-video" autoplay muted loop playsinline poster="hero-poster.jpg">
+        <source src="enquiry-video.mp4" type="video/mp4">
+      </video>
+      <div class="panel-overlay"></div>
+    </div>
+
+    <a class="left-logo" href="/" onclick="return false;">
+      <img src="logo-dark.png" alt="Propersafe" />
     </a>
 
     <div class="left-main">
-      <div class="left-eyebrow">Submit an enquiry</div>
-      <h1 class="left-title">Tell us about your situation.</h1>
-      <p class="left-sub">We'll review your enquiry and come back within 24 hours to confirm scope, timeline, and fees. No payment required at this stage.</p>
+      <div class="left-eyebrow">Verification Desk</div>
+      <h1 class="left-title">Secure your purchase with independent audit.</h1>
+      <p class="left-sub">We coordinate on-ground inspections and legal searches while you remain abroad. Independent, professional, and on your side.</p>
       <div class="left-checks">
-        <div class="left-check"><div class="left-check-dot"></div>Property lawyers</div>
-        <div class="left-check"><div class="left-check-dot"></div>AGIS / FCDA searches</div>
-        <div class="left-check"><div class="left-check-dot"></div>Court & litigation checks</div>
-        <div class="left-check"><div class="left-check-dot"></div>Quantity surveyors</div>
-        <div class="left-check"><div class="left-check-dot"></div>Site inspections</div>
+        <div class="left-check"><div class="left-check-dot"></div>Physical site audit</div>
+        <div class="left-check"><div class="left-check-dot"></div>AGIS / FCDA verification</div>
+        <div class="left-check"><div class="left-check-dot"></div>Cost & payment auditing</div>
+        <div class="left-check"><div class="left-check-dot"></div>Contractor background checks</div>
+        <div class="left-check"><div class="left-check-dot"></div>Litigation & encumbrance checks</div>
       </div>
     </div>
 
     <div class="left-footer">
-      Propersafe never handles your purchase or contractor funds. You only pay us for the agreed verification service.<br><br>
-      We coordinate checks, provide a report, and you decide whether to release money.
+      Propersafe is not a developer or realtor. We do not handle your purchase funds.<br><br>
+      We provide the verification you need to release payment with confidence.
     </div>
   </div>
 

@@ -110,3 +110,56 @@ export async function sendAdminNotification(args: {
     html,
   });
 }
+
+export async function sendRiskCalculatorNotification(args: {
+  name: string;
+  email: string;
+  score: number;
+  answers: Array<{ question: string; answer: string; points: number }>;
+}) {
+  if (!resend) {
+    console.warn("[email] RESEND_API_KEY not set, skipping risk calculator notification");
+    return;
+  }
+
+  const { name, email, score, answers } = args;
+  const riskLevel = score >= 18 ? "High" : score >= 10 ? "Moderate" : "Low";
+  const riskColor = score >= 18 ? "#bb553c" : score >= 10 ? "#e2b545" : "#78c878";
+
+  const html = `
+    <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;color:#15120e;line-height:1.5;">
+      <div style="padding:24px;background:#15120e;color:#F0EBE0;border-radius:8px 8px 0 0;">
+        <p style="margin:0;font-size:12px;color:#C9A46A;letter-spacing:0.12em;text-transform:uppercase;">Risk Assessment Lead</p>
+        <p style="margin:4px 0 0;font-size:20px;font-weight:600;">Score: ${score}/25 — <span style="color:${riskColor}">${riskLevel} Risk</span></p>
+      </div>
+      <div style="padding:24px;background:#fff;border:1px solid #E8E6E1;border-top:none;border-radius:0 0 8px 8px;">
+        <table style="width:100%;font-size:13px;border-collapse:collapse;margin-bottom:20px;">
+          <tr><td style="padding:6px 0;color:#6B6B6B;width:100px;">Name</td><td style="padding:6px 0;font-weight:500;">${name}</td></tr>
+          <tr><td style="padding:6px 0;color:#6B6B6B;">Email</td><td style="padding:6px 0;"><a href="mailto:${email}" style="color:#15120e;">${email}</a></td></tr>
+        </table>
+        
+        <div style="border-top:1px solid #E8E6E1;padding-top:16px;">
+          <p style="margin:0 0 12px;font-size:11px;color:#6B6B6B;letter-spacing:0.08em;text-transform:uppercase;">Answer Breakdown</p>
+          ${answers.map((a, i) => `
+            <div style="margin-bottom:12px;font-size:12px;">
+              <p style="margin:0 0 2px;font-weight:600;color:#15120e;">Q${i+1}: ${a.question}</p>
+              <p style="margin:0;color:#4A4A4A;">${a.answer} (${a.points} pts)</p>
+            </div>
+          `).join("")}
+        </div>
+
+        <div style="margin-top:20px;">
+          <a href="${process.env.NEXT_PUBLIC_APP_URL || "https://propersafe-production.up.railway.app"}/cases" style="display:inline-block;padding:10px 20px;background:#15120e;color:#F0EBE0;text-decoration:none;border-radius:6px;font-size:13px;font-weight:500;">View Clients →</a>
+        </div>
+      </div>
+    </div>
+  `;
+
+  await resend.emails.send({
+    from: `Propersafe Leads <${FROM_EMAIL}>`,
+    to: ADMIN_EMAIL,
+    subject: `Risk Assessment: ${riskLevel} Risk — ${name}`,
+    html,
+  });
+}
+

@@ -6,12 +6,22 @@ const nextConfig: NextConfig = {
     root: resolve("."),
   },
   async rewrites() {
-    return [
-      {
-        source: "/",
-        destination: "/landing.html",
-      },
-    ];
+    return {
+      beforeFiles: [
+        {
+          source: "/",
+          destination: "/landing.html",
+        },
+        {
+          source: "/risk-calculator",
+          destination: "/risk-calculator.html",
+        },
+        {
+          source: "/enquire",
+          destination: "/enquire.html",
+        },
+      ],
+    };
   },
 };
 

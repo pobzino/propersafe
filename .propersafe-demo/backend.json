@@ -1,0 +1,244 @@
+{
+  "enquiries": [
+    {
+      "service_type": "build_cost_preview",
+      "first_name": "Api",
+      "last_name": "Check",
+      "email": "api-check@example.com",
+      "whatsapp_number": "+447700900123",
+      "user_location": "Manchester",
+      "property_location": "Kuje",
+      "situation_text": "Checking build cost preview route.",
+      "id": "2865c579-a8b7-4d1e-8dd1-1df99f64a3d9",
+      "case_ref": "PS-2026-0004",
+      "status": "new",
+      "risk_level": "unknown",
+      "created_at": "2026-06-07T12:47:42.989Z",
+      "updated_at": "2026-06-07T12:47:42.989Z"
+    },
+    {
+      "service_type": "land_property_validity",
+      "first_name": "Test",
+      "last_name": "Buyer",
+      "email": "test-buyer@example.com",
+      "whatsapp_number": "+447700900123",
+      "user_location": "London, UK",
+      "property_location": "Gwarinpa",
+      "situation_text": "Testing local enquiry persistence.",
+      "id": "bce2b921-18ac-4e9c-8064-0fb4e16d1d65",
+      "case_ref": "PS-2026-0003",
+      "status": "reviewing",
+      "risk_level": "unknown",
+      "created_at": "2026-06-07T12:47:34.918Z",
+      "updated_at": "2026-06-07T12:47:34.929Z"
+    },
+    {
+      "service_type": "payment_sanity_check",
+      "first_name": "Api",
+      "last_name": "Smoke",
+      "email": "api-smoke@example.com",
+      "whatsapp_number": "+447700900123",
+      "user_location": "London",
+      "property_location": "Maitama",
+      "situation_text": "Checking route handler persistence.",
+      "id": "9f880c65-be7e-4033-be3c-6e6517ecf5f6",
+      "case_ref": "PS-2026-0002",
+      "status": "new",
+      "risk_level": "unknown",
+      "created_at": "2026-06-07T12:46:27.530Z",
+      "updated_at": "2026-06-07T12:46:27.530Z"
+    },
+    {
+      "service_type": "land_property_validity",
+      "first_name": "Test",
+      "last_name": "Buyer",
+      "email": "test-buyer@example.com",
+      "whatsapp_number": "+447700900123",
+      "user_location": "London, UK",
+      "property_location": "Gwarinpa",
+      "situation_text": "Testing local enquiry persistence.",
+      "id": "7d0915a8-c510-4322-9c57-02315e4b281b",
+      "case_ref": "PS-2026-0001",
+      "status": "reviewing",
+      "risk_level": "unknown",
+      "created_at": "2026-06-07T12:46:05.955Z",
+      "updated_at": "2026-06-07T12:46:05.959Z"
+    }
+  ],
+  "enquiry_files": [
+    {
+      "id": "965a5cf1-0be8-4921-a031-dfbc8c410073",
+      "enquiry_id": "bce2b921-18ac-4e9c-8064-0fb4e16d1d65",
+      "original_filename": "title.pdf",
+      "storage_path": "PS-2026-0003/7fa6bd86-c61f-4f61-9660-59e1c8e2214e-title.pdf",
+      "mime_type": "application/pdf",
+      "file_size": 14,
+      "uploaded_at": "2026-06-07T12:47:34.918Z"
+    },
+    {
+      "id": "33c3175e-0792-49c0-b226-17115742af1b",
+      "enquiry_id": "9f880c65-be7e-4033-be3c-6e6517ecf5f6",
+      "original_filename": "receipt.png",
+      "storage_path": "PS-2026-0002/3e0f7f2d-2e1a-4ac1-bef5-673f65375cef-receipt.png",
+      "mime_type": "image/png",
+      "file_size": 7,
+      "uploaded_at": "2026-06-07T12:46:27.530Z"
+    },
+    {
+      "id": "2c048fd2-5aee-4f27-abdb-986c584d1b1a",
+      "enquiry_id": "7d0915a8-c510-4322-9c57-02315e4b281b",
+      "original_filename": "title.pdf",
+      "storage_path": "PS-2026-0001/0ba2d4ee-5a1d-4b53-9347-46cd1ad2b7ba-title.pdf",
+      "mime_type": "application/pdf",
+      "file_size": 14,
+      "uploaded_at": "2026-06-07T12:46:05.955Z"
+    }
+  ],
+  "status_history": [
+    {
+      "id": "6beed489-cc10-42e8-9dce-65f92fb4a41d",
+      "enquiry_id": "2865c579-a8b7-4d1e-8dd1-1df99f64a3d9",
+      "previous_status": null,
+      "new_status": "new",
+      "note": "Enquiry submitted.",
+      "changed_by": null,
+      "created_at": "2026-06-07T12:47:42.989Z"
+    },
+    {
+      "id": "cdafe990-2b71-4ba1-8529-3dcac55cffe0",
+      "enquiry_id": "bce2b921-18ac-4e9c-8064-0fb4e16d1d65",
+      "previous_status": "new",
+      "new_status": "reviewing",
+      "note": "Admin started review.",
+      "changed_by": null,
+      "created_at": "2026-06-07T12:47:34.929Z"
+    },
+    {
+      "id": "f0b28e4c-116d-4dcb-92c7-755cdcc5f461",
+      "enquiry_id": "bce2b921-18ac-4e9c-8064-0fb4e16d1d65",
+      "previous_status": null,
+      "new_status": "new",
+      "note": "Enquiry submitted.",
+      "changed_by": null,
+      "created_at": "2026-06-07T12:47:34.918Z"
+    },
+    {
+      "id": "96d6d7e2-c741-4cae-aa38-fbbf135282d0",
+      "enquiry_id": "9f880c65-be7e-4033-be3c-6e6517ecf5f6",
+      "previous_status": null,
+      "new_status": "new",
+      "note": "Enquiry submitted.",
+      "changed_by": null,
+      "created_at": "2026-06-07T12:46:27.530Z"
+    },
+    {
+      "id": "db8c8525-1940-4bc0-bfb9-be3574c3acfb",
+      "enquiry_id": "7d0915a8-c510-4322-9c57-02315e4b281b",
+      "previous_status": "new",
+      "new_status": "reviewing",
+      "note": "Admin started review.",
+      "changed_by": null,
+      "created_at": "2026-06-07T12:46:05.959Z"
+    },
+    {
+      "id": "48344b0c-13ab-4a07-a26e-92074a1aea00",
+      "enquiry_id": "7d0915a8-c510-4322-9c57-02315e4b281b",
+      "previous_status": null,
+      "new_status": "new",
+      "note": "Enquiry submitted.",
+      "changed_by": null,
+      "created_at": "2026-06-07T12:46:05.955Z"
+    }
+  ],
+  "professional_partners": [
+    {
+      "id": "4f98fe70-bdf9-4eb8-bd21-8a5846ffb45e",
+      "name": "Test Partner",
+      "role": "property_lawyer",
+      "email": "partner@example.com",
+      "phone": null,
+      "location": null,
+      "notes": null,
+      "active": true,
+      "created_at": "2026-06-07T12:47:34.930Z",
+      "updated_at": "2026-06-07T12:47:34.930Z"
+    },
+    {
+      "id": "30c7dd1d-35b2-4a56-9e88-2a8b8e076a34",
+      "name": "Test Partner",
+      "role": "property_lawyer",
+      "email": "partner@example.com",
+      "phone": null,
+      "location": null,
+      "notes": null,
+      "active": true,
+      "created_at": "2026-06-07T12:46:05.959Z",
+      "updated_at": "2026-06-07T12:46:05.959Z"
+    },
+    {
+      "id": "b521e0aa-5f92-4afb-83dd-e8f1f4918035",
+      "name": "Demo Property Lawyer",
+      "role": "property_lawyer",
+      "email": "lawyer@example.com",
+      "phone": null,
+      "location": "Abuja",
+      "notes": "Seed partner for title, AGIS/FCTA, and court-search workflows.",
+      "active": true,
+      "created_at": "2026-06-07T12:46:05.954Z",
+      "updated_at": "2026-06-07T12:46:05.954Z"
+    },
+    {
+      "id": "c7a14c29-ffb6-4e68-9e10-a281167539b2",
+      "name": "Demo Surveyor / GIS Specialist",
+      "role": "surveyor_gis",
+      "email": "surveyor@example.com",
+      "phone": null,
+      "location": "Abuja",
+      "notes": "Seed partner for survey, coordinates, and location consistency checks.",
+      "active": true,
+      "created_at": "2026-06-07T12:46:05.954Z",
+      "updated_at": "2026-06-07T12:46:05.954Z"
+    },
+    {
+      "id": "51ed7112-0e2b-41a6-b5d1-d8cba77eddc0",
+      "name": "Demo Quantity Surveyor",
+      "role": "quantity_surveyor",
+      "email": "qs@example.com",
+      "phone": null,
+      "location": "Abuja",
+      "notes": "Seed partner for build cost previews and payment request reviews.",
+      "active": true,
+      "created_at": "2026-06-07T12:46:05.954Z",
+      "updated_at": "2026-06-07T12:46:05.954Z"
+    }
+  ],
+  "case_tasks": [
+    {
+      "id": "6578a753-08c1-4367-8d34-e5f369711518",
+      "enquiry_id": "bce2b921-18ac-4e9c-8064-0fb4e16d1d65",
+      "partner_id": "4f98fe70-bdf9-4eb8-bd21-8a5846ffb45e",
+      "task_type": "legal_review",
+      "title": "Review title documents",
+      "description": "Check supplied documents before payment.",
+      "status": "assigned",
+      "due_date": null,
+      "output_notes": null,
+      "created_at": "2026-06-07T12:47:34.930Z",
+      "updated_at": "2026-06-07T12:47:34.930Z"
+    },
+    {
+      "id": "e4e5740d-5ab5-4e68-8a40-6a2b27ae1adb",
+      "enquiry_id": "7d0915a8-c510-4322-9c57-02315e4b281b",
+      "partner_id": "30c7dd1d-35b2-4a56-9e88-2a8b8e076a34",
+      "task_type": "legal_review",
+      "title": "Review title documents",
+      "description": "Check supplied documents before payment.",
+      "status": "assigned",
+      "due_date": null,
+      "output_notes": null,
+      "created_at": "2026-06-07T12:46:05.959Z",
+      "updated_at": "2026-06-07T12:46:05.959Z"
+    }
+  ],
+  "next_case_number": 5
+}
