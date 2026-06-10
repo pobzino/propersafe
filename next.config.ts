@@ -54,7 +54,8 @@ const nextConfig: NextConfig = {
           destination: "/guides.html",
         },
         {
-          source: "/guides/:slug",
+          // Constrained to extensionless slugs so assets like guide.css pass through
+          source: "/guides/:slug([a-zA-Z0-9-]+)",
           destination: "/guides/:slug.html",
         },
       ],
