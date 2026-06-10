@@ -12,7 +12,8 @@
   <meta property="og:url" content="https://propersafe.ng/guides">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add("js");</script>
   <style>
     :root {
       --paper: #f6efe2; --paper-soft: #fff9ef; --ink: #15120e; --muted: #655f56;
@@ -20,34 +21,75 @@
       --serif: "Cormorant Garamond", Georgia, serif; --sans: "Inter", system-ui, sans-serif;
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
-    .container { width: min(840px, calc(100% - 40px)); margin: 0 auto; }
-    header { padding: 28px 0; display: flex; align-items: center; justify-content: space-between; }
-    .logo img { height: 30px; width: auto; object-fit: contain; }
-    .back-link { font-size: 13px; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 1px; }
-    .back-link:hover { color: var(--ink); border-color: var(--ink); }
-    .head { margin: 24px 0 36px; max-width: 620px; }
-    .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dark); margin: 0 0 12px; }
-    h1 { font-family: var(--serif); font-size: clamp(32px, 5vw, 46px); font-weight: 300; line-height: 1.1; margin: 0 0 12px; }
-    .head p { color: var(--muted); font-size: 16px; margin: 0; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 0 0 48px; }
-    .card {
-      display: block; background: var(--paper-soft); border: 1px solid var(--line); border-radius: 12px;
-      padding: 30px; text-decoration: none; color: var(--ink);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    .container { width: min(960px, calc(100% - 48px)); margin: 0 auto; }
+
+    /* Header */
+    header { position: sticky; top: 0; z-index: 10; background: rgba(246,239,226,0.82); backdrop-filter: saturate(150%) blur(12px); -webkit-backdrop-filter: saturate(150%) blur(12px); border-bottom: 1px solid var(--line); }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; }
+    .logo img { height: 28px; width: auto; object-fit: contain; display: block; }
+    .back-link { font-size: 13px; color: var(--muted); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s ease; }
+    .back-link:hover { color: var(--ink); }
+    .back-link .arr { display: inline-block; transition: transform 0.2s ease; }
+    .back-link:hover .arr { transform: translateX(-3px); }
+
+    /* Hero */
+    .head { margin: 76px 0 52px; max-width: 780px; }
+    .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dark); margin: 0 0 18px; }
+    h1 { font-family: var(--serif); font-size: clamp(36px, 5.6vw, 60px); font-weight: 300; line-height: 1.04; letter-spacing: -0.01em; margin: 0 0 22px; }
+    h1 em { font-style: italic; font-weight: 400; color: var(--gold-dark); }
+    .head .lead { color: var(--muted); font-size: clamp(17px, 1.6vw, 19px); margin: 0; max-width: 640px; }
+
+    /* Featured guide */
+    .feature { position: relative; display: block; background: var(--paper-soft); border: 1px solid var(--line); border-radius: 18px; padding: clamp(30px, 4vw, 52px); margin: 0 0 8px; text-decoration: none; color: var(--ink); overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+    .feature::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--gold), var(--gold-dark)); }
+    .feature:hover { transform: translateY(-4px); box-shadow: 0 30px 70px rgba(21,18,14,0.12); border-color: rgba(196,145,56,0.4); }
+    .feature .tag { display: inline-block; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-dark); font-weight: 700; margin: 0 0 16px; }
+    .feature h2 { font-family: var(--serif); font-size: clamp(27px, 3.6vw, 40px); font-weight: 400; line-height: 1.1; margin: 0 0 16px; max-width: 700px; }
+    .feature .desc { font-size: 16px; color: var(--muted); margin: 0 0 28px; max-width: 620px; }
+    .feature .btn { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 26px; border-radius: 999px; background: var(--ink); color: var(--paper-soft); font-size: 14px; font-weight: 600; }
+    .feature .btn .arr { display: inline-block; transition: transform 0.25s ease; }
+    .feature:hover .btn .arr { transform: translateX(4px); }
+
+    /* Guide list */
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin: 52px 0 2px; }
+    .guide-list { margin: 0 0 56px; }
+    .g-row { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; padding: 30px 14px; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); border-radius: 12px; transition: background 0.25s ease; }
+    .guide-list .g-row:last-child { border-bottom: 1px solid var(--line); }
+    .g-row:hover { background: var(--paper-soft); }
+    .g-row .tag { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-dark); font-weight: 700; margin: 0 0 9px; }
+    .g-row h3 { font-family: var(--serif); font-size: clamp(21px, 2.5vw, 27px); font-weight: 400; line-height: 1.16; margin: 0 0 9px; }
+    .g-row .desc { font-size: 14.5px; color: var(--muted); margin: 0; max-width: 640px; }
+    .g-arrow { width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--gold-dark); flex-shrink: 0; font-size: 16px; transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
+    .g-row:hover .g-arrow { background: var(--gold); color: #fff; border-color: var(--gold); transform: translateX(4px); }
+
+    /* CTA */
+    .cta-band { position: relative; overflow: hidden; background: var(--ink); color: var(--paper-soft); border-radius: 18px; padding: clamp(32px, 4vw, 48px); margin: 0 0 64px; }
+    .cta-band h2 { font-family: var(--serif); font-size: clamp(25px, 3vw, 32px); font-weight: 300; line-height: 1.15; margin: 0 0 10px; }
+    .cta-band h2 em { font-style: italic; font-weight: 400; color: #e9c87f; }
+    .cta-band p { color: rgba(255,249,239,0.72); font-size: 15.5px; margin: 0 0 22px; max-width: 560px; }
+    .cta-band .btn { display: inline-flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 30px; border-radius: 999px; background: var(--gold); color: #1a1409; text-decoration: none; font-size: 14px; font-weight: 600; }
+    .cta-band .btn .arr { display: inline-block; transition: transform 0.25s ease; }
+    .cta-band .btn:hover .arr { transform: translateX(4px); }
+
+    footer { text-align: center; padding: 0 0 48px; color: var(--muted); font-size: 13px; }
+    footer a { color: var(--gold-dark); text-decoration: none; }
+
+    /* Scroll reveal (progressive enhancement — only active when JS is on) */
+    .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (max-width: 700px) {
+      .head { margin: 44px 0 36px; }
+      .g-row { gap: 18px; padding: 24px 6px; }
+      .g-row .desc { display: none; }
     }
-    .card:hover { transform: translateY(-3px); box-shadow: 0 24px 60px rgba(21,18,14,0.10); }
-    .card .tag { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dark); font-weight: 600; margin: 0 0 10px; }
-    .card h2 { font-family: var(--serif); font-size: 23px; font-weight: 400; line-height: 1.2; margin: 0 0 10px; }
-    .card p { font-size: 14px; color: var(--muted); margin: 0 0 14px; }
-    .card .more { font-size: 13px; color: var(--gold-dark); }
-    .cta-band { background: var(--ink); color: #fff9ef; border-radius: 12px; padding: 32px 36px; margin: 0 0 64px; }
-    .cta-band h2 { font-family: var(--serif); font-size: 26px; font-weight: 300; margin: 0 0 8px; }
-    .cta-band p { color: rgba(255,249,239,0.7); font-size: 15px; margin: 0 0 18px; }
-    .cta-band a.btn { display: inline-flex; align-items: center; min-height: 46px; padding: 0 28px; border-radius: 999px; background: var(--gold); color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; }
-    footer { text-align: center; padding: 0 0 40px; color: var(--muted); font-size: 13px; }
-    footer a { color: var(--gold-dark); }
-    @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } .card { padding: 24px 20px; } }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .js .reveal { opacity: 1; transform: none; transition: none; }
+      .feature, .g-arrow, .btn .arr, .back-link .arr { transition: none; }
+    }
   </style>
   <script type="application/ld+json">
   {
@@ -61,53 +103,114 @@
   </script>
 </head>
 <body>
-<div class="container">
-  <header>
+<header>
+  <div class="container header-inner">
     <a href="/" class="logo"><img src="/logo-light.png" alt="Propersafe" onerror="this.onerror=null;this.src='/logo-dark.png';"></a>
-    <a href="/" class="back-link">← Back to propersafe</a>
-  </header>
+    <a href="/" class="back-link"><span class="arr">←</span> Back to Propersafe</a>
+  </div>
+</header>
 
+<div class="container">
   <div class="head">
     <p class="eyebrow">Guides</p>
-    <h1>Buying land and building in Abuja, safely — from anywhere.</h1>
-    <p>Plain-English guides from the Propersafe verification desk. No hype, no jargon — the checks, documents, and scam patterns every remote buyer should understand before money moves.</p>
+    <h1>Buying land and building in Abuja, <em>safely — from anywhere.</em></h1>
+    <p class="lead">Plain-English guides from the Propersafe verification desk. No hype, no jargon — the checks, documents, and scam patterns every remote buyer should understand before money moves.</p>
   </div>
 
-  <div class="grid">
-    <a class="card" href="/guides/verify-land-title-abuja">
-      <p class="tag">Start here</p>
-      <h2>How to verify land or property in Abuja before you pay</h2>
-      <p>The complete six-check process — AGIS search, documents, courts, survey, seller authority, legal review — and how to run it from abroad.</p>
-      <span class="more">Read the guide →</span>
+  <a class="feature reveal" href="/guides/verify-land-title-abuja">
+    <span class="tag">Start here</span>
+    <h2>How to verify land or property in Abuja before you pay</h2>
+    <p class="desc">The complete six-check process — AGIS search, documents, courts, survey, seller authority, legal review — and exactly how to run each one from abroad.</p>
+    <span class="btn">Read the guide <span class="arr">&rarr;</span></span>
+  </a>
+
+  <p class="section-label">More guides</p>
+  <div class="guide-list">
+    <a class="g-row reveal" href="/guides/agis-search">
+      <div>
+        <p class="tag">The cornerstone check</p>
+        <h3>What is an AGIS search — and how does it work from abroad?</h3>
+        <p class="desc">What the FCT land registry holds, what a legal search reveals, what it can't tell you, and the one trap remote buyers fall into.</p>
+      </div>
+      <span class="g-arrow" aria-hidden="true">&rarr;</span>
     </a>
-    <a class="card" href="/guides/agis-search">
-      <p class="tag">The cornerstone check</p>
-      <h2>What is an AGIS search — and how does it work from abroad?</h2>
-      <p>What the FCT land registry holds, what a legal search reveals, what it can't tell you, and the one trap remote buyers fall into.</p>
-      <span class="more">Read the guide →</span>
+    <a class="g-row reveal" href="/guides/c-of-o-vs-r-of-o">
+      <div>
+        <p class="tag">Documents</p>
+        <h3>C of O vs R of O: Abuja title documents explained</h3>
+        <p class="desc">What each document actually proves, why "it has C of O" isn't the finish line, and the supporting papers where deals quietly fail.</p>
+      </div>
+      <span class="g-arrow" aria-hidden="true">&rarr;</span>
     </a>
-    <a class="card" href="/guides/c-of-o-vs-r-of-o">
-      <p class="tag">Documents</p>
-      <h2>C of O vs R of O: Abuja title documents explained</h2>
-      <p>What each document actually proves, why "it has C of O" isn't the finish line, and the supporting papers where deals quietly fail.</p>
-      <span class="more">Read the guide →</span>
+    <a class="g-row reveal" href="/guides/abuja-land-scams">
+      <div>
+        <p class="tag">Know the patterns</p>
+        <h3>The Abuja land scams that target diaspora buyers</h3>
+        <p class="desc">Cloned C of Os, double allocation, family land, ghost building progress — how each works and the specific check that defeats it.</p>
+      </div>
+      <span class="g-arrow" aria-hidden="true">&rarr;</span>
     </a>
-    <a class="card" href="/guides/abuja-land-scams">
-      <p class="tag">Know the patterns</p>
-      <h2>The Abuja land scams that target diaspora buyers</h2>
-      <p>Cloned C of Os, double allocation, family land, ghost building progress — how each works and the specific check that defeats it.</p>
-      <span class="more">Read the guide →</span>
+    <a class="g-row reveal" href="/guides/estate-land-abuja">
+      <div>
+        <p class="tag">Estates</p>
+        <h3>Estate land in Abuja: what an allocation letter really means</h3>
+        <p class="desc">Your plot's security can never be better than the developer's parent title. Why cheap estates are cheap, and what to verify before a deposit.</p>
+      </div>
+      <span class="g-arrow" aria-hidden="true">&rarr;</span>
+    </a>
+    <a class="g-row reveal" href="/guides/where-to-buy-land-abuja">
+      <div>
+        <p class="tag">Choosing a location</p>
+        <h3>Where to buy land in Abuja: a district-by-district guide</h3>
+        <p class="desc">Maitama to Kuje — the four market tiers, what actually drives value, and each tier's title-risk profile.</p>
+      </div>
+      <span class="g-arrow" aria-hidden="true">&rarr;</span>
+    </a>
+    <a class="g-row reveal" href="/guides/deed-of-assignment-consent">
+      <div>
+        <p class="tag">Closing the deal</p>
+        <h3>Deed of assignment and consent, explained</h3>
+        <p class="desc">A signed deed is the middle of a purchase, not the end. The consent trap, and how titles actually get perfected.</p>
+      </div>
+      <span class="g-arrow" aria-hidden="true">&rarr;</span>
+    </a>
+    <a class="g-row reveal" href="/guides/buying-nigerian-property-from-uk">
+      <div>
+        <p class="tag">From the UK</p>
+        <h3>Buying property in Nigeria from the UK: the playbook</h3>
+        <p class="desc">Moving money safely, verifying remotely, signing without flying, and the UK-specific traps — December purchases included.</p>
+      </div>
+      <span class="g-arrow" aria-hidden="true">&rarr;</span>
     </a>
   </div>
 
-  <div class="cta-band">
-    <h2>Reading because something feels off?</h2>
+  <div class="cta-band reveal">
+    <h2>Reading because <em>something feels off?</em></h2>
     <p>Take the free pre-payment risk analysis — six questions, an instant read on your exposure, and a specialist's note within 24 hours.</p>
-    <a class="btn" href="/risk-analysis">Free risk analysis →</a>
+    <a class="btn" href="/risk-analysis">Free risk analysis <span class="arr">&rarr;</span></a>
   </div>
 
   <footer><a href="/">Propersafe</a> — independent property verification in Abuja, for buyers everywhere.</footer>
 </div>
+
+<script>
+  (function () {
+    var els = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) {
+      els.forEach(function (el) { el.classList.add("in"); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    els.forEach(function (el, i) {
+      el.style.transitionDelay = Math.min(i, 5) * 0.06 + "s";
+      io.observe(el);
+    });
+  })();
+</script>
 <script src="/analytics.js" defer></script>
 </body>
 </html>
