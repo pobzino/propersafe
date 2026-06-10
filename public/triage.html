@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Payment Risk Analysis | Propersafe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0F0E0A;
+            --charcoal: #1A1814;
+            --paper-soft: #fff9ef;
+            --gold: #c49138;
+            --gold-dim: rgba(196, 145, 56, 0.2);
+            --gold-dark: #7b5518;
+            --muted: #655f56;
+            --line: rgba(255, 249, 239, 0.1);
+            --serif: "Cormorant Garamond", Georgia, serif;
+            --sans: "Inter", system-ui, sans-serif;
+            --red: #bb553c;
+            --yellow: #e2b545;
+            --green: #163d2d;
+            --green-text: #78c878;
+            --error: rgba(220, 120, 110, 0.95);
+            --error-border: rgba(180, 80, 80, 0.5);
+            --error-bg: rgba(120, 40, 40, 0.2);
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            background: var(--ink);
+            color: var(--paper-soft);
+            font-family: var(--sans);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: min(720px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        header {
+            padding: 40px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo {
+            text-decoration: none;
+            color: var(--paper-soft);
+            font-family: var(--serif);
+            font-size: 26px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ── PROGRESS BAR ── */
+        .progress-container {
+            margin-bottom: 48px;
+        }
+        .progress-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .progress-track {
+            height: 2px;
+            background: var(--line);
+            position: relative;
+        }
+        .progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--gold);
+            transition: width 0.4s ease;
+        }
+
+        /* ── STEPS ── */
+        .step {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+        .step.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-title {
+            font-family: var(--serif);
+            font-size: clamp(28px, 5vw, 36px);
+            line-height: 1.2;
+            margin-bottom: 12px;
+            font-weight: 300;
+        }
+        .step-desc {
+            color: var(--muted);
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 12px;
+        }
+        .option-btn {
+            background: var(--charcoal);
+            border: 1px solid var(--line);
+            padding: 20px 24px;
+            border-radius: 8px;
+            color: var(--paper-soft);
+            text-align: left;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            font-family: var(--sans);
+        }
+        .option-btn:hover {
+            border-color: var(--gold);
+            background: rgba(196, 145, 56, 0.05);
+        }
+        .option-btn.selected {
+            border-color: var(--gold);
+            background: rgba(196, 145, 56, 0.1);
+        }
+
+        .checkbox-group {
+            display: grid;
+            gap: 12px;
+        }
+        .checkbox-item {
+            background: var(--charcoal);
+            border: 1px solid var(--line);
+            padding: 16px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .checkbox-item:hover {
+            border-color: var(--gold-dim);
+        }
+        .checkbox-item input {
+            accent-color: var(--gold);
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ── FORM FIELDS ── */
+        .form-field {
+            margin-bottom: 24px;
+        }
+        .form-field label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+        .form-field input[type="text"],
+        .form-field input[type="email"],
+        .form-field textarea {
+            width: 100%;
+            background: var(--charcoal);
+            border: 1px solid var(--line);
+            padding: 16px;
+            border-radius: 8px;
+            color: var(--paper-soft);
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s ease;
+            font-family: var(--sans);
+        }
+        .form-field input:focus,
+        .form-field textarea:focus {
+            border-color: var(--gold);
+        }
+        .form-field.error input {
+            border-color: var(--error-border);
+        }
+        .field-error {
+            display: none;
+            margin-top: 8px;
+            font-size: 13px;
+            color: var(--error);
+        }
+        .form-field.error .field-error { display: block; }
+
+        /* ── ERROR BANNER ── */
+        .error-banner {
+            display: none;
+            background: var(--error-bg);
+            border: 1px solid var(--error-border);
+            color: var(--error);
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        .error-banner.visible { display: block; }
+
+        /* ── FILE UPLOAD ── */
+        .file-upload {
+            border: 2px dashed var(--line);
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .file-upload:hover {
+            border-color: var(--gold);
+            background: rgba(196, 145, 56, 0.02);
+        }
+        .file-upload p {
+            margin: 0;
+            color: var(--muted);
+        }
+        .file-upload .icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .file-list {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: var(--charcoal);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            color: var(--paper-soft);
+        }
+        .file-item span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .file-remove {
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+            padding: 4px;
+        }
+        .file-remove:hover { color: var(--red); }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 16px;
+        }
+        .btn {
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--sans);
+        }
+        .btn-primary {
+            background: var(--gold);
+            color: white;
+            border: none;
+            flex: 1;
+        }
+        .btn-primary:hover {
+            background: var(--gold-dark);
+        }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-secondary {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--line);
+        }
+        .btn-secondary:hover {
+            color: var(--paper-soft);
+            border-color: var(--paper-soft);
+        }
+
+        /* ── LOADING ── */
+        .loading-screen {
+            text-align: center;
+            padding: 80px 0;
+            display: none;
+        }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--line);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-msg {
+            font-family: var(--serif);
+            font-size: 20px;
+            font-style: italic;
+            color: var(--muted);
+            min-height: 1.5em;
+        }
+
+        /* ── RESULTS ── */
+        .results-screen {
+            display: none;
+            text-align: center;
+            padding-bottom: 40px;
+        }
+        .verdict-box {
+            background: var(--charcoal);
+            border: 1px solid var(--line);
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        .verdict-level {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 16px;
+        }
+        .verdict-title {
+            font-family: var(--serif);
+            font-size: clamp(28px, 5vw, 40px);
+            line-height: 1.1;
+            margin: 0 0 20px;
+            font-weight: 300;
+        }
+        .verdict-text {
+            font-size: 16px;
+            color: var(--muted);
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        .risk--low { color: var(--green-text); }
+        .risk--moderate { color: var(--yellow); }
+        .risk--high { color: var(--red); }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            text-align: left;
+            margin-top: 36px;
+        }
+        .comparison-col {
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .comparison-col--gaps {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--line);
+        }
+        .comparison-col--fixes {
+            background: rgba(196, 145, 56, 0.05);
+            border: 1px solid var(--gold-dim);
+        }
+        .comparison-col p {
+            font-size: 12px;
+            font-weight: 600;
+            margin: 0 0 12px;
+        }
+        .comparison-col--gaps p { color: var(--red); }
+        .comparison-col--fixes p { color: var(--gold); }
+        .comparison-col ul {
+            font-size: 14px;
+            padding-left: 18px;
+            margin: 0;
+        }
+        .comparison-col--gaps ul { color: var(--muted); }
+        .comparison-col--fixes ul { color: var(--paper-soft); }
+        .comparison-col li { margin-bottom: 8px; }
+
+        .followup-note {
+            font-size: 14px;
+            color: var(--muted);
+            max-width: 440px;
+            margin: 0 auto 32px;
+        }
+        .followup-note strong { color: var(--paper-soft); font-weight: 500; }
+        .results-ref {
+            display: inline-block;
+            margin-bottom: 28px;
+            padding: 10px 24px;
+            border: 1px solid var(--line);
+            border-radius: 100px;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+        }
+        .results-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 360px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 600px) {
+            header { padding: 24px 0; }
+            .step-title { font-size: 24px; }
+            .option-btn { padding: 16px; }
+            .nav-buttons { flex-direction: column-reverse; }
+            .comparison-grid { grid-template-columns: 1fr; }
+            .verdict-box { padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="/" class="logo"><img src="logo-dark.png" alt="Propersafe" style="height: 33px; width: auto; object-fit: contain;"></a>
+</header>
+
+<main class="container">
+    <div id="triage-form">
+        <div class="progress-container">
+            <div class="progress-label">Step <span id="current-step-num">1</span> of 6</div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-fill" style="width: 16.66%"></div>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 40px; text-align: center;">
+            <p style="color: var(--gold); font-size: 14px; margin-bottom: 8px;">Free Pre-Payment Risk Analysis</p>
+            <p style="color: var(--muted); font-size: 15px; max-width: 480px; margin: 0 auto;">Tell us what you're buying, building, or paying for. You'll get an instant read on your risk exposure, and a specialist confirms what should be checked before any money moves. No payment required.</p>
+        </div>
+
+        <!-- Step 1: What are you trying to do? -->
+        <div class="step active" id="step-1">
+            <h1 class="step-title">What are you trying to verify?</h1>
+            <p class="step-desc">Select the category that best describes your current situation.</p>
+            <div class="options-grid">
+                <button class="option-btn" data-value="Buy land">Buy land</button>
+                <button class="option-btn" data-value="Buy a house/flat/duplex">Buy a house, flat, or duplex</button>
+                <button class="option-btn" data-value="Plan a build">Plan a new build project</button>
+                <button class="option-btn" data-value="Pay a contractor">Verify a contractor payment request</button>
+                <button class="option-btn" data-value="Not sure">Not sure yet / General research</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Where? -->
+        <div class="step" id="step-2">
+            <h1 class="step-title">Where is the property?</h1>
+            <p class="step-desc">We currently specialize in Abuja and surrounding districts.</p>
+            <div class="form-field" id="field-location">
+                <label>District or Area</label>
+                <input type="text" id="property-location" placeholder="e.g. Guzape, Maitama, Jabi...">
+                <span class="field-error">Please tell us where the property is</span>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn btn-secondary prev-btn">Back</button>
+                <button class="btn btn-primary next-btn">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 3: What have you received? -->
+        <div class="step" id="step-3">
+            <h1 class="step-title">What have you received?</h1>
+            <p class="step-desc">Check all the documents or evidence the seller/contractor has sent you.</p>
+            <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox" value="C of O / R of O"> <span>C of O / R of O</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Survey Plan"> <span>Survey Plan</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Allocation Letter"> <span>Allocation Letter</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Deed of Assignment/Sublease"> <span>Deed of Assignment/Sublease</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Photos/Videos"> <span>Photos or Videos of the site</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Contractor Invoice"> <span>Contractor Invoice / BOQ</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Payment Request"> <span>Formal Payment Request</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="None yet"> <span>None yet</span></label>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn btn-secondary prev-btn">Back</button>
+                <button class="btn btn-primary next-btn">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Urgency? -->
+        <div class="step" id="step-4">
+            <h1 class="step-title">How urgent is this?</h1>
+            <p class="step-desc">Is there a pending deadline for payment or commitment?</p>
+            <div class="options-grid">
+                <button class="option-btn" data-value="Seller/contractor wants payment now">Seller or contractor wants payment immediately</button>
+                <button class="option-btn" data-value="This week">Decision needed this week</button>
+                <button class="option-btn" data-value="This month">Exploring for later this month</button>
+                <button class="option-btn" data-value="Just researching">Just researching / No immediate rush</button>
+            </div>
+            <div class="nav-buttons" style="margin-top: 20px;">
+                <button class="btn btn-secondary prev-btn">Back</button>
+            </div>
+        </div>
+
+        <!-- Step 5: What worries you most? -->
+        <div class="step" id="step-5">
+            <h1 class="step-title">What worries you most?</h1>
+            <p class="step-desc">Tell us your main concern so we can prioritize our review.</p>
+            <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox" value="Documents may be fake"> <span>Documents may be fake or cloned</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Seller may not own it"> <span>Seller might not be the actual owner</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Land may not match location"> <span>Land might not match the physical location</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Contractor may be overcharging"> <span>Contractor might be overcharging / inflated BOQ</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Progress may not be real"> <span>Work progress might not be real/accurate</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Unsure despite family advice"> <span>Family/realtor says it's fine, but I'm unsure</span></label>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn btn-secondary prev-btn">Back</button>
+                <button class="btn btn-primary next-btn">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 6: Contact & Upload -->
+        <div class="step" id="step-6">
+            <h1 class="step-title">Final Details</h1>
+            <p class="step-desc">Where should we send your Risk Analysis?</p>
+
+            <div class="error-banner" id="submit-error"></div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-field" id="field-first-name">
+                    <label>First Name</label>
+                    <input type="text" id="first-name" placeholder="John" autocomplete="given-name">
+                    <span class="field-error">Please enter your first name</span>
+                </div>
+                <div class="form-field" id="field-email">
+                    <label>Email Address</label>
+                    <input type="email" id="email" placeholder="john@example.com" autocomplete="email">
+                    <span class="field-error">Please enter a valid email address</span>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>Upload Documents (Optional)</label>
+                <div class="file-upload" onclick="document.getElementById('file-input').click()">
+                    <span class="icon">📄</span>
+                    <p id="file-label">Click to upload photos, PDFs, or invoices</p>
+                    <input type="file" id="file-input" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx" style="display: none">
+                </div>
+                <div class="file-list" id="file-list"></div>
+                <p style="font-size: 12px; color: var(--muted); margin-top: 8px;">Upload what they sent you (up to 5 files, 10MB each). We'll identify what's missing.</p>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary prev-btn">Back</button>
+                <button class="btn btn-primary" id="submit-triage">Get Free Risk Analysis →</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-spinner"></div>
+        <div class="loading-msg" id="loading-msg">Reviewing your situation...</div>
+    </div>
+
+    <!-- INSTANT RESULTS -->
+    <div class="results-screen" id="results-screen">
+        <div class="verdict-box">
+            <div class="verdict-level" id="verdict-level"></div>
+            <h2 class="verdict-title" id="verdict-title"></h2>
+            <p class="verdict-text" id="verdict-text"></p>
+
+            <div class="comparison-grid" id="comparison-grid" style="display: none;">
+                <div class="comparison-col comparison-col--gaps">
+                    <p>WHAT YOU HAVE NOW</p>
+                    <ul id="current-gaps"></ul>
+                </div>
+                <div class="comparison-col comparison-col--fixes">
+                    <p>WITH A PROPERSAFE CHECK</p>
+                    <ul id="propersafe-solutions"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="results-ref" id="results-ref"></div>
+        <p class="followup-note">This is an instant indicative read based on your answers. <strong>A Propersafe specialist will review your situation — including any documents you uploaded — and email you a confirmed risk note within 24 hours.</strong></p>
+
+        <div class="results-actions">
+            <button class="btn btn-primary" id="result-cta" style="padding: 16px 24px;">Start your full enquiry →</button>
+            <button class="btn btn-secondary" id="back-home">Back to Home</button>
+        </div>
+    </div>
+</main>
+
+<script src="/analytics.js" defer></script>
+<script>
+    let currentStep = 1;
+    const totalSteps = 6;
+    const formData = {
+        intent: '',
+        location: '',
+        received: [],
+        urgency: '',
+        worries: [],
+        firstName: '',
+        email: ''
+    };
+    let selectedFiles = [];
+    const MAX_FILES = 5;
+    const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+    const inIframe = window.self !== window.top;
+
+    function track(event, props) {
+        if (window.psTrack) window.psTrack(event, props);
+    }
+
+    function updateProgress() {
+        const fill = document.getElementById('progress-fill');
+        const num = document.getElementById('current-step-num');
+        fill.style.width = (currentStep / totalSteps) * 100 + '%';
+        num.innerText = currentStep;
+    }
+
+    function showStep(step) {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById(`step-${step}`).classList.add('active');
+        currentStep = step;
+        updateProgress();
+        window.scrollTo(0, 0);
+        track('triage_step_viewed', { step: step });
+    }
+
+    function setFieldError(fieldId, show) {
+        const el = document.getElementById(fieldId);
+        if (el) el.classList.toggle('error', show);
+    }
+
+    // Option buttons (steps 1 and 4) advance immediately
+    document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const stepId = this.closest('.step').id;
+            const value = this.getAttribute('data-value');
+            if (stepId === 'step-1') {
+                formData.intent = value;
+                showStep(2);
+            } else if (stepId === 'step-4') {
+                formData.urgency = value;
+                showStep(5);
+            }
+        });
+    });
+
+    document.querySelectorAll('.next-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (currentStep === 2) {
+                const loc = document.getElementById('property-location').value.trim();
+                if (!loc) { setFieldError('field-location', true); return; }
+                setFieldError('field-location', false);
+                formData.location = loc;
+                showStep(3);
+            } else if (currentStep === 3) {
+                formData.received = Array.from(document.querySelectorAll('#step-3 input:checked')).map(i => i.value);
+                showStep(4);
+            } else if (currentStep === 5) {
+                formData.worries = Array.from(document.querySelectorAll('#step-5 input:checked')).map(i => i.value);
+                showStep(6);
+            }
+        });
+    });
+
+    document.querySelectorAll('.prev-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            showStep(currentStep - 1);
+        });
+    });
+
+    /* ── FILE SELECTION ── */
+    document.getElementById('file-input').addEventListener('change', function() {
+        for (const file of this.files) {
+            if (selectedFiles.length >= MAX_FILES) break;
+            if (file.size > MAX_FILE_SIZE) {
+                showSubmitError(`"${file.name}" is larger than 10MB and was skipped.`);
+                continue;
+            }
+            if (!selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
+                selectedFiles.push(file);
+            }
+        }
+        this.value = '';
+        renderFileList();
+    });
+
+    function renderFileList() {
+        const list = document.getElementById('file-list');
+        const label = document.getElementById('file-label');
+        list.innerHTML = '';
+        selectedFiles.forEach((file, i) => {
+            const row = document.createElement('div');
+            row.className = 'file-item';
+            const name = document.createElement('span');
+            name.textContent = file.name;
+            const remove = document.createElement('button');
+            remove.className = 'file-remove';
+            remove.type = 'button';
+            remove.setAttribute('aria-label', 'Remove ' + file.name);
+            remove.textContent = '✕';
+            remove.addEventListener('click', () => {
+                selectedFiles.splice(i, 1);
+                renderFileList();
+            });
+            row.appendChild(name);
+            row.appendChild(remove);
+            list.appendChild(row);
+        });
+        if (selectedFiles.length > 0) {
+            label.innerText = `${selectedFiles.length} file(s) attached — add more?`;
+            label.style.color = 'var(--gold)';
+        } else {
+            label.innerText = 'Click to upload photos, PDFs, or invoices';
+            label.style.color = 'var(--muted)';
+        }
+    }
+
+    function showSubmitError(msg) {
+        const el = document.getElementById('submit-error');
+        el.textContent = msg;
+        el.classList.add('visible');
+    }
+    function hideSubmitError() {
+        document.getElementById('submit-error').classList.remove('visible');
+    }
+
+    /* ── INSTANT RISK SCORING ── */
+    function computeScore() {
+        let score = 0;
+
+        const urgencyPts = {
+            'Seller/contractor wants payment now': 5,
+            'This week': 3,
+            'This month': 2,
+            'Just researching': 1
+        };
+        score += urgencyPts[formData.urgency] || 2;
+
+        const docs = formData.received.filter(d => d !== 'None yet');
+        const hasTitleDoc = docs.some(d =>
+            ['C of O / R of O', 'Allocation Letter', 'Deed of Assignment/Sublease'].includes(d));
+        if (docs.length === 0) score += 5;
+        else if (!hasTitleDoc) score += 4;
+        else score += 2; // documents exist but are seller-provided and unverified
+
+        score += Math.min(formData.worries.length, 4);
+
+        return score; // range 2–14
+    }
+
+    function riskLevelFromScore(score) {
+        if (score >= 10) return 'High';
+        if (score >= 6) return 'Moderate';
+        return 'Low';
+    }
+
+    function buildGapAnalysis() {
+        const gaps = [];
+        const fixes = [];
+        const docs = formData.received.filter(d => d !== 'None yet');
+        const hasTitleDoc = docs.some(d =>
+            ['C of O / R of O', 'Allocation Letter', 'Deed of Assignment/Sublease'].includes(d));
+        const buying = ['Buy land', 'Buy a house/flat/duplex', 'Not sure'].includes(formData.intent);
+
+        if (buying || hasTitleDoc || formData.worries.includes('Documents may be fake') || formData.worries.includes('Seller may not own it')) {
+            if (!hasTitleDoc) {
+                gaps.push('No title document sighted (C of O / R of O)');
+                fixes.push('Official AGIS search & title verification');
+            } else {
+                gaps.push('Title documents are seller-provided, not verified at source');
+                fixes.push('Certified AGIS / FCDA search to confirm authenticity');
+            }
+        }
+        if (buying || formData.worries.includes('Land may not match location')) {
+            gaps.push('Site and boundaries not independently verified');
+            fixes.push('Independent surveyor beacon & boundary check');
+        }
+        if (formData.intent === 'Plan a build' || formData.worries.includes('Contractor may be overcharging') || formData.received.includes('Contractor Invoice')) {
+            gaps.push('Construction costs not independently audited');
+            fixes.push('Quantity Surveyor (QS) audit of the quote / BOQ');
+        }
+        if (formData.intent === 'Pay a contractor' || formData.worries.includes('Progress may not be real')) {
+            gaps.push('Work progress not verified on the ground');
+            fixes.push('Site engineer milestone check before funds release');
+        }
+
+        return { gaps: gaps.slice(0, 4), fixes: fixes.slice(0, 4) };
+    }
+
+    const VERDICTS = {
+        High: {
+            title: 'High Risk — Pause Before Paying',
+            cls: 'risk--high',
+            label: '🔴 High Risk',
+            text: 'Based on your answers, money is about to move with little or no independent verification behind it. This is the exact pattern behind most diaspora capital loss in Abuja. Do not transfer funds until the gaps below are closed.'
+        },
+        Moderate: {
+            title: 'Moderate Risk — Blind Spots Detected',
+            cls: 'risk--moderate',
+            label: '🟡 Moderate Risk',
+            text: 'You have some of the right paperwork, but it is seller-provided and unverified. Document cloning and inflated invoicing are most common at exactly this stage. The gaps below should be closed before you commit.'
+        },
+        Low: {
+            title: 'Lower Risk — Verify Before Closing',
+            cls: 'risk--low',
+            label: '🟢 Lower Risk',
+            text: 'Your situation has more structure than most. The remaining step is independent verification at source — most late-stage losses happen when buyers relax just before closing.'
+        }
+    };
+
+    /* ── SUBMIT ── */
+    document.getElementById('submit-triage').addEventListener('click', async function() {
+        hideSubmitError();
+
+        const firstName = document.getElementById('first-name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        let ok = true;
+        if (!firstName) { setFieldError('field-first-name', true); ok = false; }
+        else setFieldError('field-first-name', false);
+        if (!email || !email.includes('@') || !email.includes('.')) { setFieldError('field-email', true); ok = false; }
+        else setFieldError('field-email', false);
+        if (!ok) return;
+
+        formData.firstName = firstName;
+        formData.email = email;
+
+        const score = computeScore();
+        const riskLevel = riskLevelFromScore(score);
+
+        const btn = this;
+        btn.disabled = true;
+
+        document.getElementById('triage-form').style.display = 'none';
+        const loading = document.getElementById('loading-screen');
+        loading.style.display = 'block';
+
+        const msgs = [
+            'Reviewing your situation...',
+            'Checking your document coverage...',
+            'Preparing your risk profile...'
+        ];
+        let msgIdx = 0;
+        const msgEl = document.getElementById('loading-msg');
+        const msgInterval = setInterval(() => {
+            msgIdx = (msgIdx + 1) % msgs.length;
+            msgEl.innerText = msgs[msgIdx];
+        }, 1100);
+
+        const fd = new FormData();
+        fd.append('payload', JSON.stringify({
+            firstName: formData.firstName,
+            email: formData.email,
+            score: score,
+            riskLevel: riskLevel,
+            details: {
+                intent: formData.intent,
+                location: formData.location,
+                received: formData.received,
+                urgency: formData.urgency,
+                worries: formData.worries
+            }
+        }));
+        selectedFiles.forEach(file => fd.append('files', file));
+
+        try {
+            const response = await fetch('/api/risk-calculator', { method: 'POST', body: fd });
+            const data = await response.json().catch(() => ({}));
+            clearInterval(msgInterval);
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Something went wrong. Please try again.');
+            }
+
+            track('triage_submitted', { risk_level: riskLevel, score: score, files: selectedFiles.length });
+            loading.style.display = 'none';
+            showResults(score, riskLevel, data.caseRef);
+        } catch (err) {
+            clearInterval(msgInterval);
+            loading.style.display = 'none';
+            document.getElementById('triage-form').style.display = 'block';
+            btn.disabled = false;
+            showSubmitError(err.message || 'There was an error submitting your request. Please try again.');
+        }
+    });
+
+    function showResults(score, riskLevel, caseRef) {
+        const v = VERDICTS[riskLevel];
+        const levelEl = document.getElementById('verdict-level');
+        levelEl.innerText = v.label;
+        levelEl.className = 'verdict-level ' + v.cls;
+        document.getElementById('verdict-title').innerText = v.title;
+        document.getElementById('verdict-text').innerText = v.text;
+
+        const { gaps, fixes } = buildGapAnalysis();
+        if (gaps.length > 0) {
+            document.getElementById('comparison-grid').style.display = 'grid';
+            document.getElementById('current-gaps').innerHTML = '';
+            document.getElementById('propersafe-solutions').innerHTML = '';
+            gaps.forEach(g => {
+                const li = document.createElement('li');
+                li.textContent = g;
+                document.getElementById('current-gaps').appendChild(li);
+            });
+            fixes.forEach(f => {
+                const li = document.createElement('li');
+                li.textContent = f;
+                document.getElementById('propersafe-solutions').appendChild(li);
+            });
+        }
+
+        const refEl = document.getElementById('results-ref');
+        if (caseRef) {
+            refEl.textContent = 'Reference: ' + caseRef;
+        } else {
+            refEl.style.display = 'none';
+        }
+
+        document.getElementById('results-screen').style.display = 'block';
+        window.scrollTo(0, 0);
+    }
+
+    /* ── RESULT CTAs ── */
+    const INTENT_SERVICE_MAP = {
+        'Buy land': 'land',
+        'Buy a house/flat/duplex': 'land',
+        'Plan a build': 'build',
+        'Pay a contractor': 'payment'
+    };
+
+    document.getElementById('result-cta').addEventListener('click', function() {
+        const service = INTENT_SERVICE_MAP[formData.intent] || '';
+        track('triage_cta_clicked', { service: service || 'none' });
+        if (inIframe) {
+            window.parent.postMessage({ type: 'open-enquiry', service: service }, '*');
+        } else {
+            window.location.href = '/enquire' + (service ? '?service=' + encodeURIComponent(service) : '');
+        }
+    });
+
+    document.getElementById('back-home').addEventListener('click', function() {
+        if (inIframe) {
+            window.parent.postMessage('close-overlay', '*');
+        } else {
+            window.location.href = '/';
+        }
+    });
+
+    // Escape closes the parent overlay even while focus is inside this iframe
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && inIframe) {
+            window.parent.postMessage('close-overlay', '*');
+        }
+    });
+
+    track('triage_step_viewed', { step: 1 });
+</script>
+
+</body>
+</html>

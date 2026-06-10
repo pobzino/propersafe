@@ -14,11 +14,19 @@ const nextConfig: NextConfig = {
         },
         {
           source: "/risk-calculator",
-          destination: "/risk-calculator.html",
+          destination: "/triage.html",
+        },
+        {
+          source: "/risk-analysis",
+          destination: "/triage.html",
         },
         {
           source: "/enquire",
           destination: "/enquire.html",
+        },
+        {
+          source: "/sample-report",
+          destination: "/sample-report.html",
         },
       ],
     };
