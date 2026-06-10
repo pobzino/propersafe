@@ -139,3 +139,44 @@ Before deploying, update hardcoded URLs in `propersafe-site/index.html`:
 4. Check email (Supabase logs) for magic link
 5. Click link → should land on `/case/[ref]` authenticated
 6. Upload documents, view status, see report when delivered
+
+## 2026-06-10 — Funnel fixes, merged risk analysis, enquiry redesign
+
+### Actions taken
+
+**Risk analysis (triage) overhaul**
+- Merged the old scored risk calculator into the triage flow (`public/triage.html`): same 6-step intake, now ends with an instant indicative verdict (High/Moderate/Low), personalized gap analysis ("what you have now" vs "with a Propersafe check"), and working CTAs
+- Document upload is now real: files go to the `documents` storage bucket via multipart `POST /api/risk-calculator` (max 5 × 10MB), with `documents` rows created
+- Triage submissions now create a full case (ref, service type from intent, default checks, status log, urgency-derived deadline) so leads appear in the pipeline
+- Lead receives a confirmation email (`sendTriageConfirmation`); admin notification upgraded with risk level, score, and uploaded file names
+- Deleted `public/risk-calculator.html` and dead `app/risk-calculator/page.tsx`; `/risk-calculator` and `/risk-analysis` both rewrite to `triage.html`
+- Replaced all `alert()` validation with inline field errors
+
+**Enquiry form redesign (`public/enquire.html`)**
+- Service step: larger card titles, radio-style selection indicator, auto-advance on selection (disabled Next button removed)
+- Unified design language with triage (bigger serif step titles, 8px radii, roomier cards), full contrast pass on muted text tiers
+- Left panel: brighter video, trust signals + sample report link instead of bullet list, step-aware headline copy that changes per step
+- Fixed `.page` script crash; `?service=` URL param + postMessage preselection; Escape inside the iframe closes the overlay; Done button works standalone
+
+**Landing page (`public/landing.html`)**
+- New "The deliverable" trust section with mini report-card preview linking to `/sample-report` (new redacted sample Buyer Risk Report page)
+- Overlay iframes lazy-load on first open (was: two hidden page loads + autoplaying video on initial visit)
+- Overlay close fixed: removed `#riskOverlay` ID selectors that out-specified the `.closing` rules (risk overlay popped instead of fading); replaced `history.back()` with in-place `replaceState`; added close-animation fallback timer + visibilitychange jump so a hidden tab can never leave the overlay/circle stuck
+- Triage results CTA swaps overlays in place with service preselected
+- Real WhatsApp number in footer (+44 7599 594950, wa.me link)
+
+**Backend/email**
+- Fixed urgency → deadline mapping in `/api/enquire` (keys now match the form labels; was always null)
+- Extracted shared `nextCaseRef()` into `lib/utils/case-ref.ts`
+- All user-supplied values in email templates are now HTML-escaped
+
+**Analytics scaffold**
+- `public/analytics.js` shared loader: paste a PostHog project key to activate; `psTrack()` no-ops until then
+- Funnel events instrumented: `overlay_opened`, `triage_step_viewed/submitted/cta_clicked`, `enquiry_step_viewed/submitted`, `sample_report_viewed`
+
+### Still to do
+- Paste PostHog key into `public/analytics.js`
+- One real end-to-end triage test (file upload → storage → case → emails)
+- Service naming/pricing consistency across landing cards, enquiry form, footer
+- Privacy policy + terms pages; fix `og:url`/`og:image` (still github.io); delete orphaned `thanks.html`
+- Note: `~/propersafe` is an older duplicate checkout — this repo (`~/Downloads/propersafe`) is canonical

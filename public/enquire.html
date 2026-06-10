@@ -5,30 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Propersafe — Submit an Enquiry</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;1,200;1,300&family=Geist:wght@200;300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;1,200;1,300&family=Geist:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   --cream: #F0EBE0;
-  --cream-dim: rgba(240,235,224,0.75);
-  --cream-muted: rgba(240,235,224,0.45);
-  --cream-faint: rgba(240,235,224,0.22);
-  --cream-ghost: rgba(240,235,224,0.10);
+  --cream-dim: rgba(240,235,224,0.82);
+  --cream-muted: rgba(240,235,224,0.62);
+  --cream-faint: rgba(240,235,224,0.30);
+  --cream-ghost: rgba(240,235,224,0.12);
   --gold: #C9A46A;
   --gold-dark: #A07840;
-  --gold-dim: rgba(201,164,106,0.45);
+  --gold-dim: rgba(201,164,106,0.55);
   --gold-border: rgba(201,164,106,0.35);
   --ink: #0F0E0A;
   --ink-2: #1A1814;
+  --card: rgba(255,249,239,0.03);
   --green-bg: rgba(45,80,45,0.3);
   --green-border: rgba(80,140,80,0.3);
-  --green-text: rgba(120,200,120,0.8);
-  --green-has-bg: rgba(45,80,45,0.15);
-  --green-has-border: rgba(80,140,80,0.35);
-  --error: rgba(200,100,100,0.9);
+  --green-text: rgba(130,210,130,0.9);
+  --green-has-bg: rgba(45,80,45,0.18);
+  --green-has-border: rgba(80,140,80,0.4);
+  --error: rgba(220,120,110,0.95);
   --error-bg: rgba(120,40,40,0.25);
-  --error-border: rgba(180,80,80,0.4);
+  --error-border: rgba(180,80,80,0.45);
   --serif: 'Cormorant Garamond', Georgia, serif;
   --sans: 'Geist', system-ui, sans-serif;
 }
@@ -45,7 +46,7 @@ html, body {
 .page {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.1fr;
 }
 .page.animated {
   opacity: 0;
@@ -116,15 +117,15 @@ html, body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.38;
-  filter: grayscale(0.4) contrast(1.15);
+  opacity: 0.55;
+  filter: grayscale(0.25) contrast(1.1);
 }
 .panel-overlay {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to bottom, rgba(15, 14, 10, 0.5) 0%, rgba(15, 14, 10, 0.2) 40%, rgba(15, 14, 10, 0.8) 100%),
-    linear-gradient(to right, var(--ink-2) 0%, transparent 55%);
+    linear-gradient(to bottom, rgba(15, 14, 10, 0.45) 0%, rgba(15, 14, 10, 0.15) 40%, rgba(15, 14, 10, 0.75) 100%),
+    linear-gradient(to right, rgba(26, 24, 20, 0.85) 0%, transparent 65%);
   z-index: 1;
 }
 .left-panel > *:not(.panel-video-container) {
@@ -142,7 +143,6 @@ html, body {
   width: auto;
   object-fit: contain;
 }
-.left-main {}
 .left-eyebrow {
   font-size: 10px;
   letter-spacing: 0.18em;
@@ -162,46 +162,68 @@ html, body {
 }
 .left-title {
   font-family: var(--serif);
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-size: clamp(1.9rem, 3.2vw, 2.8rem);
   font-weight: 200;
   line-height: 1.05;
   letter-spacing: -0.02em;
   color: var(--cream);
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
+  text-shadow: 0 2px 24px rgba(15,14,10,0.5);
 }
 .left-sub {
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   font-weight: 300;
-  color: var(--cream-muted);
-  line-height: 1.75;
-  max-width: 340px;
-  margin-bottom: 2.5rem;
+  color: var(--cream-dim);
+  line-height: 1.7;
+  max-width: 360px;
+  margin-bottom: 2.25rem;
+  text-shadow: 0 1px 12px rgba(15,14,10,0.5);
 }
-.left-checks {
+.left-trust {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
+  max-width: 340px;
 }
-.left-check {
+.trust-item {
   display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13.5px;
+  font-weight: 300;
+  color: var(--cream-dim);
+  line-height: 1.5;
+}
+.trust-item svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  stroke: var(--gold);
+  stroke-width: 1.5;
+  fill: none;
+}
+.trust-link {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 0.5px solid var(--gold-border);
+  padding-bottom: 2px;
+  width: fit-content;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.trust-link:hover { color: var(--cream); border-color: var(--cream-faint); }
+.left-footer {
   font-size: 12px;
   font-weight: 300;
-  color: rgba(240,235,224,0.55);
-}
-.left-check-dot {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: var(--gold-dark);
-  flex-shrink: 0;
-}
-.left-footer {
-  font-size: 11px;
-  font-weight: 300;
-  color: rgba(240,235,224,0.30);
+  color: rgba(240,235,224,0.5);
   line-height: 1.6;
+  max-width: 360px;
 }
 
 /* ── RIGHT PANEL ── */
@@ -209,10 +231,14 @@ html, body {
   padding: 3rem;
   min-height: 100vh;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #131109 0%, var(--ink) 30%);
 }
 .right-inner {
-  max-width: 520px;
-  margin: 0 auto;
+  max-width: 560px;
+  width: 100%;
+  margin: auto;
 }
 
 /* ── STEPS BAR ── */
@@ -227,18 +253,18 @@ html, body {
   gap: 8px;
 }
 .step-dot {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 300;
   flex-shrink: 0;
   transition: all 0.25s;
   border: 0.5px solid var(--cream-faint);
-  color: rgba(240,235,224,0.35);
+  color: rgba(240,235,224,0.45);
   cursor: default;
 }
 .step-dot.active {
@@ -246,6 +272,7 @@ html, body {
   border-color: var(--gold-dark);
   color: var(--cream);
   font-weight: 400;
+  box-shadow: 0 0 16px rgba(160,120,64,0.35);
 }
 .step-dot.done {
   background: var(--green-bg);
@@ -254,8 +281,8 @@ html, body {
   font-size: 12px;
 }
 .step-dot.visited {
-  border-color: rgba(240,235,224,0.22);
-  color: rgba(240,235,224,0.55);
+  border-color: rgba(240,235,224,0.3);
+  color: rgba(240,235,224,0.65);
 }
 .step-connector {
   flex: 1;
@@ -269,7 +296,7 @@ html, body {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(80,140,80,0.2);
+  background: rgba(80,140,80,0.25);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -278,17 +305,17 @@ html, body {
   transform: scaleX(1);
 }
 .step-label {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 300;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(240,235,224,0.35);
+  color: rgba(240,235,224,0.45);
   white-space: nowrap;
   transition: color 0.25s;
 }
-.step-label.active { color: rgba(201,164,106,0.65); }
-.step-label.done { color: rgba(120,200,120,0.45); }
-.step-label.visited { color: rgba(240,235,224,0.3); }
+.step-label.active { color: var(--gold); }
+.step-label.done { color: rgba(130,210,130,0.6); }
+.step-label.visited { color: rgba(240,235,224,0.4); }
 
 /* ── PANELS ── */
 .step-panel {
@@ -304,7 +331,6 @@ html, body {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
-/* Staggered children entrance */
 .step-panel.active .panel-heading {
   animation: staggerIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.03s both;
 }
@@ -349,18 +375,18 @@ html, body {
 }
 
 .panel-heading {
-  margin-bottom: 1.75rem;
+  margin-bottom: 2rem;
 }
 .panel-title {
   font-family: var(--serif);
-  font-size: 1.4rem;
+  font-size: clamp(26px, 3.4vw, 32px);
   font-weight: 200;
   color: var(--cream);
   line-height: 1.1;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 .panel-sub {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 300;
   color: var(--cream-muted);
   line-height: 1.6;
@@ -370,62 +396,92 @@ html, body {
 .service-grid {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 2rem;
+  gap: 12px;
+  margin-bottom: 1rem;
 }
 .service-card {
   border: 0.5px solid var(--cream-faint);
-  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  background: var(--card);
+  padding: 1.15rem 1.25rem;
   cursor: pointer;
   transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 1rem;
 }
 .service-card:hover {
-  border-color: rgba(240,235,224,0.22);
+  border-color: rgba(201,164,106,0.45);
+  background: rgba(255,249,239,0.05);
   transform: translateY(-2px);
 }
 .service-card.selected {
-  border-color: var(--gold-dark);
-  background: rgba(160,120,64,0.07);
-  box-shadow: 0 0 0 0.5px var(--gold-dark), 0 8px 24px rgba(160,120,64,0.08);
+  border-color: var(--gold);
+  background: rgba(160,120,64,0.1);
+  box-shadow: 0 0 0 0.5px var(--gold), 0 10px 30px rgba(160,120,64,0.12);
 }
 .sc-num {
   font-family: var(--serif);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-style: italic;
   font-weight: 200;
-  color: rgba(240,235,224,0.35);
-  margin-top: 2px;
+  color: rgba(240,235,224,0.4);
   flex-shrink: 0;
   transition: color 0.15s;
-  min-width: 18px;
+  min-width: 20px;
 }
-.service-card.selected .sc-num { color: rgba(201,164,106,0.55); }
+.service-card.selected .sc-num { color: var(--gold); }
+.sc-body { flex: 1; }
 .sc-tag {
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--gold-dark);
-  font-weight: 300;
-  margin-bottom: 3px;
+  color: var(--gold);
+  font-weight: 400;
+  margin-bottom: 4px;
 }
 .sc-title {
-  font-size: 13px;
-  font-weight: 300;
-  color: rgba(240,235,224,0.75);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--cream);
   line-height: 1.3;
   margin-bottom: 4px;
   transition: color 0.15s;
 }
-.service-card.selected .sc-title { color: var(--cream); }
 .sc-hint {
-  font-size: 11px;
+  font-size: 13px;
   font-style: italic;
   font-family: var(--serif);
-  color: rgba(240,235,224,0.35);
+  color: var(--cream-muted);
   line-height: 1.4;
+}
+.sc-radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--cream-faint);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: transparent;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin-left: 0.5rem;
+}
+.service-card:hover .sc-radio { border-color: var(--gold-border); }
+.service-card.selected .sc-radio {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+  transform: scale(1.1);
+}
+.auto-advance-note {
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(240,235,224,0.4);
+  text-align: center;
+  margin-top: 0.5rem;
 }
 
 /* ── FIELDS ── */
@@ -433,26 +489,26 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 .field-row.solo { grid-template-columns: 1fr; }
-.field { display: flex; flex-direction: column; gap: 5px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
 .field label {
-  font-size: 9px;
-  font-weight: 300;
+  font-size: 10px;
+  font-weight: 400;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(240,235,224,0.50);
+  color: rgba(240,235,224,0.65);
 }
 .field input,
 .field select,
 .field textarea {
   background: transparent;
   border: none;
-  border-bottom: 0.5px solid rgba(240,235,224,0.20);
-  padding: 9px 0;
+  border-bottom: 0.5px solid rgba(240,235,224,0.28);
+  padding: 10px 0;
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 300;
   color: var(--cream);
   outline: none;
@@ -462,15 +518,15 @@ html, body {
   -webkit-appearance: none;
 }
 .field input::placeholder,
-.field textarea::placeholder { color: rgba(240,235,224,0.16); }
+.field textarea::placeholder { color: rgba(240,235,224,0.25); }
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  border-bottom-color: rgba(201,164,106,0.55);
+  border-bottom-color: var(--gold);
   box-shadow: 0 4px 12px rgba(201,164,106,0.06);
 }
 .field select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 8 5'%3E%3Cpath fill='rgba(240,235,224,0.22)' d='M4 5L0 0h8z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 8 5'%3E%3Cpath fill='rgba(240,235,224,0.35)' d='M4 5L0 0h8z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 2px center;
   padding-right: 16px;
@@ -479,7 +535,7 @@ html, body {
 .field select option { background: #1a1814; }
 .field textarea {
   resize: none;
-  min-height: 80px;
+  min-height: 90px;
   line-height: 1.65;
 }
 .field.error input,
@@ -488,7 +544,7 @@ html, body {
   border-bottom-color: var(--error-border);
 }
 .field-error {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 300;
   color: var(--error);
   margin-top: 4px;
@@ -497,61 +553,55 @@ html, body {
 .field.error .field-error { display: block; }
 
 /* ── DOCUMENT TOGGLES ── */
-.doc-intro {
-  font-size: 11px;
-  font-weight: 300;
-  color: var(--cream-muted);
-  line-height: 1.65;
-  margin-bottom: 1.25rem;
-}
 .doc-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 7px;
+  gap: 10px;
   margin-bottom: 1.5rem;
 }
 .doc-toggle {
   border: 0.5px solid var(--cream-faint);
-  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: var(--card);
+  padding: 0.85rem 1rem;
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 10px;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
-.doc-toggle:hover { border-color: rgba(240,235,224,0.2); transform: translateY(-1px); }
-.doc-toggle { transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease; }
+.doc-toggle:hover { border-color: rgba(201,164,106,0.4); transform: translateY(-1px); }
 .doc-toggle.has {
   border-color: var(--green-has-border);
   background: var(--green-has-bg);
 }
 .doc-check {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  border: 0.5px solid rgba(240,235,224,0.30);
+  border: 0.5px solid rgba(240,235,224,0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 8px;
+  font-size: 9px;
   color: transparent;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   margin-top: 1px;
 }
 .doc-toggle.has .doc-check {
-  background: rgba(80,160,80,0.35);
-  border-color: rgba(80,160,80,0.5);
-  color: rgba(140,220,140,0.9);
+  background: rgba(80,160,80,0.4);
+  border-color: rgba(80,160,80,0.55);
+  color: rgba(150,230,150,0.95);
   transform: scale(1.15);
 }
 .doc-label {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 300;
-  color: rgba(240,235,224,0.55);
-  line-height: 1.35;
+  color: var(--cream-dim);
+  line-height: 1.4;
 }
-.doc-toggle.has .doc-label { color: rgba(240,235,224,0.7); }
+.doc-toggle.has .doc-label { color: var(--cream); }
 
 /* ── ACTIONS ── */
 .form-actions {
@@ -567,82 +617,83 @@ html, body {
   background: var(--cream);
   color: var(--ink);
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 400;
-  padding: 11px 26px;
+  padding: 13px 30px;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
   letter-spacing: 0.02em;
   transition: opacity 0.2s ease, transform 0.15s ease;
 }
-.btn-next:hover { opacity: 0.8; }
+.btn-next:hover { opacity: 0.85; }
 .btn-next:active { transform: scale(0.97); }
-.btn-next:disabled { opacity: 0.25; cursor: not-allowed; transform: none; }
 .btn-back {
   background: transparent;
-  color: rgba(240,235,224,0.28);
+  color: rgba(240,235,224,0.4);
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 300;
-  padding: 11px 0;
+  padding: 13px 0;
   border: none;
   cursor: pointer;
   letter-spacing: 0.02em;
   transition: color 0.2s ease, transform 0.15s ease;
 }
-.btn-back:hover { color: rgba(240,235,224,0.55); }
+.btn-back:hover { color: rgba(240,235,224,0.7); }
 .btn-back:active { transform: scale(0.97); }
 .btn-submit {
   background: var(--gold-dark);
   color: var(--cream);
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 400;
-  padding: 11px 28px;
+  padding: 13px 32px;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
   letter-spacing: 0.02em;
   transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
   position: relative;
 }
-.btn-submit:hover { opacity: 0.85; box-shadow: 0 4px 16px rgba(160,120,64,0.2); }
+.btn-submit:hover { opacity: 0.88; box-shadow: 0 6px 20px rgba(160,120,64,0.25); }
 .btn-submit:active { transform: scale(0.97); }
 .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 .submit-note {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 300;
-  color: rgba(240,235,224,0.35);
+  color: rgba(240,235,224,0.5);
 }
 
 /* ── REVIEW ── */
 .review-block { margin-bottom: 1.25rem; }
 .review-label {
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(240,235,224,0.40);
+  color: rgba(240,235,224,0.5);
   font-weight: 300;
   margin-bottom: 0.4rem;
 }
 .review-val {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 300;
-  color: rgba(240,235,224,0.65);
+  color: var(--cream-dim);
   line-height: 1.6;
   padding-bottom: 1rem;
   border-bottom: 0.5px solid var(--cream-ghost);
 }
 .review-service-tag {
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--gold-dark);
+  color: var(--gold);
   font-weight: 300;
   margin-bottom: 4px;
 }
 .review-service-name {
   font-family: var(--serif);
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 200;
   color: var(--cream);
   line-height: 1.1;
@@ -653,8 +704,8 @@ html, body {
   background: var(--error-bg);
   border: 0.5px solid var(--error-border);
   padding: 0.75rem 1rem;
-  border-radius: 4px;
-  font-size: 12px;
+  border-radius: 8px;
+  font-size: 13px;
   font-weight: 300;
   color: var(--error);
   margin-bottom: 1.5rem;
@@ -688,40 +739,41 @@ html, body {
   will-change: opacity, transform;
 }
 .success-icon {
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: var(--green-bg);
   border: 0.5px solid var(--green-border);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 22px;
   color: var(--green-text);
   margin-bottom: 1.5rem;
 }
 .success-title {
   font-family: var(--serif);
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 200;
   color: var(--cream);
   margin-bottom: 0.5rem;
 }
 .success-sub {
-  font-size: 0.85rem;
+  font-size: 0.92rem;
   font-weight: 300;
   color: var(--cream-muted);
   line-height: 1.75;
-  max-width: 360px;
+  max-width: 380px;
 }
 .success-ref {
   margin-top: 1.5rem;
   padding: 0.75rem 1.75rem;
-  border: 0.5px solid var(--cream-ghost);
-  font-size: 11px;
+  border: 0.5px solid var(--gold-border);
+  border-radius: 100px;
+  font-size: 12px;
   font-weight: 300;
   letter-spacing: 0.12em;
-  color: rgba(240,235,224,0.22);
+  color: var(--gold);
 }
 
 /* ── RESPONSIVE ── */
@@ -730,7 +782,7 @@ html, body {
   .left-panel {
     position: static;
     height: auto;
-    min-height: 320px;
+    min-height: 300px;
     padding: 2rem 1.5rem;
     border-right: none;
     border-bottom: 0.5px solid var(--cream-ghost);
@@ -743,7 +795,7 @@ html, body {
   .draft-toast.visible {
     transform: translateX(-50%) translateY(0);
   }
-  .left-checks { display: none; }
+  .left-trust { display: none; }
   .left-footer { display: none; }
   .left-main { margin: 1.5rem 0 1rem; }
   .right-panel { padding: 2rem 1.5rem; }
@@ -751,11 +803,11 @@ html, body {
   .doc-grid { grid-template-columns: 1fr; }
   .steps-bar { gap: 0; }
   .step-label { display: none; }
+  .panel-title { font-size: 24px; }
 }
 </style>
 </head>
 <body>
-<script>document.querySelector('.page').classList.toggle('animated', window.self === window.top);</script>
 
 <div class="draft-toast" id="draft-toast">Picked up where you left off</div>
 <div class="page">
@@ -775,20 +827,23 @@ html, body {
 
     <div class="left-main">
       <div class="left-eyebrow">Verification Desk</div>
-      <h1 class="left-title">Secure your purchase with independent audit.</h1>
-      <p class="left-sub">We coordinate on-ground inspections and legal searches while you remain abroad. Independent, professional, and on your side.</p>
-      <div class="left-checks">
-        <div class="left-check"><div class="left-check-dot"></div>Physical site audit</div>
-        <div class="left-check"><div class="left-check-dot"></div>AGIS / FCDA verification</div>
-        <div class="left-check"><div class="left-check-dot"></div>Cost & payment auditing</div>
-        <div class="left-check"><div class="left-check-dot"></div>Contractor background checks</div>
-        <div class="left-check"><div class="left-check-dot"></div>Litigation & encumbrance checks</div>
+      <h1 class="left-title" id="left-title">Secure your purchase with independent audit.</h1>
+      <p class="left-sub" id="left-sub">We coordinate on-ground inspections and legal searches while you remain abroad. Independent, professional, and on your side.</p>
+      <div class="left-trust">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <span>We reply within 24 hours with scope, timeline, and fees</span>
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg>
+          <span>No payment required at this stage — and we never touch purchase funds</span>
+        </div>
+        <a class="trust-link" href="/sample-report" target="_blank" rel="noopener">See a sample report →</a>
       </div>
     </div>
 
     <div class="left-footer">
-      Propersafe is not a developer or realtor. We do not handle your purchase funds.<br><br>
-      We provide the verification you need to release payment with confidence.
+      Propersafe is not a developer or realtor. We provide the verification you need to release payment with confidence.
     </div>
   </div>
 
@@ -839,32 +894,33 @@ html, body {
           <div class="service-grid">
             <div class="service-card" onclick="selectService(this, 'land')">
               <div class="sc-num">01</div>
-              <div>
+              <div class="sc-body">
                 <div class="sc-tag">Before you buy</div>
-                <div class="sc-title">Land & Property Validity Check</div>
+                <div class="sc-title">Land &amp; Property Validity Check</div>
                 <div class="sc-hint">"I want to buy land in Abuja — is it safe?"</div>
               </div>
+              <div class="sc-radio">✓</div>
             </div>
             <div class="service-card" onclick="selectService(this, 'build')">
               <div class="sc-num">02</div>
-              <div>
+              <div class="sc-body">
                 <div class="sc-tag">Before you build</div>
                 <div class="sc-title">Build Cost Preview</div>
                 <div class="sc-hint">"What will it actually cost to build on my land?"</div>
               </div>
+              <div class="sc-radio">✓</div>
             </div>
             <div class="service-card" onclick="selectService(this, 'payment')">
               <div class="sc-num">03</div>
-              <div>
+              <div class="sc-body">
                 <div class="sc-tag">Active build</div>
                 <div class="sc-title">Payment Sanity Check</div>
                 <div class="sc-hint">"My contractor wants ₦6m for stage two — should I pay?"</div>
               </div>
+              <div class="sc-radio">✓</div>
             </div>
           </div>
-          <div class="form-actions">
-            <button class="btn-next" id="next-0" onclick="goTo(1)" disabled>Next →</button>
-          </div>
+          <p class="auto-advance-note">Pick one to continue</p>
         </div>
 
         <!-- STEP 2 — PROPERTY -->
@@ -1048,7 +1104,7 @@ html, body {
         <div class="success-title">Enquiry received.</div>
         <p class="success-sub">We'll review your situation and come back within 24 hours. Check your inbox — and your WhatsApp.</p>
         <div class="success-ref" id="success-ref">Ref: —</div>
-        <p style="margin-top:1.5rem;font-size:11px;font-weight:300;color:rgba(240,235,224,0.18);">You can close this window to return to the site.</p>
+        <button onclick="if (window.self !== window.top) { window.parent.postMessage('close-overlay', '*'); } else { window.location.href = '/'; }" style="margin-top:2rem;background:var(--gold);color:white;border:none;padding:13px 28px;border-radius:8px;cursor:pointer;font-family:var(--sans);font-weight:500;">Done</button>
       </div>
 
     </div>
@@ -1056,7 +1112,15 @@ html, body {
 
 </div>
 
+<script src="/analytics.js" defer></script>
 <script>
+  // Standalone (non-iframe) visits get the page entrance animation
+  document.querySelector('.page').classList.toggle('animated', window.self === window.top);
+
+  function track(event, props) {
+    if (window.psTrack) window.psTrack(event, props);
+  }
+
   const state = {
     service: null,
     current: 0,
@@ -1075,6 +1139,15 @@ html, body {
     build: 'Before you build',
     payment: 'Active build'
   };
+
+  // Step-aware left panel copy
+  const leftCopy = [
+    { title: 'Secure your purchase with independent audit.', sub: 'We coordinate on-ground inspections and legal searches while you remain abroad. Independent, professional, and on your side.' },
+    { title: 'Tell us what you’re looking at.', sub: 'Rough details are fine — district, land type, budget. We refine everything together before any work starts.' },
+    { title: 'No documents? That’s useful too.', sub: 'What you have (or don’t have) tells us exactly which searches to run at AGIS, the courts, and on the ground.' },
+    { title: 'How we’ll reach you.', sub: 'Most of our updates happen over WhatsApp and email — wherever in the world you are.' },
+    { title: 'One last look.', sub: 'Check everything reads right. After you submit, we reply within 24 hours with scope, timeline, and fees.' }
+  ];
 
   /* ── DRAFT AUTOSAVE ── */
   const DRAFT_KEY = 'propersafe_enquiry_draft_v1';
@@ -1119,18 +1192,15 @@ html, body {
     try { draft = JSON.parse(localStorage.getItem(DRAFT_KEY)); } catch(e) {}
     if (!draft) return false;
 
-    // Restore service
     if (draft.service) {
       state.service = draft.service;
       const cards = document.querySelectorAll('.service-card');
       const idx = { land: 0, build: 1, payment: 2 }[draft.service];
       if (idx != null && cards[idx]) {
         cards[idx].classList.add('selected');
-        document.getElementById('next-0').disabled = false;
       }
     }
 
-    // Restore fields
     const setVal = (id, val) => { const el = document.getElementById(id); if (el && val != null) el.value = val; };
     setVal('prop-loc', draft.propLoc);
     setVal('land-type', draft.landType);
@@ -1145,20 +1215,18 @@ html, body {
     setVal('base', draft.base);
     setVal('referral', draft.referral);
 
-    // Restore documents
     if (draft.docs && draft.docs.length) {
       document.querySelectorAll('.doc-toggle').forEach(d => {
         if (draft.docs.includes(d.dataset.doc)) d.classList.add('has');
       });
     }
 
-    // Restore stepper state
     if (draft.visited) draft.visited.forEach(i => state.visited.add(i));
     if (draft.done) draft.done.forEach(i => state.done.add(i));
     if (typeof draft.current === 'number') state.current = draft.current;
 
-    // Jump to restored step
     refreshStepper();
+    updateLeftPanel();
     for (let i = 0; i <= 4; i++) {
       const panel = document.getElementById('panel-' + i);
       if (panel) panel.classList.toggle('active', i === state.current);
@@ -1174,7 +1242,6 @@ html, body {
     draftTimer = setTimeout(saveDraft, 300);
   }
 
-  // Attach listeners to all inputs
   document.querySelectorAll('input, select, textarea').forEach(el => {
     el.addEventListener('input', queueDraftSave);
     el.addEventListener('change', saveDraft);
@@ -1186,15 +1253,37 @@ html, body {
     return div.innerHTML;
   }
 
+  function updateLeftPanel() {
+    const copy = leftCopy[state.current];
+    if (!copy) return;
+    const titleEl = document.getElementById('left-title');
+    const subEl = document.getElementById('left-sub');
+    if (titleEl.textContent === copy.title) return;
+    [titleEl, subEl].forEach(el => {
+      el.style.transition = 'opacity 0.25s ease';
+      el.style.opacity = '0';
+    });
+    setTimeout(() => {
+      titleEl.textContent = copy.title;
+      subEl.textContent = copy.sub;
+      [titleEl, subEl].forEach(el => { el.style.opacity = '1'; });
+    }, 260);
+  }
+
+  let advanceTimer = null;
+
   function selectService(el, val) {
     document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
     el.classList.add('selected');
-    // Brief press feedback
     el.style.transform = 'scale(0.985)';
     setTimeout(() => el.style.transform = '', 120);
     state.service = val;
-    document.getElementById('next-0').disabled = false;
     saveDraft();
+    // Single-choice step: advance automatically once the selection lands
+    if (advanceTimer) clearTimeout(advanceTimer);
+    if (state.current === 0) {
+      advanceTimer = setTimeout(() => goTo(1), 420);
+    }
   }
 
   function toggleDoc(el) {
@@ -1224,7 +1313,6 @@ html, body {
       else if (state.visited.has(i)) updateStep(i, 'visited');
       else updateStep(i, '');
     }
-    // Also update connectors for done steps
     for (let i = 0; i < 4; i++) {
       const conn = document.getElementById('conn-' + i);
       if (conn) {
@@ -1245,26 +1333,26 @@ html, body {
     const incoming = document.getElementById('panel-' + n);
 
     state.visited.add(state.current);
+    if (state.current === 0 && state.service) state.done.add(0);
     state.current = n;
     state.visited.add(n);
 
-    // Remove active from outgoing, add to incoming
     outgoing.classList.remove('active');
     incoming.classList.add('active');
 
-    // If going back, re-run animation by toggling class
     if (direction === 'back') {
       incoming.classList.remove('active');
-      void incoming.offsetWidth; // force reflow
+      void incoming.offsetWidth;
       incoming.classList.add('active');
     }
 
     refreshStepper();
+    updateLeftPanel();
     if (n === 4) buildReview();
     hideGlobalError();
     saveDraft();
+    track('enquiry_step_viewed', { step: n + 1 });
 
-    // Scroll right panel to top smoothly
     const rightPanel = document.querySelector('.right-panel');
     if (rightPanel) rightPanel.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -1274,14 +1362,6 @@ html, body {
   function setFieldError(id, show) {
     const el = document.getElementById('field-' + id);
     if (el) el.classList.toggle('error', show);
-  }
-
-  function validateStep1() {
-    if (!state.service) {
-      showGlobalError('Please select a service to continue.');
-      return false;
-    }
-    return true;
   }
 
   function validateStep2() {
@@ -1439,6 +1519,7 @@ html, body {
       });
       document.getElementById('success-ref').textContent = 'Ref: ' + (data.caseRef || '—');
       clearDraft();
+      track('enquiry_submitted', { service: state.service });
     } catch (err) {
       showGlobalError(err.message);
       btn.disabled = false;
@@ -1448,6 +1529,39 @@ html, body {
 
   // Restore draft on load (after DOM ready)
   restoreDraft();
+
+  /* ── SERVICE PRESELECTION ── */
+  const SERVICE_PARAM_MAP = {
+    land: 'land',
+    build: 'build',
+    payment: 'payment',
+    precheck: 'land',
+    full: 'land'
+  };
+
+  function preselectService(raw) {
+    const val = SERVICE_PARAM_MAP[raw];
+    if (!val) return;
+    const idx = { land: 0, build: 1, payment: 2 }[val];
+    const cards = document.querySelectorAll('.service-card');
+    if (cards[idx]) selectService(cards[idx], val);
+  }
+
+  const serviceParam = new URLSearchParams(window.location.search).get('service');
+  if (serviceParam) preselectService(serviceParam);
+
+  window.addEventListener('message', (e) => {
+    if (e.data && e.data.type === 'preselect-service') preselectService(e.data.service);
+  });
+
+  // Escape closes the parent overlay even while focus is inside this iframe
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && window.self !== window.top) {
+      window.parent.postMessage('close-overlay', '*');
+    }
+  });
+
+  track('enquiry_step_viewed', { step: 1 });
 </script>
 
 </body>
