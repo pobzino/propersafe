@@ -328,19 +328,6 @@
         object-fit: cover;
         z-index: 0;
       }
-      .hero__loopfade {
-        position: absolute;
-        inset: 0;
-        background: #0c0a08;
-        opacity: 0;
-        pointer-events: none;
-        z-index: 1;
-        transition: opacity 0.9s ease;
-      }
-      .hero__loopfade.dip {
-        opacity: 1;
-        transition: opacity 0.55s ease;
-      }
       .hero__overlay {
         position: absolute;
         inset: 0;
@@ -2073,7 +2060,6 @@
           <source src="hero-video.mp4" type="video/mp4" />
         </video>
         <div class="hero__overlay"></div>
-        <div class="hero__loopfade" id="heroLoopFade" aria-hidden="true"></div>
         <div class="container hero__content">
           <p class="eyebrow">Property Verification for Abuja</p>
           <h1>Your contact says the land in Abuja is fine. <span class="accent">Let's make sure.</span></h1>
@@ -2349,19 +2335,6 @@
     </div>
 
     <script>
-      // Mask the loop's jump cut: dip the footage to dark just before the
-      // video ends, then lift the veil as the new pass begins. The headline
-      // sits above the veil and stays visible throughout.
-      const heroVideo = document.querySelector(".hero__video");
-      const heroLoopFade = document.getElementById("heroLoopFade");
-      if (heroVideo && heroLoopFade) {
-        heroVideo.addEventListener("timeupdate", () => {
-          if (!heroVideo.duration) return;
-          const remaining = heroVideo.duration - heroVideo.currentTime;
-          heroLoopFade.classList.toggle("dip", remaining < 0.7);
-        });
-      }
-
       const nav = document.querySelector(".nav");
       window.addEventListener("scroll", () => {
         nav.classList.toggle("is-scrolled", window.scrollY > 60);
