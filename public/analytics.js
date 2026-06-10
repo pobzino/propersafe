@@ -1,12 +1,9 @@
 /*
  * Propersafe analytics loader.
- *
- * To activate: create a PostHog project for Propersafe and paste its
- * project API key below (Settings → Project → Project API key).
- * Until a key is set, psTrack() is a safe no-op everywhere.
+ * PostHog project: "Propersafe" (id 463759, US Cloud).
  */
 (function () {
-  var POSTHOG_KEY = ""; // e.g. "phc_XXXXXXXX"
+  var POSTHOG_KEY = "phc_uMnqZ7d4TcJSY4xP74GyFBjp9ftehW66gouPxHYWCg4A";
   var POSTHOG_HOST = "https://us.i.posthog.com";
 
   window.psTrack = function (event, props) {
