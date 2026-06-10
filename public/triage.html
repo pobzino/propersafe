@@ -448,13 +448,6 @@
             color: var(--paper-soft);
             line-height: 1.2;
         }
-        .rn-rec-price {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--gold);
-            letter-spacing: 0.04em;
-            white-space: nowrap;
-        }
         .rn-rec-covers {
             font-size: 13.5px;
             color: var(--muted);
@@ -655,7 +648,6 @@
                 <p class="rn-label">Recommended next step</p>
                 <div class="rn-rec-row">
                     <span class="rn-rec-name" id="rec-name"></span>
-                    <span class="rn-rec-price" id="rec-price"></span>
                 </div>
                 <p class="rn-rec-covers" id="rec-covers"></p>
             </div>
@@ -894,19 +886,16 @@
     const RECOMMENDATIONS = {
         'Buy land': {
             name: 'Property Title & Document Audit',
-            price: 'From £350',
             covers: 'Covers: AGIS search · court & litigation · C of O verification · survey & beacons · seller authority. Delivered as a written Buyer Risk Report with a proceed / pause / avoid verdict.',
             service: 'land'
         },
         'Plan a build': {
             name: 'Construction Cost Audit',
-            price: 'From £250',
             covers: 'Covers: an independent Quantity Surveyor reviews your contractor’s quote against current Abuja market rates, identifying padding and hidden costs. Delivered as a Build Cost Preview Report.',
             service: 'build'
         },
         'Pay a contractor': {
             name: 'Milestone & Payment Audit',
-            price: 'From £150',
             covers: 'Covers: a site engineer verifies on the ground that completed work matches the invoice before you release funds. Delivered as a written Payment Recommendation.',
             service: 'payment'
         }
@@ -1001,7 +990,7 @@
                 const fix = document.createElement('p');
                 fix.className = 'rn-finding-fix';
                 const lbl = document.createElement('span');
-                lbl.textContent = 'Resolved by: ';
+                lbl.textContent = 'Covered in the audit: ';
                 fix.appendChild(lbl);
                 fix.appendChild(document.createTextNode(fixes[i] || ''));
                 row.appendChild(gap);
@@ -1012,7 +1001,6 @@
 
         currentRec = RECOMMENDATIONS[formData.intent] || RECOMMENDATIONS['Buy land'];
         document.getElementById('rec-name').textContent = currentRec.name;
-        document.getElementById('rec-price').textContent = currentRec.price;
         document.getElementById('rec-covers').textContent = currentRec.covers;
 
         const refEl = document.getElementById('results-ref');
