@@ -297,14 +297,21 @@ td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--line); vertical-a
 .gcard.is-hidden { display: none; }
 .gcard--wide { grid-column: span 2; }
 .gcard > span { display: block; }
-/* Backdrop layer — swap any card to a photo by adding
-   style="background-image:url(/guides/img/xyz.jpg);background-size:cover;background-position:center"
-   on .gcard__bg; the gradient classes below are the placeholder art. */
-.gcard__bg { position: absolute; inset: 0; }
-.bg-a { background: radial-gradient(120% 90% at 20% 12%, rgba(196, 145, 56, 0.5) 0%, rgba(21, 18, 14, 0) 55%), linear-gradient(160deg, #241d12 0%, var(--ink) 70%); }
-.bg-b { background: radial-gradient(110% 90% at 80% 10%, rgba(22, 61, 45, 0.9) 0%, rgba(21, 18, 14, 0) 60%), linear-gradient(200deg, #14201a 0%, var(--ink) 75%); }
-.bg-c { background: radial-gradient(120% 100% at 25% 88%, rgba(187, 85, 60, 0.45) 0%, rgba(21, 18, 14, 0) 55%), linear-gradient(150deg, #221511 0%, var(--ink) 75%); }
-.bg-d { background: radial-gradient(130% 90% at 75% 85%, rgba(226, 181, 69, 0.35) 0%, rgba(21, 18, 14, 0) 55%), linear-gradient(190deg, #1c1812 0%, var(--charcoal) 80%); }
+/* Backdrop layer — survey-plan (TDP) line art: dashed plot boundaries and
+   beacon markers in faint gold on the card's flat ink. The bg-a..d classes
+   rotate/flip the same drawing for variety. To use a photo on a card instead,
+   add class "bg-photo" and an inline style="background-image:url(...)". */
+.gcard__bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 520'%3E%3Cg fill='none' stroke='%23c49138' stroke-opacity='0.16' stroke-width='1'%3E%3Cpath d='M-20 150 L150 96 L380 176 L430 330' stroke-dasharray='5 7'/%3E%3Cpath d='M150 96 L118 332 L302 424' stroke-dasharray='5 7'/%3E%3Cpath d='M-30 384 L118 332' stroke-dasharray='5 7'/%3E%3Cpath d='M302 424 L432 386' stroke-dasharray='5 7'/%3E%3Cpath d='M380 176 L302 424' stroke-dasharray='2 9' stroke-opacity='0.5'/%3E%3C/g%3E%3Cg fill='none' stroke='%23c49138' stroke-opacity='0.34' stroke-width='1'%3E%3Ccircle cx='150' cy='96' r='7'/%3E%3Cpath d='M150 85 v22 M139 96 h22'/%3E%3Ccircle cx='118' cy='332' r='7'/%3E%3Cpath d='M118 321 v22 M107 332 h22'/%3E%3Ccircle cx='302' cy='424' r='7'/%3E%3Cpath d='M302 413 v22 M291 424 h22'/%3E%3Ccircle cx='380' cy='176' r='7'/%3E%3Cpath d='M380 165 v22 M369 176 h22'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: center;
+}
+.bg-b { transform: scaleX(-1); }
+.bg-c { transform: rotate(180deg); }
+.bg-d { transform: scaleX(-1) rotate(180deg); }
+.bg-photo { transform: none; background-size: cover; background-position: center; }
 .gcard__num {
   position: absolute;
   top: 44px;
