@@ -1,6 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { NextRequest, NextResponse } from "next/server";
 import { DEFAULT_CHECKS } from "@/lib/utils/checks";
+import { nextCaseRef } from "@/lib/utils/case-ref";
 import { sendEnquiryConfirmation, sendAdminNotification } from "@/lib/email";
 import { sendEnquiryConfirmationWhatsApp } from "@/lib/whatsapp";
 
@@ -26,24 +27,7 @@ export async function POST(request: NextRequest) {
 
     const serviceType = serviceMap[body.service] || "validity_check";
 
-    // Generate case reference — find max existing ref number for this year
-    const year = new Date().getFullYear();
-    const { data: latestCases } = await supabase
-      .from("cases")
-      .select("case_ref")
-      .like("case_ref", `PS-${year}-%`)
-      .order("case_ref", { ascending: false })
-      .limit(1);
-
-    let nextNum = 1;
-    if (latestCases && latestCases.length > 0) {
-      const match = latestCases[0].case_ref.match(/-(\d+)$/);
-      if (match) {
-        nextNum = parseInt(match[1], 10) + 1;
-      }
-    }
-
-    const caseRef = `PS-${year}-${String(nextNum).padStart(4, "0")}`;
+    const caseRef = await nextCaseRef(supabase);
 
     // Create or find client
     const { data: existingClient, error: findError } = await supabase
@@ -167,23 +151,17 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// Keys must match the urgency <select> labels in public/enquire.html
 function calculateDeadline(urgency: string): string | null {
+  const days: Record<string, number> = {
+    "As soon as possible": 3,
+    "Within the next week": 7,
+    "Within the next 2 weeks": 14,
+    "Within the next month": 30,
+  };
+  const offset = days[urgency];
+  if (!offset) return null;
   const now = new Date();
-  switch (urgency) {
-    case "asap":
-      now.setDate(now.getDate() + 3);
-      break;
-    case "week":
-      now.setDate(now.getDate() + 7);
-      break;
-    case "two-weeks":
-      now.setDate(now.getDate() + 14);
-      break;
-    case "month":
-      now.setDate(now.getDate() + 30);
-      break;
-    default:
-      return null;
-  }
+  now.setDate(now.getDate() + offset);
   return now.toISOString().slice(0, 10);
 }
