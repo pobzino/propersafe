@@ -28,6 +28,14 @@ const nextConfig: NextConfig = {
           source: "/sample-report",
           destination: "/sample-report.html",
         },
+        {
+          source: "/privacy",
+          destination: "/privacy.html",
+        },
+        {
+          source: "/terms",
+          destination: "/terms.html",
+        },
       ],
     };
   },

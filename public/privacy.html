@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy | Propersafe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f6efe2;
+      --paper-soft: #fff9ef;
+      --ink: #15120e;
+      --muted: #655f56;
+      --muted-strong: #3b352e;
+      --line: rgba(21, 18, 14, 0.13);
+      --gold-dark: #7b5518;
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "Inter", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { width: min(720px, calc(100% - 40px)); margin: 0 auto; }
+    header {
+      padding: 32px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo img { height: 30px; width: auto; object-fit: contain; }
+    .back-link {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 1px;
+    }
+    .back-link:hover { color: var(--ink); border-color: var(--ink); }
+    article {
+      background: var(--paper-soft);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 48px;
+      margin: 16px 0 64px;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(30px, 5vw, 40px);
+      font-weight: 300;
+      line-height: 1.1;
+      margin: 0 0 8px;
+    }
+    .updated { font-size: 13px; color: var(--muted); margin: 0 0 32px; }
+    h2 {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 400;
+      margin: 32px 0 10px;
+    }
+    p, li { font-size: 15px; color: var(--muted-strong); }
+    ul { padding-left: 20px; margin: 0 0 16px; }
+    li { margin-bottom: 6px; }
+    a { color: var(--gold-dark); }
+    @media (max-width: 600px) { article { padding: 28px 22px; } }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <a href="/" class="logo"><img src="logo-light.png" alt="Propersafe" onerror="this.onerror=null;this.src='logo-dark.png';"></a>
+    <a href="/" class="back-link">← Back to propersafe</a>
+  </header>
+
+  <article>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: 10 June 2026</p>
+
+    <p>Propersafe ("we", "us") provides independent, buyer-side property verification in Abuja, Nigeria, primarily for clients living abroad. This policy explains what personal information we collect, why, and how we handle it.</p>
+
+    <h2>What we collect</h2>
+    <ul>
+      <li><strong>Contact details</strong> — your name, email address, WhatsApp number, and where you're based, when you submit an enquiry or risk analysis request.</li>
+      <li><strong>Property and situation details</strong> — the location, type, and approximate value of the property or project you ask us about, your timeline, your concerns, and any notes you write.</li>
+      <li><strong>Documents you upload</strong> — files you choose to share with us (for example title documents, survey plans, invoices, or site photos) so our professionals can review them.</li>
+      <li><strong>Usage data</strong> — anonymous analytics about how the site is used (pages viewed, form steps reached), collected via PostHog. We may also record anonymised session replays to improve the site; typed form input is masked in recordings.</li>
+    </ul>
+
+    <h2>How we use it</h2>
+    <ul>
+      <li>To assess your situation and respond with scope, timeline, and fees.</li>
+      <li>To carry out the verification work you engage us for, including sharing relevant details and documents with the vetted professionals (lawyers, surveyors, quantity surveyors, engineers) working on your case.</li>
+      <li>To communicate with you by email and WhatsApp about your enquiry or case.</li>
+      <li>To improve the website and our service.</li>
+    </ul>
+    <p>We do not sell your information, and we do not share it with sellers, agents, developers, or contractors connected to your transaction.</p>
+
+    <h2>Where it's stored</h2>
+    <p>Your data is stored on secure cloud infrastructure (Supabase for case records and documents). Emails are delivered via Resend, WhatsApp messages via Twilio, and analytics processed by PostHog (US Cloud). Each provider processes data only as needed to deliver their service.</p>
+
+    <h2>How long we keep it</h2>
+    <p>We keep enquiry and case records for as long as needed to provide the service and meet our legal and professional obligations. If you never become a client, you can ask us to delete your enquiry data at any time.</p>
+
+    <h2>Your rights</h2>
+    <p>You can ask us at any time to access, correct, or delete the personal information we hold about you. Email <a href="mailto:hello@propersafe.ng">hello@propersafe.ng</a> and we'll respond promptly.</p>
+
+    <h2>Contact</h2>
+    <p>Propersafe · Abuja, Nigeria · <a href="mailto:hello@propersafe.ng">hello@propersafe.ng</a></p>
+  </article>
+</div>
+</body>
+</html>
