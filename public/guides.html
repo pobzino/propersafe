@@ -166,6 +166,25 @@
       });
     }
 
+    // One-big-picture backdrops: size the shared survey-sheet drawing to the
+    // whole grid and offset each card's slice, so the cards read as windows
+    // onto a single map.
+    var grid = document.querySelector(".card-grid");
+    function layoutTiles() {
+      if (!grid) return;
+      var g = grid.getBoundingClientRect();
+      if (!g.width) return;
+      grid.querySelectorAll(".gcard:not(.is-hidden) .gcard__bg").forEach(function (bg) {
+        if (bg.classList.contains("bg-photo")) return;
+        var c = bg.getBoundingClientRect();
+        bg.style.backgroundSize = g.width + "px " + g.height + "px";
+        bg.style.backgroundPosition = (g.left - c.left) + "px " + (g.top - c.top) + "px";
+      });
+    }
+    window.addEventListener("resize", layoutTiles);
+    window.addEventListener("load", layoutTiles);
+    layoutTiles();
+
     // Category filter
     var buttons = document.querySelectorAll(".filter-btn");
     var cards = document.querySelectorAll(".gcard");
@@ -178,6 +197,7 @@
           var show = f === "all" || card.getAttribute("data-cat") === f;
           card.classList.toggle("is-hidden", !show);
         });
+        layoutTiles();
         if (window.psTrack) window.psTrack("guides_filtered", { filter: f });
       });
     });

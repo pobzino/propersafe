@@ -297,21 +297,21 @@ td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--line); vertical-a
 .gcard.is-hidden { display: none; }
 .gcard--wide { grid-column: span 2; }
 .gcard > span { display: block; }
-/* Backdrop layer — survey-plan (TDP) line art: dashed plot boundaries and
-   beacon markers in faint gold on the card's flat ink. The bg-a..d classes
-   rotate/flip the same drawing for variety. To use a photo on a card instead,
-   add class "bg-photo" and an inline style="background-image:url(...)". */
+/* Backdrop layer — one large survey sheet (dashed plot boundaries, beacon
+   markers, a road corridor) shared across ALL cards: a script on the index
+   sizes the drawing to the whole grid and offsets each card's slice, so the
+   cards read as windows onto a single cadastral map. To use a photo on a
+   card instead, add class "bg-photo" and an inline background-image style —
+   the script skips it. */
 .gcard__bg {
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 520'%3E%3Cg fill='none' stroke='%23c49138' stroke-opacity='0.16' stroke-width='1'%3E%3Cpath d='M-20 150 L150 96 L380 176 L430 330' stroke-dasharray='5 7'/%3E%3Cpath d='M150 96 L118 332 L302 424' stroke-dasharray='5 7'/%3E%3Cpath d='M-30 384 L118 332' stroke-dasharray='5 7'/%3E%3Cpath d='M302 424 L432 386' stroke-dasharray='5 7'/%3E%3Cpath d='M380 176 L302 424' stroke-dasharray='2 9' stroke-opacity='0.5'/%3E%3C/g%3E%3Cg fill='none' stroke='%23c49138' stroke-opacity='0.34' stroke-width='1'%3E%3Ccircle cx='150' cy='96' r='7'/%3E%3Cpath d='M150 85 v22 M139 96 h22'/%3E%3Ccircle cx='118' cy='332' r='7'/%3E%3Cpath d='M118 321 v22 M107 332 h22'/%3E%3Ccircle cx='302' cy='424' r='7'/%3E%3Cpath d='M302 413 v22 M291 424 h22'/%3E%3Ccircle cx='380' cy='176' r='7'/%3E%3Cpath d='M380 165 v22 M369 176 h22'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 1200' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='none' stroke='%23c49138' stroke-opacity='0.15' stroke-width='1.2'%3E%3Cpath d='M-40 210 L300 140 L640 260 L580 560 L240 520 L-40 580' stroke-dasharray='6 8'/%3E%3Cpath d='M640 260 L980 180 L1240 300' stroke-dasharray='6 8'/%3E%3Cpath d='M980 180 L1040 480 L580 560' stroke-dasharray='6 8'/%3E%3Cpath d='M240 520 L180 860 L520 980' stroke-dasharray='6 8'/%3E%3Cpath d='M580 560 L520 980 L900 900 L1040 480' stroke-dasharray='6 8'/%3E%3Cpath d='M520 980 L460 1240' stroke-dasharray='6 8'/%3E%3Cpath d='M900 900 L1000 1180' stroke-dasharray='6 8'/%3E%3Cpath d='M180 860 L-60 940' stroke-dasharray='6 8'/%3E%3Cpath d='M300 140 L260 -40' stroke-dasharray='6 8'/%3E%3C/g%3E%3Cpath d='M-50 760 C300 640 700 820 1250 700' fill='none' stroke='%23c49138' stroke-opacity='0.1' stroke-width='14'/%3E%3Cpath d='M-50 760 C300 640 700 820 1250 700' fill='none' stroke='%23c49138' stroke-opacity='0.22' stroke-width='1' stroke-dasharray='2 10'/%3E%3Cg fill='none' stroke='%23c49138' stroke-opacity='0.32' stroke-width='1.2'%3E%3Ccircle cx='300' cy='140' r='8'/%3E%3Cpath d='M300 128 v24 M288 140 h24'/%3E%3Ccircle cx='640' cy='260' r='8'/%3E%3Cpath d='M640 248 v24 M628 260 h24'/%3E%3Ccircle cx='980' cy='180' r='8'/%3E%3Cpath d='M980 168 v24 M968 180 h24'/%3E%3Ccircle cx='580' cy='560' r='8'/%3E%3Cpath d='M580 548 v24 M568 560 h24'/%3E%3Ccircle cx='240' cy='520' r='8'/%3E%3Cpath d='M240 508 v24 M228 520 h24'/%3E%3Ccircle cx='1040' cy='480' r='8'/%3E%3Cpath d='M1040 468 v24 M1028 480 h24'/%3E%3Ccircle cx='180' cy='860' r='8'/%3E%3Cpath d='M180 848 v24 M168 860 h24'/%3E%3Ccircle cx='520' cy='980' r='8'/%3E%3Cpath d='M520 968 v24 M508 980 h24'/%3E%3Ccircle cx='900' cy='900' r='8'/%3E%3Cpath d='M900 888 v24 M888 900 h24'/%3E%3C/g%3E%3C/svg%3E");
   background-size: cover;
   background-position: center;
 }
-.bg-b { transform: scaleX(-1); }
-.bg-c { transform: rotate(180deg); }
-.bg-d { transform: scaleX(-1) rotate(180deg); }
-.bg-photo { transform: none; background-size: cover; background-position: center; }
+.bg-photo { background-size: cover !important; background-position: center !important; }
 .gcard__num {
   position: absolute;
   top: 44px;
