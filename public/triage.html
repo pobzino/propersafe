@@ -342,95 +342,132 @@
             min-height: 1.5em;
         }
 
-        /* ── RESULTS ── */
+        /* ── PRELIMINARY RISK NOTE ── */
         .results-screen {
             display: none;
-            text-align: center;
-            padding-bottom: 40px;
+            padding-bottom: 48px;
         }
-        .verdict-box {
+        .risk-note {
             background: var(--charcoal);
             border: 1px solid var(--line);
-            padding: 40px;
             border-radius: 12px;
-            margin-bottom: 32px;
-            text-align: center;
+            padding: 40px 44px;
+            margin-bottom: 28px;
+            text-align: left;
         }
-        .verdict-level {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            margin-bottom: 16px;
+        .rn-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--line);
         }
-        .verdict-title {
+        .rn-eyebrow {
             font-family: var(--serif);
-            font-size: clamp(28px, 5vw, 40px);
-            line-height: 1.1;
-            margin: 0 0 20px;
+            font-size: 22px;
             font-weight: 300;
+            color: var(--paper-soft);
+            margin: 0;
         }
-        .verdict-text {
-            font-size: 16px;
+        .rn-meta {
+            font-size: 12px;
+            letter-spacing: 0.1em;
             color: var(--muted);
-            max-width: 480px;
-            margin: 0 auto;
-            line-height: 1.7;
+            margin: 0;
+        }
+        .rn-section {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .rn-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--muted);
+            margin: 0 0 10px;
+        }
+        .rn-exposure {
+            font-family: var(--serif);
+            font-size: 26px;
+            font-weight: 400;
+            line-height: 1.1;
+            margin: 0 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .rn-exposure::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            flex-shrink: 0;
         }
         .risk--low { color: var(--green-text); }
         .risk--moderate { color: var(--yellow); }
         .risk--high { color: var(--red); }
-
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            text-align: left;
-            margin-top: 36px;
+        .rn-text {
+            font-size: 14.5px;
+            color: rgba(255, 249, 239, 0.75);
+            line-height: 1.7;
+            margin: 0;
+            max-width: 540px;
         }
-        .comparison-col {
-            padding: 20px;
-            border-radius: 8px;
+        .rn-finding {
+            padding: 12px 0;
+            border-top: 1px solid rgba(255, 249, 239, 0.05);
         }
-        .comparison-col--gaps {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--line);
-        }
-        .comparison-col--fixes {
-            background: rgba(196, 145, 56, 0.05);
-            border: 1px solid var(--gold-dim);
-        }
-        .comparison-col p {
-            font-size: 12px;
-            font-weight: 600;
-            margin: 0 0 12px;
-        }
-        .comparison-col--gaps p { color: var(--red); }
-        .comparison-col--fixes p { color: var(--gold); }
-        .comparison-col ul {
+        .rn-finding:first-child { border-top: none; padding-top: 0; }
+        .rn-finding-gap {
             font-size: 14px;
-            padding-left: 18px;
+            color: rgba(255, 249, 239, 0.8);
+            margin: 0 0 3px;
+            line-height: 1.5;
+        }
+        .rn-finding-fix {
+            font-size: 12.5px;
+            color: var(--gold);
             margin: 0;
         }
-        .comparison-col--gaps ul { color: var(--muted); }
-        .comparison-col--fixes ul { color: var(--paper-soft); }
-        .comparison-col li { margin-bottom: 8px; }
-
-        .followup-note {
-            font-size: 14px;
-            color: var(--muted);
-            max-width: 440px;
-            margin: 0 auto 32px;
+        .rn-finding-fix span { color: var(--muted); }
+        .rn-rec-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
         }
-        .followup-note strong { color: var(--paper-soft); font-weight: 500; }
-        .results-ref {
-            display: inline-block;
-            margin-bottom: 28px;
-            padding: 10px 24px;
-            border: 1px solid var(--line);
-            border-radius: 100px;
-            font-size: 12px;
-            letter-spacing: 0.1em;
+        .rn-rec-name {
+            font-family: var(--serif);
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--paper-soft);
+            line-height: 1.2;
+        }
+        .rn-rec-price {
+            font-size: 14px;
+            font-weight: 600;
             color: var(--gold);
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+        }
+        .rn-rec-covers {
+            font-size: 13.5px;
+            color: var(--muted);
+            line-height: 1.65;
+            margin: 0;
+            max-width: 540px;
+        }
+        .rn-foot {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.65;
+            margin: 0;
+            padding-top: 22px;
         }
         .results-actions {
             display: flex;
@@ -445,8 +482,9 @@
             .step-title { font-size: 24px; }
             .option-btn { padding: 16px; }
             .nav-buttons { flex-direction: column-reverse; }
-            .comparison-grid { grid-template-columns: 1fr; }
-            .verdict-box { padding: 32px 20px; }
+            .risk-note { padding: 28px 22px; }
+            .rn-exposure { font-size: 22px; }
+            .rn-rec-name { font-size: 20px; }
         }
     </style>
 </head>
@@ -594,30 +632,39 @@
         <div class="loading-msg" id="loading-msg">Reviewing your situation...</div>
     </div>
 
-    <!-- INSTANT RESULTS -->
+    <!-- PRELIMINARY RISK NOTE -->
     <div class="results-screen" id="results-screen">
-        <div class="verdict-box">
-            <div class="verdict-level" id="verdict-level"></div>
-            <h2 class="verdict-title" id="verdict-title"></h2>
-            <p class="verdict-text" id="verdict-text"></p>
-
-            <div class="comparison-grid" id="comparison-grid" style="display: none;">
-                <div class="comparison-col comparison-col--gaps">
-                    <p>WHAT YOU HAVE NOW</p>
-                    <ul id="current-gaps"></ul>
-                </div>
-                <div class="comparison-col comparison-col--fixes">
-                    <p>WITH A PROPERSAFE CHECK</p>
-                    <ul id="propersafe-solutions"></ul>
-                </div>
+        <div class="risk-note">
+            <div class="rn-head">
+                <p class="rn-eyebrow">Preliminary Risk Assessment</p>
+                <p class="rn-meta" id="results-ref"></p>
             </div>
+
+            <div class="rn-section">
+                <p class="rn-label">Exposure</p>
+                <p class="rn-exposure" id="verdict-level"></p>
+                <p class="rn-text" id="verdict-text"></p>
+            </div>
+
+            <div class="rn-section" id="findings-section" style="display: none;">
+                <p class="rn-label">Unverified items</p>
+                <div id="findings-list"></div>
+            </div>
+
+            <div class="rn-section">
+                <p class="rn-label">Recommended next step</p>
+                <div class="rn-rec-row">
+                    <span class="rn-rec-name" id="rec-name"></span>
+                    <span class="rn-rec-price" id="rec-price"></span>
+                </div>
+                <p class="rn-rec-covers" id="rec-covers"></p>
+            </div>
+
+            <p class="rn-foot">Indicative assessment based on your answers. A Propersafe specialist will review your situation — including any documents you uploaded — and confirm scope by email within 24 hours. No payment is required at this stage.</p>
         </div>
 
-        <div class="results-ref" id="results-ref"></div>
-        <p class="followup-note">This is an instant indicative read based on your answers. <strong>A Propersafe specialist will review your situation — including any documents you uploaded — and email you a confirmed risk note within 24 hours.</strong></p>
-
         <div class="results-actions">
-            <button class="btn btn-primary" id="result-cta" style="padding: 16px 24px;">Start your full enquiry →</button>
+            <button class="btn btn-primary" id="result-cta">Request this check →</button>
             <button class="btn btn-secondary" id="back-home">Back to Home</button>
         </div>
     </div>
@@ -827,24 +874,49 @@
 
     const VERDICTS = {
         High: {
-            title: 'High Risk — Pause Before Paying',
             cls: 'risk--high',
-            label: '🔴 High Risk',
-            text: 'Based on your answers, money is about to move with little or no independent verification behind it. This is the exact pattern behind most diaspora capital loss in Abuja. Do not transfer funds until the gaps below are closed.'
+            label: 'High',
+            text: 'Based on your answers, funds are due to move with little independent verification in place. We recommend completing the items below before any payment or commitment is made.'
         },
         Moderate: {
-            title: 'Moderate Risk — Blind Spots Detected',
             cls: 'risk--moderate',
-            label: '🟡 Moderate Risk',
-            text: 'You have some of the right paperwork, but it is seller-provided and unverified. Document cloning and inflated invoicing are most common at exactly this stage. The gaps below should be closed before you commit.'
+            label: 'Moderate',
+            text: 'Some documentation exists, but it is seller-provided and has not been verified at source. The items below should be closed out before you commit.'
         },
         Low: {
-            title: 'Lower Risk — Verify Before Closing',
             cls: 'risk--low',
-            label: '🟢 Lower Risk',
-            text: 'Your situation has more structure than most. The remaining step is independent verification at source — most late-stage losses happen when buyers relax just before closing.'
+            label: 'Lower',
+            text: 'Your situation has more structure than most we review. The remaining step is verification at source — most late-stage losses occur after buyers relax close to completion.'
         }
     };
+
+    // Canonical services (matching the landing page) keyed by triage intent
+    const RECOMMENDATIONS = {
+        'Buy land': {
+            name: 'Property Title & Document Audit',
+            price: 'From £350',
+            covers: 'Covers: AGIS search · court & litigation · C of O verification · survey & beacons · seller authority. Delivered as a written Buyer Risk Report with a proceed / pause / avoid verdict.',
+            service: 'land'
+        },
+        'Plan a build': {
+            name: 'Construction Cost Audit',
+            price: 'From £250',
+            covers: 'Covers: an independent Quantity Surveyor reviews your contractor’s quote against current Abuja market rates, identifying padding and hidden costs. Delivered as a Build Cost Preview Report.',
+            service: 'build'
+        },
+        'Pay a contractor': {
+            name: 'Milestone & Payment Audit',
+            price: 'From £150',
+            covers: 'Covers: a site engineer verifies on the ground that completed work matches the invoice before you release funds. Delivered as a written Payment Recommendation.',
+            service: 'payment'
+        }
+    };
+    RECOMMENDATIONS['Buy a house/flat/duplex'] = RECOMMENDATIONS['Buy land'];
+    RECOMMENDATIONS['Not sure'] = Object.assign({}, RECOMMENDATIONS['Buy land'], {
+        covers: RECOMMENDATIONS['Buy land'].covers + ' Most situations start here — we confirm the right scope with you before any work begins.'
+    });
+
+    let currentRec = RECOMMENDATIONS['Buy land'];
 
     /* ── SUBMIT ── */
     document.getElementById('submit-triage').addEventListener('click', async function() {
@@ -871,18 +943,7 @@
         document.getElementById('triage-form').style.display = 'none';
         const loading = document.getElementById('loading-screen');
         loading.style.display = 'block';
-
-        const msgs = [
-            'Reviewing your situation...',
-            'Checking your document coverage...',
-            'Preparing your risk profile...'
-        ];
-        let msgIdx = 0;
-        const msgEl = document.getElementById('loading-msg');
-        const msgInterval = setInterval(() => {
-            msgIdx = (msgIdx + 1) % msgs.length;
-            msgEl.innerText = msgs[msgIdx];
-        }, 1100);
+        document.getElementById('loading-msg').innerText = 'Submitting your details…';
 
         const fd = new FormData();
         fd.append('payload', JSON.stringify({
@@ -903,7 +964,6 @@
         try {
             const response = await fetch('/api/risk-calculator', { method: 'POST', body: fd });
             const data = await response.json().catch(() => ({}));
-            clearInterval(msgInterval);
 
             if (!response.ok) {
                 throw new Error(data.error || 'Something went wrong. Please try again.');
@@ -913,7 +973,6 @@
             loading.style.display = 'none';
             showResults(score, riskLevel, data.caseRef);
         } catch (err) {
-            clearInterval(msgInterval);
             loading.style.display = 'none';
             document.getElementById('triage-form').style.display = 'block';
             btn.disabled = false;
@@ -925,30 +984,40 @@
         const v = VERDICTS[riskLevel];
         const levelEl = document.getElementById('verdict-level');
         levelEl.innerText = v.label;
-        levelEl.className = 'verdict-level ' + v.cls;
-        document.getElementById('verdict-title').innerText = v.title;
+        levelEl.className = 'rn-exposure ' + v.cls;
         document.getElementById('verdict-text').innerText = v.text;
 
         const { gaps, fixes } = buildGapAnalysis();
         if (gaps.length > 0) {
-            document.getElementById('comparison-grid').style.display = 'grid';
-            document.getElementById('current-gaps').innerHTML = '';
-            document.getElementById('propersafe-solutions').innerHTML = '';
-            gaps.forEach(g => {
-                const li = document.createElement('li');
-                li.textContent = g;
-                document.getElementById('current-gaps').appendChild(li);
-            });
-            fixes.forEach(f => {
-                const li = document.createElement('li');
-                li.textContent = f;
-                document.getElementById('propersafe-solutions').appendChild(li);
+            document.getElementById('findings-section').style.display = 'block';
+            const list = document.getElementById('findings-list');
+            list.innerHTML = '';
+            gaps.forEach((g, i) => {
+                const row = document.createElement('div');
+                row.className = 'rn-finding';
+                const gap = document.createElement('p');
+                gap.className = 'rn-finding-gap';
+                gap.textContent = g;
+                const fix = document.createElement('p');
+                fix.className = 'rn-finding-fix';
+                const lbl = document.createElement('span');
+                lbl.textContent = 'Resolved by: ';
+                fix.appendChild(lbl);
+                fix.appendChild(document.createTextNode(fixes[i] || ''));
+                row.appendChild(gap);
+                row.appendChild(fix);
+                list.appendChild(row);
             });
         }
 
+        currentRec = RECOMMENDATIONS[formData.intent] || RECOMMENDATIONS['Buy land'];
+        document.getElementById('rec-name').textContent = currentRec.name;
+        document.getElementById('rec-price').textContent = currentRec.price;
+        document.getElementById('rec-covers').textContent = currentRec.covers;
+
         const refEl = document.getElementById('results-ref');
         if (caseRef) {
-            refEl.textContent = 'Reference: ' + caseRef;
+            refEl.textContent = 'Ref: ' + caseRef;
         } else {
             refEl.style.display = 'none';
         }
@@ -958,15 +1027,8 @@
     }
 
     /* ── RESULT CTAs ── */
-    const INTENT_SERVICE_MAP = {
-        'Buy land': 'land',
-        'Buy a house/flat/duplex': 'land',
-        'Plan a build': 'build',
-        'Pay a contractor': 'payment'
-    };
-
     document.getElementById('result-cta').addEventListener('click', function() {
-        const service = INTENT_SERVICE_MAP[formData.intent] || '';
+        const service = currentRec.service || '';
         track('triage_cta_clicked', { service: service || 'none' });
         if (inIframe) {
             window.parent.postMessage({ type: 'open-enquiry', service: service }, '*');

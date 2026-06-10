@@ -105,11 +105,11 @@ export async function POST(request: NextRequest) {
     // Send confirmation email to client
     const serviceLabel =
       body.service === "land"
-        ? "Land & Property Validity Check"
+        ? "Property Title & Document Audit"
         : body.service === "build"
-        ? "Build Cost Preview"
+        ? "Construction Cost Audit"
         : body.service === "payment"
-        ? "Payment Sanity Check"
+        ? "Milestone & Payment Audit"
         : "Property Verification";
 
     await sendEnquiryConfirmation({
