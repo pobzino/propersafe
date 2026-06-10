@@ -294,9 +294,32 @@ td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--line); vertical-a
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .gcard:hover { transform: translateY(-5px); box-shadow: 0 30px 70px rgba(21, 18, 14, 0.25); }
+.gcard:hover .gcard__bg { filter: brightness(1.6); }
 .gcard.is-hidden { display: none; }
 .gcard--wide { grid-column: span 2; }
-.gcard > span { display: block; }
+.gcard > span, .gcard__panel span { display: block; }
+.gcard__hook {
+  position: relative;
+  margin: auto 10px 20px;
+  padding-top: 58px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1.3;
+  color: rgba(255, 249, 239, 0.72);
+  text-align: left;
+}
+.gcard--wide .gcard__hook { font-size: 28px; max-width: 480px; }
+.gcard__hook::before {
+  content: "";
+  display: block;
+  width: 26px;
+  height: 1px;
+  background: var(--gold);
+  margin-bottom: 14px;
+  opacity: 0.8;
+}
 /* Backdrop layer — one large survey sheet (dashed plot boundaries, beacon
    markers, a road corridor) shared across ALL cards: a script on the index
    sizes the drawing to the whole grid and offsets each card's slice, so the
@@ -364,7 +387,9 @@ td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--line); vertical-a
   line-height: 1.18;
   color: var(--ink);
   margin: 0;
+  transition: color 0.2s ease;
 }
+.gcard:hover .gcard__title { color: var(--gold-dark); }
 .gcard--wide .gcard__title { font-size: 26px; }
 .gcard__desc {
   font-size: 13px;
@@ -377,23 +402,20 @@ td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--line); vertical-a
   transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.35s ease;
 }
 .gcard__more {
-  display: inline-flex;
+  display: inline-flex !important;
   align-items: center;
   gap: 8px;
+  margin-top: 12px;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--gold-dark);
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.35s ease;
+  transition: gap 0.25s ease;
 }
+.gcard:hover .gcard__more { gap: 14px; }
 .gcard:hover .gcard__desc, .gcard:focus-visible .gcard__desc { max-height: 100px; opacity: 1; margin-top: 10px; }
-.gcard:hover .gcard__more, .gcard:focus-visible .gcard__more { max-height: 30px; opacity: 1; margin-top: 12px; }
 @media (hover: none) {
   .gcard__desc { max-height: none; opacity: 1; margin-top: 10px; }
-  .gcard__more { max-height: none; opacity: 1; margin-top: 12px; }
 }
 .idx-wrap .cta-band { margin: 72px 0 0; }
 .idx-wrap .cta-band h2 em { font-style: italic; color: var(--gold); font-weight: 400; }
