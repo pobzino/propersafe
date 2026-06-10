@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /dashboard
+Disallow: /cases
+Disallow: /case/
+Disallow: /login
+Disallow: /client-login
+Disallow: /register
+Disallow: /professionals
+
+Sitemap: https://propersafe.ng/sitemap.xml

@@ -5,6 +5,19 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: resolve("."),
   },
+  async headers() {
+    // Internal/auth pages should never appear in search results
+    const noindex = [{ key: "X-Robots-Tag", value: "noindex" }];
+    return [
+      { source: "/login", headers: noindex },
+      { source: "/client-login", headers: noindex },
+      { source: "/register", headers: noindex },
+      { source: "/dashboard/:path*", headers: noindex },
+      { source: "/cases/:path*", headers: noindex },
+      { source: "/case/:path*", headers: noindex },
+      { source: "/professionals/:path*", headers: noindex },
+    ];
+  },
   async rewrites() {
     return {
       beforeFiles: [
@@ -35,6 +48,14 @@ const nextConfig: NextConfig = {
         {
           source: "/terms",
           destination: "/terms.html",
+        },
+        {
+          source: "/guides",
+          destination: "/guides.html",
+        },
+        {
+          source: "/guides/:slug",
+          destination: "/guides/:slug.html",
         },
       ],
     };
