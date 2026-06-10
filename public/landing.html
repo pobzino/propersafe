@@ -372,6 +372,52 @@
         text-transform: uppercase;
       }
 
+      /* Hero entrance + scroll cue */
+      @keyframes heroRise {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes heroFade {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes scrollBob {
+        0%, 100% { transform: translateY(0); opacity: 1; }
+        50% { transform: translateY(6px); opacity: 0.5; }
+      }
+      .hero .eyebrow,
+      .hero h1,
+      .hero__text,
+      .hero__actions {
+        opacity: 0;
+        animation: heroRise 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+      .hero .eyebrow { animation-delay: 0.15s; }
+      .hero h1 { animation-delay: 0.3s; }
+      .hero__text { animation-delay: 0.5s; }
+      .hero__actions { animation-delay: 0.68s; }
+      .hero h1 .accent {
+        opacity: 0;
+        animation: heroFade 0.8s ease 0.62s forwards;
+      }
+      .hero__scroll {
+        opacity: 0;
+        animation: heroFade 0.8s ease 1s forwards, scrollBob 2.4s ease-in-out 1.8s infinite;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .hero .eyebrow,
+        .hero h1,
+        .hero h1 .accent,
+        .hero__text,
+        .hero__actions,
+        .hero__scroll {
+          opacity: 1;
+          animation: none;
+          transform: none;
+        }
+      }
+
       .trust-strip {
         background: var(--charcoal);
         padding: 14px 0;
@@ -478,6 +524,25 @@
         gap: 20px;
         padding: 28px 0;
         border-top: 0.5px solid rgba(21, 18, 14, 0.1);
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+
+      .principle.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .principle.is-visible:nth-child(2) { transition-delay: 0.12s; }
+      .principle.is-visible:nth-child(3) { transition-delay: 0.24s; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .principle {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
       }
 
       .principle:last-child {
@@ -706,7 +771,13 @@
         left: 50%;
         width: 1px;
         background: linear-gradient(180deg, rgba(196,145,56,0) 0%, rgba(196,145,56,0.25) 8%, rgba(196,145,56,0.25) 92%, rgba(196,145,56,0) 100%);
-        transform: translateX(-50%);
+        transform: translateX(-50%) scaleY(0);
+        transform-origin: top center;
+        transition: transform 1.3s ease;
+      }
+
+      .steps-timeline.is-visible::before {
+        transform: translateX(-50%) scaleY(1);
       }
 
       .step-item {
@@ -1167,16 +1238,40 @@
       }
 
       .step-item {
-        transition: opacity 0.6s ease, transform 0.6s ease;
+        opacity: 0;
+        transform: translateY(44px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+
+      .step-item.is-visible {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .step-item__dot {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s, box-shadow 0.3s ease;
+      }
+
+      .step-item.is-visible .step-item__dot {
+        transform: translate(-50%, -50%) scale(1);
       }
 
       .step-item:hover .step-item__dot {
         transform: translate(-50%, -50%) scale(1.3);
         box-shadow: 0 0 0 8px var(--paper), 0 0 0 9px rgba(196, 145, 56, 0.25);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .step-item,
+        .step-item__dot,
+        .steps-timeline::before {
+          transition: none;
+        }
+        .step-item { opacity: 1; transform: none; }
+        .step-item__dot { transform: translate(-50%, -50%) scale(1); }
+        .steps-timeline::before { transform: translateX(-50%) scaleY(1); }
       }
 
       .nav__cta {
@@ -1551,14 +1646,18 @@
       .enquiry-overlay {
         position: fixed;
         inset: 0;
-        z-index: 1000;
+        z-index: 1010;
         visibility: hidden;
+        pointer-events: none;
       }
       .enquiry-overlay.open {
         visibility: visible;
       }
+      .enquiry-overlay.open:not(.closing) {
+        pointer-events: auto;
+      }
       .reveal-circle {
-        position: absolute;
+        position: fixed;
         width: 4px;
         height: 4px;
         border-radius: 50%;
@@ -1566,7 +1665,11 @@
         transform: translate(-50%, -50%) scale(0);
         will-change: transform;
         pointer-events: none;
-        z-index: 1;
+        z-index: 1005;
+        visibility: hidden;
+      }
+      .reveal-circle.active {
+        visibility: visible;
       }
       .overlay-content {
         position: absolute;
@@ -1645,15 +1748,14 @@
         position: fixed;
         inset: 0;
         z-index: 999;
-        background: rgba(15, 14, 10, 0.25);
-        backdrop-filter: blur(2px);
-        -webkit-backdrop-filter: blur(2px);
+        background: rgba(15, 14, 10, 0.4);
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.8s ease;
+        transition: opacity 0.6s ease;
       }
       .overlay-backdrop.visible {
         opacity: 1;
+        pointer-events: auto;
       }
       body.overlay-open {
         overflow: hidden;
@@ -1746,8 +1848,148 @@
 
       .product-card__name { margin-bottom: 0.5rem; }
       .product-card__price { font-size: 14px; font-weight: 600; color: var(--gold); margin-bottom: 1.5rem; letter-spacing: 0.05em; }
+
+      /* ── REPORT PREVIEW ── */
+      .report-preview {
+        background: var(--paper);
+        padding: 108px 0;
+      }
+      .report-preview__inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+        gap: clamp(40px, 6vw, 88px);
+        align-items: center;
+      }
+      .report-preview__eyebrow {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 18px;
+      }
+      .report-preview__title {
+        font-family: "Cormorant Garamond", var(--serif);
+        font-size: clamp(36px, 4.5vw, 56px);
+        font-weight: 200;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        margin-bottom: 20px;
+      }
+      .report-preview__title .accent {
+        font-style: italic;
+        color: var(--gold-dark);
+        font-weight: 400;
+      }
+      .report-preview__text {
+        color: var(--muted);
+        font-size: 17px;
+        font-weight: 300;
+        line-height: 1.7;
+        max-width: 480px;
+        margin-bottom: 24px;
+      }
+      .report-preview__list {
+        list-style: none;
+        margin: 0 0 32px;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .report-preview__list li {
+        position: relative;
+        padding-left: 24px;
+        font-size: 15px;
+        color: var(--muted-strong);
+        font-weight: 400;
+      }
+      .report-preview__list li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 11px;
+        width: 12px;
+        height: 1px;
+        background: var(--gold);
+      }
+      .report-card {
+        display: block;
+        background: var(--paper-soft);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 36px 32px;
+        box-shadow: 0 30px 80px rgba(21, 18, 14, 0.12);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .report-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 40px 90px rgba(21, 18, 14, 0.16);
+      }
+      .report-card__head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--gold-dark);
+        font-weight: 600;
+        margin-bottom: 24px;
+      }
+      .report-card__sample {
+        border: 1px solid var(--line-strong);
+        border-radius: 999px;
+        padding: 3px 10px;
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .report-card__verdict {
+        font-family: "Cormorant Garamond", var(--serif);
+        font-size: 44px;
+        font-weight: 400;
+        letter-spacing: 0.06em;
+        color: var(--terracotta);
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+      .report-card__sub {
+        font-size: 13px;
+        color: var(--muted);
+        margin: 0 0 24px;
+      }
+      .report-card__row {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 10px 0;
+        border-top: 1px solid var(--line);
+        font-size: 13px;
+        color: var(--muted-strong);
+      }
+      .report-card__row .ok { color: #2e6b4f; font-weight: 600; }
+      .report-card__row .warn { color: var(--terracotta); font-weight: 600; }
+
+      @media (max-width: 1040px) {
+        .report-preview__inner {
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+      }
+      @media (max-width: 720px) {
+        .report-preview {
+          padding: 64px 0;
+        }
+        .report-preview__title {
+          font-size: 32px;
+        }
+        .report-card {
+          padding: 28px 22px;
+        }
+      }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="/analytics.js" defer></script>
   </head>
   <body>
     <nav class="nav" aria-label="Primary navigation">
@@ -1780,8 +2022,8 @@
             Propersafe coordinates the right property professionals to verify land, check contractor invoices, and preview build costs — so you can make decisions with clarity, not hope.
           </p>
           <div class="hero__actions">
-            <a class="button" href="/risk-calculator">Check your risk score</a>
-            <a class="button button--ghost" href="#enquire" onclick="openEnquiryFrom(this); return false;">Start an enquiry →</a>
+            <a class="button" href="#enquire" onclick="openEnquiryFrom(this); return false;">Start an enquiry →</a>
+            <a class="button button--ghost" href="#risk-analysis" onclick="openRiskFrom(this); return false;">Pre-payment Risk Analysis</a>
           </div>
         </div>
         <div class="hero__scroll"><span>Scroll</span></div>
@@ -1840,14 +2082,14 @@
 
           <div class="assessment-card" style="margin-top: 5rem; margin-bottom: 0;">
             <div class="assessment-card__content">
-              <p class="assessment-card__eyebrow">Preliminary Diagnostic</p>
-              <h2 class="assessment-card__title">2026 Diaspora Property <span class="accent">Risk Assessment</span></h2>
+              <p class="assessment-card__eyebrow">Professional Assessment</p>
+              <h2 class="assessment-card__title">Pre-Payment <span class="accent">Risk Analysis</span></h2>
               <p class="assessment-card__text">
-                Not ready for a full audit? Identify potential "family traps," title red flags, and contractor padding in under 2 minutes.
+                Tell us what you're buying, building, or paying for. We'll review your situation and confirm what should be checked before any money moves.
               </p>
             </div>
             <div class="assessment-card__action">
-              <a class="button button--gold" href="/risk-calculator">Start Risk Check →</a>
+              <a class="button button--gold" href="#risk-analysis" onclick="openRiskFrom(this); return false;">Start risk analysis →</a>
             </div>
           </div>
         </div>
@@ -2014,7 +2256,8 @@
             <h4>Company</h4>
             <ul>
               <li><a href="#top">Home</a></li>
-              <li><a href="/risk-calculator">Risk Assessment</a></li>
+              <li><a href="#risk-analysis" onclick="openRiskFrom(this); return false;">Pre-payment Risk Analysis</a></li>
+              <li><a href="/sample-report" target="_blank" rel="noopener">Sample report</a></li>
               <li><a href="#enquire" onclick="openEnquiryFrom(this); return false;">Contact</a></li>
               <li><a href="#enquire" onclick="openEnquiryFrom(this); return false;">Enquiry form</a></li>
               <li><a href="/client-login">Client portal</a></li>
@@ -2026,7 +2269,7 @@
             <p>
               <a href="mailto:hello@propersafe.ng">hello@propersafe.ng</a>
             </p>
-            <p>WhatsApp: +234 000 000 0000</p>
+            <p>WhatsApp: <a href="https://wa.me/447599594950">+44 7599 594950</a></p>
             <p>Abuja, Nigeria</p>
           </div>
         </div>
@@ -2055,33 +2298,69 @@
         });
       }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
       productCards.forEach((card) => cardObserver.observe(card));
+      document.querySelectorAll(".principle").forEach((el) => cardObserver.observe(el));
 
+      // Timeline: draw the line when the section enters, reveal each step as it scrolls in.
+      const timeline = document.querySelector(".steps-timeline");
+      if (timeline) {
+        const lineObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              lineObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        lineObserver.observe(timeline);
+
+        const stepObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              stepObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.25, rootMargin: "0px 0px -60px 0px" });
+        document.querySelectorAll(".step-item").forEach((el) => stepObserver.observe(el));
+      }
 
     </script>
 
     </div>
 
-    <!-- ENQUIRY OVERLAY -->
+    <!-- OVERLAY UTILS -->
     <div class="overlay-backdrop" id="overlayBackdrop"></div>
-    <div class="enquiry-overlay" id="enquiryOverlay">
-      <div class="reveal-circle" id="revealCircle"></div>
+    <div class="reveal-circle" id="revealCircle"></div>
 
+    <!-- ENQUIRY OVERLAY -->
+    <div class="enquiry-overlay" id="enquiryOverlay">
       <div class="overlay-content" id="overlayContent">
-        <button class="overlay-close" onclick="closeEnquiry()" aria-label="Close enquiry form">
+        <iframe data-src="enquire.html" title="Submit an enquiry" id="enquiryFrame" allow="autoplay"></iframe>
+        <button class="overlay-close" onclick="closeAllOverlays()" aria-label="Close enquiry form">
           <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>
-        <iframe src="enquire.html" title="Submit an enquiry" id="enquiryFrame" allow="autoplay"></iframe>
+      </div>
+    </div>
+
+    <!-- RISK ANALYSIS OVERLAY -->
+    <div class="enquiry-overlay" id="riskOverlay">
+      <div class="overlay-content">
+        <iframe data-src="triage.html" title="Pre-payment Risk Analysis" id="riskFrame" allow="autoplay"></iframe>
+        <button class="overlay-close" onclick="closeAllOverlays()" aria-label="Close risk analysis">
+          <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
       </div>
     </div>
 
     <script>
-      const overlay = document.getElementById('enquiryOverlay');
+      const enquiryOverlay = document.getElementById('enquiryOverlay');
+      const riskOverlay = document.getElementById('riskOverlay');
       const backdrop = document.getElementById('overlayBackdrop');
       const revealCircle = document.getElementById('revealCircle');
+      
       let isOpen = false;
+      let openType = null; 
       let savedScrollY = 0;
-      let originX = 0;
-      let originY = 0;
 
       function getCoverScale(bx, by) {
         const vw = window.innerWidth;
@@ -2091,104 +2370,181 @@
         return Math.ceil(Math.sqrt(dx * dx + dy * dy) * 1.3);
       }
 
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      let isClosing = false;
+      let closeFallbackTimer = null;
 
-      function openEnquiryFrom(el) {
-        if (isOpen) return;
-        isOpen = true;
-        savedScrollY = window.scrollY;
-
-        const rect = el.getBoundingClientRect();
-        originX = rect.left + rect.width / 2;
-        originY = rect.top + rect.height / 2;
-
-        revealCircle.style.left = originX + 'px';
-        revealCircle.style.top = originY + 'px';
-
-        overlay.classList.remove('closing');
-        overlay.classList.add('open');
-        backdrop.classList.add('visible');
-        document.body.style.paddingRight = scrollbarWidth + 'px';
-        document.body.classList.add('overlay-open');
-        history.pushState({ enquiry: true }, '', '#enquire');
-
-        gsap.fromTo(revealCircle,
-          { scale: 0 },
-          { scale: getCoverScale(originX, originY), duration: 1.1, ease: 'power4.inOut' }
-        );
-      }
-
-      function openEnquiry() {
-        if (isOpen) return;
-        isOpen = true;
-        savedScrollY = window.scrollY;
-
-        originX = window.innerWidth / 2;
-        originY = window.innerHeight / 2;
-        revealCircle.style.left = originX + 'px';
-        revealCircle.style.top = originY + 'px';
-
-        overlay.classList.remove('closing');
-        overlay.classList.add('open');
-        backdrop.classList.add('visible');
-        document.body.style.paddingRight = scrollbarWidth + 'px';
-        document.body.classList.add('overlay-open');
-        history.pushState({ enquiry: true }, '', '#enquire');
-
-        gsap.fromTo(revealCircle,
-          { scale: 0 },
-          { scale: getCoverScale(originX, originY), duration: 1.1, ease: 'power4.inOut' }
-        );
-      }
-
-      function doClose() {
-        if (!overlay.classList.contains('open')) return;
-        overlay.classList.add('closing');
-        backdrop.classList.remove('visible');
-        document.body.style.paddingRight = '';
-        document.body.classList.remove('overlay-open');
+      // Final cleanup after a close — also used to fast-forward an
+      // interrupted close so no half-scaled circle is ever left behind.
+      function finishClose() {
+        clearTimeout(closeFallbackTimer);
+        enquiryOverlay.classList.remove('open', 'closing');
+        riskOverlay.classList.remove('open', 'closing');
+        revealCircle.classList.remove('active');
+        gsap.set(revealCircle, { scale: 0 });
         window.scrollTo(0, savedScrollY);
-
-        const tl = gsap.timeline({
-          onComplete: () => {
-            overlay.classList.remove('open', 'closing');
-          }
-        });
-
-        // Circle shrinks back — responsive start, smooth land
-        tl.to(revealCircle, {
-          scale: 0,
-          duration: 1.1,
-          ease: 'power2.inOut'
-        }, 0);
+        isClosing = false;
+        if (!isOpen) openType = null;
       }
 
-      function closeEnquiry() {
+      function openOverlay(type, el = null, skipHistory = false) {
+        if (isOpen) return;
+
+        // If a close animation is still mid-flight, complete it instantly
+        gsap.killTweensOf(revealCircle);
+        if (isClosing) finishClose();
+
+        isOpen = true;
+        openType = type;
+        savedScrollY = window.scrollY;
+
+        let originX, originY;
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          originX = rect.left + rect.width / 2;
+          originY = rect.top + rect.height / 2;
+        } else {
+          originX = window.innerWidth / 2;
+          originY = window.innerHeight / 2;
+        }
+
+        revealCircle.style.left = originX + 'px';
+        revealCircle.style.top = originY + 'px';
+        revealCircle.classList.add('active');
+
+        // Iframes load lazily on first open to keep the initial page light
+        const frame = type === 'risk'
+          ? document.getElementById('riskFrame')
+          : document.getElementById('enquiryFrame');
+        if (frame && !frame.getAttribute('src')) frame.src = frame.dataset.src;
+
+        if (window.psTrack) window.psTrack('overlay_opened', { type });
+
+        const target = type === 'risk' ? riskOverlay : enquiryOverlay;
+        target.classList.remove('closing');
+        target.classList.add('open');
+        backdrop.classList.add('visible');
+
+        document.body.classList.add('overlay-open');
+
+        if (!skipHistory) {
+          const state = type === 'risk' ? { risk: true } : { enquiry: true };
+          const hash = type === 'risk' ? '#risk-analysis' : '#enquire';
+          // Reuse the spent entry left behind by a previous close so the
+          // back button doesn't accumulate dead steps.
+          if (history.state && history.state.overlayClosed) {
+            history.replaceState(state, '', hash);
+          } else {
+            history.pushState(state, '', hash);
+          }
+        }
+
+        gsap.fromTo(revealCircle,
+          { scale: 0 },
+          { scale: getCoverScale(originX, originY), duration: 0.9, ease: 'power3.inOut' }
+        );
+      }
+
+      function openEnquiryFrom(el) { openOverlay('enquiry', el); }
+      function openRiskFrom(el) { openOverlay('risk', el); }
+      function openEnquiry() { openOverlay('enquiry'); }
+      function openRisk() { openOverlay('risk'); }
+
+      function closeAllOverlays() {
         if (!isOpen) return;
         isOpen = false;
-        doClose();
-        if (window.location.hash === '#enquire') {
-          history.back();
+        isClosing = true;
+
+        const target = openType === 'risk' ? riskOverlay : enquiryOverlay;
+        target.classList.add('closing');
+        backdrop.classList.remove('visible');
+        document.body.classList.remove('overlay-open');
+
+        // Strip the overlay hash in place. (history.back() here is fragile:
+        // it fires popstate asynchronously, can re-open the overlay via the
+        // forward entry, and triggers browser scroll restoration.)
+        if (window.location.hash === '#enquire' || window.location.hash === '#risk-analysis') {
+          history.replaceState({ overlayClosed: true }, '', window.location.pathname + window.location.search);
         }
+
+        gsap.killTweensOf(revealCircle);
+        gsap.to(revealCircle, {
+          scale: 0,
+          duration: 0.7,
+          ease: 'power2.inOut',
+          onComplete: finishClose
+        });
+
+        // Backstop: if the animation clock stalls (hidden tab, dropped
+        // frames), force the cleanup so the overlay can never stay stuck.
+        clearTimeout(closeFallbackTimer);
+        closeFallbackTimer = setTimeout(() => {
+          if (isClosing) {
+            gsap.killTweensOf(revealCircle);
+            finishClose();
+          }
+        }, 1000);
       }
 
-      window.addEventListener('popstate', (e) => {
-        if ((!e.state || !e.state.enquiry) && isOpen) {
-          isOpen = false;
-          doClose();
+      // GSAP's ticker runs on requestAnimationFrame, which stops while the
+      // tab is hidden — a close animation would freeze and leave the circle
+      // stuck on screen. Jump any in-flight circle animation to its end.
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          gsap.getTweensOf(revealCircle).forEach((t) => t.totalProgress(1));
         }
+      });
+
+      window.addEventListener('popstate', (e) => {
+        // If we are open and the state is now empty, close.
+        if (isOpen) {
+          const state = e.state || {};
+          if (!state.enquiry && !state.risk) {
+            closeAllOverlays();
+          }
+        }
+        // If we are closed and the state now has something, open
+        // (without pushing a duplicate history entry).
+        else {
+          if (e.state && e.state.enquiry) openOverlay('enquiry', null, true);
+          else if (e.state && e.state.risk) openOverlay('risk', null, true);
+        }
+      });
+
+      // Swap the risk overlay for the enquiry overlay in place (used by the
+      // triage results CTA), reloading the enquiry frame with the service
+      // preselected via ?service=.
+      function switchToEnquiry(service) {
+        const frame = document.getElementById('enquiryFrame');
+        const url = 'enquire.html' + (service ? '?service=' + encodeURIComponent(service) : '');
+        if (frame.getAttribute('src') !== url) frame.src = url;
+
+        if (!isOpen) {
+          openOverlay('enquiry');
+          return;
+        }
+
+        riskOverlay.classList.remove('open', 'closing');
+        enquiryOverlay.classList.remove('closing');
+        enquiryOverlay.classList.add('open');
+        openType = 'enquiry';
+        history.replaceState({ enquiry: true }, '', '#enquire');
+      }
+
+      window.addEventListener('message', (e) => {
+        if (e.data === 'close-overlay') closeAllOverlays();
+        else if (e.data && e.data.type === 'open-enquiry') switchToEnquiry(e.data.service);
       });
 
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && isOpen) {
-          closeEnquiry();
-        }
+        if (e.key === 'Escape' && isOpen) closeAllOverlays();
       });
 
-      overlay.addEventListener('click', (e) => {
-        if (e.target === overlay || e.target === revealCircle) {
-          closeEnquiry();
-        }
+      [enquiryOverlay, riskOverlay, backdrop].forEach(el => {
+        el.addEventListener('click', (e) => {
+          if (e.target === el || e.target === revealCircle) {
+            closeAllOverlays();
+          }
+        });
       });
     </script>
   </body>

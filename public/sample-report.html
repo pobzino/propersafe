@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sample Buyer Risk Report | Propersafe</title>
+  <meta name="description" content="A redacted sample of the written Buyer Risk Report every Propersafe verification ends with — verdict, findings, and recommended next steps.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f6efe2;
+      --paper-soft: #fff9ef;
+      --ink: #15120e;
+      --muted: #655f56;
+      --muted-strong: #3b352e;
+      --line: rgba(21, 18, 14, 0.13);
+      --line-strong: rgba(21, 18, 14, 0.22);
+      --gold: #c49138;
+      --gold-dark: #7b5518;
+      --green: #2e6b4f;
+      --terracotta: #bb553c;
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "Inter", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container {
+      width: min(760px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+    header {
+      padding: 32px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo img { height: 30px; width: auto; object-fit: contain; }
+    .back-link {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--line-strong);
+      padding-bottom: 1px;
+    }
+    .back-link:hover { color: var(--ink); border-color: var(--ink); }
+
+    .sample-banner {
+      background: var(--ink);
+      color: var(--paper-soft);
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .sample-banner strong { color: var(--gold); font-weight: 600; }
+
+    .report {
+      background: var(--paper-soft);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 30px 80px rgba(21, 18, 14, 0.10);
+      margin: 40px 0 64px;
+      overflow: hidden;
+    }
+    .report__head {
+      padding: 48px 48px 36px;
+      border-bottom: 1px solid var(--line);
+    }
+    .report__eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin: 0 0 14px;
+    }
+    .report__title {
+      font-family: var(--serif);
+      font-size: clamp(32px, 5vw, 44px);
+      font-weight: 300;
+      line-height: 1.1;
+      margin: 0 0 24px;
+    }
+    .report__meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px 24px;
+      font-size: 13px;
+    }
+    .report__meta dt {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+    .report__meta dd { margin: 0; color: var(--muted-strong); font-weight: 500; }
+
+    .verdict {
+      padding: 36px 48px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(187, 85, 60, 0.05);
+    }
+    .verdict__label {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+    .verdict__value {
+      font-family: var(--serif);
+      font-size: 40px;
+      letter-spacing: 0.06em;
+      color: var(--terracotta);
+      line-height: 1;
+      margin: 0 0 14px;
+    }
+    .verdict__text {
+      margin: 0;
+      font-size: 15px;
+      color: var(--muted-strong);
+      max-width: 560px;
+    }
+
+    .report section { padding: 36px 48px; border-bottom: 1px solid var(--line); }
+    .report section:last-of-type { border-bottom: none; }
+    .section-title {
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 400;
+      margin: 0 0 20px;
+    }
+
+    .checks-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .checks-table th {
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      padding: 0 12px 10px 0;
+      border-bottom: 1px solid var(--line-strong);
+    }
+    .checks-table td {
+      padding: 12px 12px 12px 0;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      color: var(--muted-strong);
+    }
+    .status { font-weight: 600; white-space: nowrap; }
+    .status--clear { color: var(--green); }
+    .status--issue { color: var(--terracotta); }
+
+    .finding { margin-bottom: 26px; }
+    .finding:last-child { margin-bottom: 0; }
+    .finding h3 {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 400;
+      margin: 0 0 6px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .finding h3 .status { font-family: var(--sans); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .finding p { margin: 0; font-size: 14px; color: var(--muted-strong); }
+    .redacted {
+      display: inline-block;
+      background: var(--ink);
+      color: var(--ink);
+      border-radius: 2px;
+      padding: 0 4px;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+
+    .recommendations ol { margin: 0; padding-left: 20px; font-size: 14px; color: var(--muted-strong); }
+    .recommendations li { margin-bottom: 10px; }
+
+    .report__foot {
+      padding: 28px 48px;
+      background: rgba(21, 18, 14, 0.03);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .cta-band {
+      text-align: center;
+      padding: 0 0 80px;
+    }
+    .cta-band h2 {
+      font-family: var(--serif);
+      font-size: clamp(28px, 4vw, 38px);
+      font-weight: 300;
+      margin: 0 0 12px;
+    }
+    .cta-band p { color: var(--muted); margin: 0 0 28px; font-size: 15px; }
+    .cta-band .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 40px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--paper-soft);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .cta-band .button:hover { background: #2a241c; transform: translateY(-1px); }
+
+    @media (max-width: 600px) {
+      .report__head, .verdict, .report section, .report__foot { padding-left: 22px; padding-right: 22px; }
+      .checks-table .col-summary { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="sample-banner"><strong>Sample report</strong> — details are redacted and illustrative. Your report follows this exact structure.</div>
+
+<div class="container">
+  <header>
+    <a href="/" class="logo"><img src="logo-light.png" alt="Propersafe" onerror="this.onerror=null;this.src='logo-dark.png';"></a>
+    <a href="/" class="back-link">← Back to propersafe</a>
+  </header>
+
+  <article class="report">
+    <div class="report__head">
+      <p class="report__eyebrow">Propersafe · Confidential</p>
+      <h1 class="report__title">Buyer Risk Report</h1>
+      <dl class="report__meta">
+        <div><dt>Reference</dt><dd>PS-2026-0000 (Sample)</dd></div>
+        <div><dt>Service</dt><dd>Land &amp; Property Validity Check</dd></div>
+        <div><dt>Property</dt><dd>Plot <span class="redacted">redacted</span>, Gwarinpa District, Abuja</dd></div>
+        <div><dt>Prepared for</dt><dd><span class="redacted">redacted</span>, London, UK</dd></div>
+      </dl>
+    </div>
+
+    <div class="verdict">
+      <p class="verdict__label">Verdict</p>
+      <p class="verdict__value">PAUSE</p>
+      <p class="verdict__text">Do not transfer funds yet. Four of six checks returned clear, but the court search surfaced an unresolved suit referencing the parent layout, and the survey check found a beacon discrepancy. Both must be resolved before payment — details and next steps below.</p>
+    </div>
+
+    <section>
+      <h2 class="section-title">Checks at a glance</h2>
+      <table class="checks-table">
+        <thead>
+          <tr><th>Check</th><th>Status</th><th class="col-summary">Summary</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>AGIS title search</td><td><span class="status status--clear">Clear</span></td><td class="col-summary">Certified search confirms the R of O is genuine and registered to the named allottee.</td></tr>
+          <tr><td>Court &amp; litigation search</td><td><span class="status status--issue">Issue found</span></td><td class="col-summary">A pending suit references the parent layout this plot was carved from.</td></tr>
+          <tr><td>C of O / R of O verification</td><td><span class="status status--clear">Clear</span></td><td class="col-summary">Document numbers match registry records; no signs of cloning.</td></tr>
+          <tr><td>Survey &amp; beacon check</td><td><span class="status status--issue">Discrepancy</span></td><td class="col-summary">One beacon is ~4m off the registered coordinates on the ground.</td></tr>
+          <tr><td>Seller authority</td><td><span class="status status--clear">Clear</span></td><td class="col-summary">Seller's identity and authority to sell verified against the allocation chain.</td></tr>
+          <tr><td>Legal review</td><td><span class="status status--clear">Clear</span></td><td class="col-summary">Draft deed of assignment is sound, subject to the two issues above.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2 class="section-title">Key findings</h2>
+
+      <div class="finding">
+        <h3>AGIS title search <span class="status status--clear">Clear</span></h3>
+        <p>A certified true copy (CTC) search dated <span class="redacted">redacted</span> confirms the Right of Occupancy <span class="redacted">redacted</span> is genuine, registered, and free of registered encumbrances. The named allottee matches the seller's allocation chain.</p>
+      </div>
+
+      <div class="finding">
+        <h3>Court &amp; litigation search <span class="status status--issue">Issue found</span></h3>
+        <p>Suit <span class="redacted">redacted</span> at the FCT High Court references the parent layout from which this plot was excised. The suit does not name this plot directly, but until the dispute's scope is confirmed in writing, there is a real risk the plot is affected. We recommend your lawyer obtain the originating processes before any commitment.</p>
+      </div>
+
+      <div class="finding">
+        <h3>Survey &amp; beacon check <span class="status status--issue">Discrepancy</span></h3>
+        <p>Our independent surveyor physically located three of four beacons in their registered positions. Beacon <span class="redacted">redacted</span> sits approximately 4 metres inside the neighbouring parcel's registered boundary. This is commonly resolvable by a re-establishment survey, but it must be corrected — and accepted by the neighbour — before purchase.</p>
+      </div>
+
+      <div class="finding">
+        <h3>Seller authority <span class="status status--clear">Clear</span></h3>
+        <p>The seller's identity documents and the chain of allocation from the original allottee were verified. Power of attorney <span class="redacted">redacted</span> is valid and properly executed.</p>
+      </div>
+    </section>
+
+    <section class="recommendations">
+      <h2 class="section-title">Recommended next steps</h2>
+      <ol>
+        <li><strong>Do not release any payment</strong> until the pending suit's scope is confirmed in writing by your lawyer.</li>
+        <li>Request the seller commission a <strong>beacon re-establishment survey</strong> at their cost, witnessed by our surveyor.</li>
+        <li>If both resolve cleanly, we re-run the court search (validity window: 30 days) and issue an updated verdict.</li>
+        <li>If the seller resists either step, treat that as a signal — walk away.</li>
+      </ol>
+    </section>
+
+    <div class="report__foot">
+      This sample is illustrative: names, references, and findings are fictionalised and redacted. Propersafe never handles purchase funds and earns no commission from any transaction. Your report covers the checks scoped for your case and is delivered as a PDF with the verifying professionals' source documents attached.
+    </div>
+  </article>
+
+  <div class="cta-band">
+    <h2>Want this clarity before your money moves?</h2>
+    <p>Tell us your situation. We reply within 24 hours with scope, timeline, and fees — no payment required.</p>
+    <a class="button" href="/enquire">Start an enquiry →</a>
+  </div>
+</div>
+
+<script src="/analytics.js" defer></script>
+<script>
+  if (window.psTrack) window.psTrack('sample_report_viewed');
+  else window.addEventListener('load', function () {
+    if (window.psTrack) window.psTrack('sample_report_viewed');
+  });
+</script>
+
+</body>
+</html>
