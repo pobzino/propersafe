@@ -1,68 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://propersafe.ng/</loc>
-    <lastmod>2026-06-10</lastmod>
+    <loc>https://propersafe.co/</loc>
+    <lastmod>2026-06-15</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://propersafe.ng/guides</loc>
+    <loc>https://propersafe.co/risk-analysis</loc>
     <lastmod>2026-06-10</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://propersafe.ng/guides/verify-land-title-abuja</loc>
+    <loc>https://propersafe.co/enquire</loc>
     <lastmod>2026-06-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://propersafe.co/guides</loc>
+    <lastmod>2026-06-15</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://propersafe.co/guides/verify-land-title-abuja</loc>
+    <lastmod>2026-06-15</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://propersafe.ng/guides/c-of-o-vs-r-of-o</loc>
-    <lastmod>2026-06-10</lastmod>
+    <loc>https://propersafe.co/guides/c-of-o-vs-r-of-o</loc>
+    <lastmod>2026-06-15</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://propersafe.ng/guides/abuja-land-scams</loc>
-    <lastmod>2026-06-10</lastmod>
+    <loc>https://propersafe.co/guides/abuja-land-scams</loc>
+    <lastmod>2026-06-15</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://propersafe.ng/guides/agis-search</loc>
-    <lastmod>2026-06-10</lastmod>
+    <loc>https://propersafe.co/guides/agis-search</loc>
+    <lastmod>2026-06-15</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://propersafe.ng/guides/estate-land-abuja</loc>
-    <lastmod>2026-06-10</lastmod>
+    <loc>https://propersafe.co/guides/estate-land-abuja</loc>
+    <lastmod>2026-06-15</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://propersafe.ng/guides/where-to-buy-land-abuja</loc>
-    <lastmod>2026-06-10</lastmod>
+    <loc>https://propersafe.co/guides/where-to-buy-land-abuja</loc>
+    <lastmod>2026-06-15</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://propersafe.ng/guides/deed-of-assignment-consent</loc>
-    <lastmod>2026-06-10</lastmod>
+    <loc>https://propersafe.co/guides/deed-of-assignment-consent</loc>
+    <lastmod>2026-06-15</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://propersafe.ng/guides/buying-nigerian-property-from-uk</loc>
-    <lastmod>2026-06-10</lastmod>
+    <loc>https://propersafe.co/guides/buying-nigerian-property-from-uk</loc>
+    <lastmod>2026-06-15</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://propersafe.ng/sample-report</loc>
-    <lastmod>2026-06-10</lastmod>
+    <loc>https://propersafe.co/sample-report</loc>
+    <lastmod>2026-06-15</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://propersafe.ng/privacy</loc>
-    <lastmod>2026-06-10</lastmod>
+    <loc>https://propersafe.co/privacy</loc>
+    <lastmod>2026-06-15</lastmod>
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://propersafe.ng/terms</loc>
-    <lastmod>2026-06-10</lastmod>
+    <loc>https://propersafe.co/terms</loc>
+    <lastmod>2026-06-15</lastmod>
     <priority>0.2</priority>
   </url>
 </urlset>

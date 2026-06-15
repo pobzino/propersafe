@@ -9,4 +9,4 @@ Disallow: /client-login
 Disallow: /register
 Disallow: /professionals
 
-Sitemap: https://propersafe.ng/sitemap.xml
+Sitemap: https://propersafe.co/sitemap.xml
