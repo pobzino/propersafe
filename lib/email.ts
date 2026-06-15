@@ -11,10 +11,7 @@ const APP_URL =
   "https://propersafe-production.up.railway.app";
 
 // Brand assets are always served from the production domain, regardless of APP_URL.
-// logo-light.png = dark logo for light backgrounds; logo-dark.png = light logo for dark.
 const BRAND_URL = "https://propersafe.co";
-const LOGO_ON_LIGHT = `<img src="${BRAND_URL}/logo-light.png" alt="Propersafe" width="137" height="40" style="display:block;border:0;outline:none;text-decoration:none;height:40px;width:137px;" />`;
-const LOGO_ON_DARK = `<img src="${BRAND_URL}/logo-dark.png" alt="Propersafe" width="137" height="40" style="display:block;border:0;outline:none;text-decoration:none;height:40px;width:137px;margin-bottom:16px;" />`;
 
 function esc(value: string | null | undefined): string {
   return String(value ?? "")
@@ -22,6 +19,45 @@ function esc(value: string | null | undefined): string {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+// ── Shared "Premium dark banner" shell ──────────────────────────────────────
+// Dark header band with the cream logo + gold rule, light serif body, gold CTA.
+
+function emailDoc(inner: string): string {
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
+  <body style="margin:0;background:#EDE7DB;padding:32px 12px;font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased;">
+    <div style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 8px 30px rgba(21,18,14,0.12);">
+      ${inner}
+    </div>
+  </body></html>`;
+}
+
+function banner(opts: { eyebrow?: string; title?: string; subtitle?: string } = {}): string {
+  const { eyebrow, title, subtitle } = opts;
+  const hasText = eyebrow || title || subtitle;
+  return `<div style="background:#15120e;padding:32px 24px 26px;text-align:center;">
+    <img src="${BRAND_URL}/logo-dark.png" alt="Propersafe" width="168" height="49" style="display:inline-block;border:0;outline:none;text-decoration:none;height:49px;width:168px;">
+    <div style="height:1px;background:linear-gradient(90deg,rgba(160,120,64,0),#A07840,rgba(160,120,64,0));margin:24px auto ${hasText ? "18px" : "0"};max-width:260px;"></div>
+    ${eyebrow ? `<p style="margin:0;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#C9A46A;">${eyebrow}</p>` : ""}
+    ${title ? `<p style="margin:6px 0 0;font-size:22px;font-weight:600;color:#F0EBE0;">${title}</p>` : ""}
+    ${subtitle ? `<p style="margin:8px 0 0;font-size:14px;color:#C9A46A;">${subtitle}</p>` : ""}
+  </div>`;
+}
+
+function goldButton(href: string, label: string): string {
+  return `<a href="${href}" style="display:inline-block;background:#A07840;color:#ffffff;text-decoration:none;font-size:15px;padding:14px 30px;border-radius:8px;">${label}</a>`;
+}
+
+function footer(): string {
+  return `<div style="padding:24px 38px 32px;border-top:1px solid #ECE9E3;font-size:12px;color:#9a948a;line-height:1.7;">
+    Propersafe · Abuja property verification for diaspora Nigerians<br>
+    <a href="mailto:hello@propersafe.co" style="color:#A07840;text-decoration:none;">hello@propersafe.co</a>
+  </div>`;
+}
+
+function bullet(text: string): string {
+  return `<p style="margin:0 0 13px;"><span style="color:#A07840;">▸</span>&nbsp;&nbsp;${text}</p>`;
 }
 
 export async function sendEnquiryConfirmation(args: {
@@ -37,37 +73,25 @@ export async function sendEnquiryConfirmation(args: {
 
   const { to, name, caseRef, service } = args;
 
-  const html = `
-    <div style="font-family:Georgia,serif;max-width:480px;margin:0 auto;color:#15120e;line-height:1.6;">
-      <div style="padding:28px 24px;border-bottom:1px solid #E8E6E1;">
-        ${LOGO_ON_LIGHT}
+  const html = emailDoc(`
+    ${banner()}
+    <div style="padding:38px 38px 6px;color:#15120e;line-height:1.6;">
+      <p style="margin:0 0 10px;font-size:16px;">Hi ${esc(name)},</p>
+      <p style="margin:0 0 28px;font-size:16px;color:#3f3a33;">We've received your enquiry — here's what happens next.</p>
+      <p style="margin:0 0 2px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#A07840;">Your reference</p>
+      <p style="margin:0 0 4px;font-size:36px;font-weight:600;color:#15120e;">${esc(caseRef)}</p>
+      <p style="margin:0 0 30px;font-size:14px;color:#6B6B6B;">${esc(service)}</p>
+      <div style="font-size:15.5px;color:#3f3a33;">
+        ${bullet("We review your situation within <strong>24 hours</strong>")}
+        ${bullet("We confirm scope, timeline &amp; fees")}
+        ${bullet("You decide whether to proceed")}
+        ${bullet("We coordinate the checks and deliver your report")}
       </div>
-      <div style="padding:32px 24px;">
-        <p style="margin:0 0 8px;font-size:15px;">Hi ${esc(name)},</p>
-        <p style="margin:0 0 20px;font-size:15px;">We've received your enquiry. Here's what happens next:</p>
-
-        <div style="background:#FAF9F6;border-radius:8px;padding:20px;margin-bottom:24px;">
-          <p style="margin:0 0 4px;font-size:11px;color:#6B6B6B;letter-spacing:0.08em;text-transform:uppercase;">Reference</p>
-          <p style="margin:0;font-size:22px;font-weight:600;font-family:Georgia,serif;color:#15120e;">${esc(caseRef)}</p>
-          <p style="margin:12px 0 0;font-size:13px;color:#4A4A4A;">Service: ${esc(service)}</p>
-        </div>
-
-        <ol style="padding-left:20px;margin:0 0 24px;font-size:14px;color:#4A4A4A;">
-          <li style="margin-bottom:8px;">We review your situation within <strong>24 hours</strong></li>
-          <li style="margin-bottom:8px;">We confirm scope, timeline, and fees</li>
-          <li style="margin-bottom:8px;">You decide whether to proceed</li>
-          <li>We coordinate the checks and deliver your report</li>
-        </ol>
-
-        <p style="margin:0 0 4px;font-size:14px;">We'll reach out via email and WhatsApp.</p>
-        <p style="margin:0;font-size:14px;color:#6B6B6B;">No payment is required at this stage.</p>
-      </div>
-      <div style="padding:20px 24px;border-top:1px solid #E8E6E1;font-size:12px;color:#6B6B6B;">
-        <p style="margin:0;">Propersafe · Abuja property verification for diaspora Nigerians</p>
-        <p style="margin:4px 0 0;"><a href="mailto:hello@propersafe.co" style="color:#A07840;text-decoration:none;">hello@propersafe.co</a></p>
-      </div>
+      <div style="margin:32px 0 6px;">${goldButton(`${APP_URL}/client-login`, "Track your case&nbsp;&rarr;")}</div>
+      <p style="margin:20px 0 0;font-size:13px;color:#8a8378;">We'll reach out via email and WhatsApp. No payment is required at this stage.</p>
     </div>
-  `;
+    ${footer()}
+  `);
 
   await resend.emails.send({
     from: `Propersafe <${FROM_EMAIL}>`,
@@ -93,33 +117,25 @@ export async function sendAdminNotification(args: {
 
   const { caseRef, name, email, whatsapp, service, situation, urgency } = args;
 
-  const html = `
-    <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;color:#15120e;line-height:1.5;">
-      <div style="padding:24px;background:#15120e;color:#F0EBE0;border-radius:8px 8px 0 0;">
-        ${LOGO_ON_DARK}
-        <p style="margin:0;font-size:12px;color:#C9A46A;letter-spacing:0.12em;text-transform:uppercase;">New Enquiry</p>
-        <p style="margin:4px 0 0;font-size:20px;font-weight:600;">${esc(caseRef)}</p>
-      </div>
-      <div style="padding:24px;background:#fff;border:1px solid #E8E6E1;border-top:none;border-radius:0 0 8px 8px;">
-        <table style="width:100%;font-size:13px;border-collapse:collapse;">
-          <tr><td style="padding:6px 0;color:#6B6B6B;width:100px;">Name</td><td style="padding:6px 0;font-weight:500;">${esc(name)}</td></tr>
-          <tr><td style="padding:6px 0;color:#6B6B6B;">Email</td><td style="padding:6px 0;"><a href="mailto:${esc(email)}" style="color:#15120e;">${esc(email)}</a></td></tr>
-          ${whatsapp ? `<tr><td style="padding:6px 0;color:#6B6B6B;">WhatsApp</td><td style="padding:6px 0;">${esc(whatsapp)}</td></tr>` : ""}
-          <tr><td style="padding:6px 0;color:#6B6B6B;">Service</td><td style="padding:6px 0;font-weight:500;">${esc(service)}</td></tr>
-          ${urgency ? `<tr><td style="padding:6px 0;color:#6B6B6B;">Urgency</td><td style="padding:6px 0;">${esc(urgency)}</td></tr>` : ""}
-        </table>
-        ${situation ? `
-        <div style="margin-top:16px;padding-top:16px;border-top:1px solid #E8E6E1;">
-          <p style="margin:0 0 4px;font-size:11px;color:#6B6B6B;letter-spacing:0.08em;text-transform:uppercase;">Situation</p>
-          <p style="margin:0;font-size:13px;color:#4A4A4A;white-space:pre-wrap;">${esc(situation)}</p>
-        </div>
-        ` : ""}
-        <div style="margin-top:20px;">
-          <a href="${APP_URL}/cases" style="display:inline-block;padding:10px 20px;background:#15120e;color:#F0EBE0;text-decoration:none;border-radius:6px;font-size:13px;font-weight:500;">View in dashboard →</a>
-        </div>
-      </div>
+  const html = emailDoc(`
+    ${banner({ eyebrow: "New Enquiry", title: esc(caseRef) })}
+    <div style="padding:32px 38px 8px;color:#15120e;line-height:1.5;">
+      <table style="width:100%;font-size:14px;border-collapse:collapse;">
+        <tr><td style="padding:7px 0;color:#9a948a;width:110px;">Name</td><td style="padding:7px 0;font-weight:600;">${esc(name)}</td></tr>
+        <tr><td style="padding:7px 0;color:#9a948a;">Email</td><td style="padding:7px 0;"><a href="mailto:${esc(email)}" style="color:#A07840;text-decoration:none;">${esc(email)}</a></td></tr>
+        ${whatsapp ? `<tr><td style="padding:7px 0;color:#9a948a;">WhatsApp</td><td style="padding:7px 0;">${esc(whatsapp)}</td></tr>` : ""}
+        <tr><td style="padding:7px 0;color:#9a948a;">Service</td><td style="padding:7px 0;font-weight:600;">${esc(service)}</td></tr>
+        ${urgency ? `<tr><td style="padding:7px 0;color:#9a948a;">Urgency</td><td style="padding:7px 0;">${esc(urgency)}</td></tr>` : ""}
+      </table>
+      ${situation ? `
+      <div style="margin-top:18px;padding-top:18px;border-top:1px solid #ECE9E3;">
+        <p style="margin:0 0 6px;font-size:11px;color:#A07840;letter-spacing:0.1em;text-transform:uppercase;">Situation</p>
+        <p style="margin:0;font-size:14px;color:#3f3a33;white-space:pre-wrap;">${esc(situation)}</p>
+      </div>` : ""}
+      <div style="margin:30px 0 6px;">${goldButton(`${APP_URL}/cases`, "View in dashboard&nbsp;&rarr;")}</div>
     </div>
-  `;
+    ${footer()}
+  `);
 
   await resend.emails.send({
     from: `Propersafe <${FROM_EMAIL}>`,
@@ -141,34 +157,23 @@ export async function sendTriageConfirmation(args: {
 
   const { to, name, caseRef } = args;
 
-  const html = `
-    <div style="font-family:Georgia,serif;max-width:480px;margin:0 auto;color:#15120e;line-height:1.6;">
-      <div style="padding:28px 24px;border-bottom:1px solid #E8E6E1;">
-        ${LOGO_ON_LIGHT}
+  const html = emailDoc(`
+    ${banner()}
+    <div style="padding:38px 38px 6px;color:#15120e;line-height:1.6;">
+      <p style="margin:0 0 10px;font-size:16px;">Hi ${esc(name)},</p>
+      <p style="margin:0 0 28px;font-size:16px;color:#3f3a33;">We've received your risk analysis request. A Propersafe specialist is reviewing your situation now.</p>
+      <p style="margin:0 0 2px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#A07840;">Your reference</p>
+      <p style="margin:0 0 30px;font-size:36px;font-weight:600;color:#15120e;">${esc(caseRef)}</p>
+      <div style="font-size:15.5px;color:#3f3a33;">
+        ${bullet("A specialist reviews your answers and any documents within <strong>24 hours</strong>")}
+        ${bullet("We send a short note on what to verify before any money moves")}
+        ${bullet("If you want us to run the checks, we confirm scope, timeline &amp; fees — you decide")}
       </div>
-      <div style="padding:32px 24px;">
-        <p style="margin:0 0 8px;font-size:15px;">Hi ${esc(name)},</p>
-        <p style="margin:0 0 20px;font-size:15px;">We've received your risk analysis request. A Propersafe specialist is reviewing your situation now.</p>
-
-        <div style="background:#FAF9F6;border-radius:8px;padding:20px;margin-bottom:24px;">
-          <p style="margin:0 0 4px;font-size:11px;color:#6B6B6B;letter-spacing:0.08em;text-transform:uppercase;">Reference</p>
-          <p style="margin:0;font-size:22px;font-weight:600;font-family:Georgia,serif;color:#15120e;">${esc(caseRef)}</p>
-        </div>
-
-        <ol style="padding-left:20px;margin:0 0 24px;font-size:14px;color:#4A4A4A;">
-          <li style="margin-bottom:8px;">A specialist reviews your answers and any documents you uploaded within <strong>24 hours</strong></li>
-          <li style="margin-bottom:8px;">We send you a short note confirming what should be verified before any money moves</li>
-          <li>If you want us to run the checks, we confirm scope, timeline, and fees — you decide</li>
-        </ol>
-
-        <p style="margin:0;font-size:14px;color:#6B6B6B;">This analysis is free. No payment is required at this stage.</p>
-      </div>
-      <div style="padding:20px 24px;border-top:1px solid #E8E6E1;font-size:12px;color:#6B6B6B;">
-        <p style="margin:0;">Propersafe · Abuja property verification for diaspora Nigerians</p>
-        <p style="margin:4px 0 0;"><a href="mailto:hello@propersafe.co" style="color:#A07840;text-decoration:none;">hello@propersafe.co</a></p>
-      </div>
+      <div style="margin:32px 0 6px;">${goldButton(APP_URL, "Visit Propersafe&nbsp;&rarr;")}</div>
+      <p style="margin:20px 0 0;font-size:13px;color:#8a8378;">This analysis is free. No payment is required at this stage.</p>
     </div>
-  `;
+    ${footer()}
+  `);
 
   await resend.emails.send({
     from: `Propersafe <${FROM_EMAIL}>`,
@@ -201,53 +206,35 @@ export async function sendTriageNotification(args: {
   const { name, email, caseRef, riskLevel, score, uploadedFiles, details } = args;
 
   const riskColor =
-    riskLevel === "High" ? "#bb553c" : riskLevel === "Moderate" ? "#e2b545" : "#78c878";
+    riskLevel === "High" ? "#df8b7c" : riskLevel === "Moderate" ? "#e2b545" : "#9bd0a3";
+  const riskSubtitle = riskLevel
+    ? `Indicative risk: <strong style="color:${riskColor};">${esc(riskLevel)}</strong>${score != null ? ` (score ${esc(String(score))})` : ""}`
+    : undefined;
 
-  const html = `
-    <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;color:#15120e;line-height:1.5;">
-      <div style="padding:24px;background:#15120e;color:#F0EBE0;border-radius:8px 8px 0 0;">
-        ${LOGO_ON_DARK}
-        <p style="margin:0;font-size:12px;color:#C9A46A;letter-spacing:0.12em;text-transform:uppercase;">Risk Analysis Lead</p>
-        <p style="margin:4px 0 0;font-size:20px;font-weight:600;">${esc(caseRef)} — ${esc(name)}</p>
-        ${riskLevel ? `<p style="margin:6px 0 0;font-size:14px;">Indicative risk: <strong style="color:${riskColor}">${esc(riskLevel)}</strong>${score != null ? ` (score ${esc(String(score))})` : ""}</p>` : ""}
-      </div>
-      <div style="padding:24px;background:#fff;border:1px solid #E8E6E1;border-top:none;border-radius:0 0 8px 8px;">
-        <table style="width:100%;font-size:13px;border-collapse:collapse;margin-bottom:20px;">
-          <tr><td style="padding:6px 0;color:#6B6B6B;width:120px;">Email</td><td style="padding:6px 0;"><a href="mailto:${esc(email)}" style="color:#15120e;">${esc(email)}</a></td></tr>
-          <tr><td style="padding:6px 0;color:#6B6B6B;">Intent</td><td style="padding:6px 0;font-weight:500;">${esc(details.intent)}</td></tr>
-          <tr><td style="padding:6px 0;color:#6B6B6B;">Location</td><td style="padding:6px 0;font-weight:500;">${esc(details.location)}</td></tr>
-          <tr><td style="padding:6px 0;color:#6B6B6B;">Urgency</td><td style="padding:6px 0;font-weight:500;color:#bb553c;">${esc(details.urgency)}</td></tr>
-        </table>
+  const listBlock = (label: string, items: string[]) => `
+    <div style="margin-top:18px;padding-top:18px;border-top:1px solid #ECE9E3;">
+      <p style="margin:0 0 8px;font-size:11px;color:#A07840;letter-spacing:0.1em;text-transform:uppercase;">${label}</p>
+      <ul style="margin:0;padding-left:18px;font-size:14px;color:#3f3a33;">
+        ${items.length ? items.map((i) => `<li style="margin-bottom:5px;">${esc(i)}</li>`).join("") : "<li>None</li>"}
+      </ul>
+    </div>`;
 
-        <div style="border-top:1px solid #E8E6E1;padding-top:16px;margin-bottom:16px;">
-          <p style="margin:0 0 8px;font-size:11px;color:#6B6B6B;letter-spacing:0.08em;text-transform:uppercase;">Documents Received (self-reported)</p>
-          <ul style="margin:0;padding-left:18px;font-size:13px;color:#4A4A4A;">
-            ${details.received.length ? details.received.map((item) => `<li style="margin-bottom:4px;">${esc(item)}</li>`).join("") : "<li>None</li>"}
-          </ul>
-        </div>
-
-        <div style="border-top:1px solid #E8E6E1;padding-top:16px;margin-bottom:16px;">
-          <p style="margin:0 0 8px;font-size:11px;color:#6B6B6B;letter-spacing:0.08em;text-transform:uppercase;">Primary Concerns</p>
-          <ul style="margin:0;padding-left:18px;font-size:13px;color:#4A4A4A;">
-            ${details.worries.length ? details.worries.map((item) => `<li style="margin-bottom:4px;">${esc(item)}</li>`).join("") : "<li>None</li>"}
-          </ul>
-        </div>
-
-        ${uploadedFiles && uploadedFiles.length ? `
-        <div style="border-top:1px solid #E8E6E1;padding-top:16px;">
-          <p style="margin:0 0 8px;font-size:11px;color:#6B6B6B;letter-spacing:0.08em;text-transform:uppercase;">Files Uploaded (${uploadedFiles.length})</p>
-          <ul style="margin:0;padding-left:18px;font-size:13px;color:#4A4A4A;">
-            ${uploadedFiles.map((f) => `<li style="margin-bottom:4px;">${esc(f)}</li>`).join("")}
-          </ul>
-        </div>
-        ` : ""}
-
-        <div style="margin-top:24px;">
-          <a href="${APP_URL}/cases" style="display:inline-block;padding:10px 20px;background:#15120e;color:#F0EBE0;text-decoration:none;border-radius:6px;font-size:13px;font-weight:500;">Open Dashboard →</a>
-        </div>
-      </div>
+  const html = emailDoc(`
+    ${banner({ eyebrow: "Risk Analysis Lead", title: `${esc(caseRef)} — ${esc(name)}`, subtitle: riskSubtitle })}
+    <div style="padding:32px 38px 8px;color:#15120e;line-height:1.5;">
+      <table style="width:100%;font-size:14px;border-collapse:collapse;">
+        <tr><td style="padding:7px 0;color:#9a948a;width:110px;">Email</td><td style="padding:7px 0;"><a href="mailto:${esc(email)}" style="color:#A07840;text-decoration:none;">${esc(email)}</a></td></tr>
+        <tr><td style="padding:7px 0;color:#9a948a;">Intent</td><td style="padding:7px 0;font-weight:600;">${esc(details.intent)}</td></tr>
+        <tr><td style="padding:7px 0;color:#9a948a;">Location</td><td style="padding:7px 0;font-weight:600;">${esc(details.location)}</td></tr>
+        <tr><td style="padding:7px 0;color:#9a948a;">Urgency</td><td style="padding:7px 0;font-weight:600;">${esc(details.urgency)}</td></tr>
+      </table>
+      ${listBlock("Documents received (self-reported)", details.received)}
+      ${listBlock("Primary concerns", details.worries)}
+      ${uploadedFiles && uploadedFiles.length ? listBlock(`Files uploaded (${uploadedFiles.length})`, uploadedFiles) : ""}
+      <div style="margin:30px 0 6px;">${goldButton(`${APP_URL}/cases`, "Open dashboard&nbsp;&rarr;")}</div>
     </div>
-  `;
+    ${footer()}
+  `);
 
   await resend.emails.send({
     from: `Propersafe Triage <${FROM_EMAIL}>`,
