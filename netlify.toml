@@ -17,15 +17,70 @@
 # status = 200 => rewrite (proxy, URL unchanged); non-forced => a real file at
 # the request path is served first (so e.g. /guides/guide.css passes through).
 
+# Canonicalize: 301 the raw *.html paths to their pretty URLs so each page has a
+# single indexable URL (kills duplicate content). force = true is required —
+# otherwise the real .html file is served before the redirect. These MUST come
+# before the pretty-URL rewrites below (first match wins).
+
+[[redirects]]
+  from = "/landing.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/triage.html"
+  to = "/risk-analysis"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/enquire.html"
+  to = "/enquire"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/sample-report.html"
+  to = "/sample-report"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/privacy.html"
+  to = "/privacy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/terms.html"
+  to = "/terms"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides.html"
+  to = "/guides"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/:slug.html"
+  to = "/guides/:slug"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/"
   to = "/landing.html"
   status = 200
 
+# Legacy alias -> canonical risk page (301, not a duplicate rewrite)
 [[redirects]]
   from = "/risk-calculator"
-  to = "/triage.html"
-  status = 200
+  to = "/risk-analysis"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/risk-analysis"
