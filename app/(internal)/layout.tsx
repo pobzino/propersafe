@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { isStaff } from "@/lib/auth/staff";
 import {
   LogOut,
   LayoutDashboard,
@@ -31,7 +32,10 @@ export default async function InternalLayout({
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
+  // Authoritative authorization boundary: only allowlisted staff may load any
+  // internal page. A signed-in non-staff user (e.g. a magic-link client) is
+  // rejected here even if they reach the route directly.
+  if (!user || !isStaff(user.email)) {
     redirect("/login");
   }
 

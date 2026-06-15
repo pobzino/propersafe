@@ -16,20 +16,30 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(new URL("/client-login", request.url));
   }
 
-  // Find the client's most recent case
-  const { data: cases } = await supabase
-    .from("cases")
-    .select("case_ref")
-    .eq("client_id", data.user.id)
-    .order("created_at", { ascending: false })
-    .limit(1);
+  // Resolve the client by email. Clients are created by the public intake forms
+  // with their own primary key and no link to auth.users, so we match on the
+  // authenticated email — the same ownership rule the case page enforces.
+  const { data: client } = await supabase
+    .from("clients")
+    .select("id")
+    .eq("email", data.user.email)
+    .maybeSingle();
 
-  if (cases && cases.length > 0) {
-    return NextResponse.redirect(
-      new URL(`/case/${cases[0].case_ref}`, request.url)
-    );
+  if (client) {
+    const { data: cases } = await supabase
+      .from("cases")
+      .select("case_ref")
+      .eq("client_id", client.id)
+      .order("created_at", { ascending: false })
+      .limit(1);
+
+    if (cases && cases.length > 0) {
+      return NextResponse.redirect(
+        new URL(`/case/${cases[0].case_ref}`, request.url)
+      );
+    }
   }
 
-  // If no case found, redirect to login with a message
+  // Authenticated but no case on file for this email — send back to the portal.
   return NextResponse.redirect(new URL("/client-login", request.url));
 }
