@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { DEFAULT_CHECKS } from "@/lib/utils/checks";
 import { nextCaseRef } from "@/lib/utils/case-ref";
 import { sendEnquiryConfirmation, sendAdminNotification } from "@/lib/email";
-import { sendEnquiryConfirmationWhatsApp } from "@/lib/whatsapp";
 
 export async function POST(request: NextRequest) {
   try {
@@ -129,15 +128,6 @@ export async function POST(request: NextRequest) {
       situation: body.situation || null,
       urgency: body.urgency || null,
     }).catch((err) => console.error("[email] admin notify failed:", err));
-
-    // Send WhatsApp confirmation if number provided
-    if (body.whatsapp) {
-      await sendEnquiryConfirmationWhatsApp({
-        to: body.whatsapp,
-        name: body.firstName,
-        caseRef,
-      }).catch((err) => console.error("[whatsapp] failed:", err));
-    }
 
     return NextResponse.json(
       { success: true, caseRef },
