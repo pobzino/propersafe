@@ -10,6 +10,12 @@ const APP_URL =
   process.env.NEXT_PUBLIC_APP_URL ||
   "https://propersafe-production.up.railway.app";
 
+// Brand assets are always served from the production domain, regardless of APP_URL.
+// logo-light.png = dark logo for light backgrounds; logo-dark.png = light logo for dark.
+const BRAND_URL = "https://propersafe.co";
+const LOGO_ON_LIGHT = `<img src="${BRAND_URL}/logo-light.png" alt="Propersafe" width="137" height="40" style="display:block;border:0;outline:none;text-decoration:none;height:40px;width:137px;" />`;
+const LOGO_ON_DARK = `<img src="${BRAND_URL}/logo-dark.png" alt="Propersafe" width="137" height="40" style="display:block;border:0;outline:none;text-decoration:none;height:40px;width:137px;margin-bottom:16px;" />`;
+
 function esc(value: string | null | undefined): string {
   return String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -33,8 +39,8 @@ export async function sendEnquiryConfirmation(args: {
 
   const html = `
     <div style="font-family:Georgia,serif;max-width:480px;margin:0 auto;color:#15120e;line-height:1.6;">
-      <div style="padding:32px 24px;border-bottom:1px solid #E8E6E1;">
-        <p style="margin:0;font-size:13px;color:#A07840;letter-spacing:0.12em;text-transform:uppercase;">Propersafe</p>
+      <div style="padding:28px 24px;border-bottom:1px solid #E8E6E1;">
+        ${LOGO_ON_LIGHT}
       </div>
       <div style="padding:32px 24px;">
         <p style="margin:0 0 8px;font-size:15px;">Hi ${esc(name)},</p>
@@ -90,6 +96,7 @@ export async function sendAdminNotification(args: {
   const html = `
     <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;color:#15120e;line-height:1.5;">
       <div style="padding:24px;background:#15120e;color:#F0EBE0;border-radius:8px 8px 0 0;">
+        ${LOGO_ON_DARK}
         <p style="margin:0;font-size:12px;color:#C9A46A;letter-spacing:0.12em;text-transform:uppercase;">New Enquiry</p>
         <p style="margin:4px 0 0;font-size:20px;font-weight:600;">${esc(caseRef)}</p>
       </div>
@@ -136,8 +143,8 @@ export async function sendTriageConfirmation(args: {
 
   const html = `
     <div style="font-family:Georgia,serif;max-width:480px;margin:0 auto;color:#15120e;line-height:1.6;">
-      <div style="padding:32px 24px;border-bottom:1px solid #E8E6E1;">
-        <p style="margin:0;font-size:13px;color:#A07840;letter-spacing:0.12em;text-transform:uppercase;">Propersafe</p>
+      <div style="padding:28px 24px;border-bottom:1px solid #E8E6E1;">
+        ${LOGO_ON_LIGHT}
       </div>
       <div style="padding:32px 24px;">
         <p style="margin:0 0 8px;font-size:15px;">Hi ${esc(name)},</p>
@@ -199,6 +206,7 @@ export async function sendTriageNotification(args: {
   const html = `
     <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;color:#15120e;line-height:1.5;">
       <div style="padding:24px;background:#15120e;color:#F0EBE0;border-radius:8px 8px 0 0;">
+        ${LOGO_ON_DARK}
         <p style="margin:0;font-size:12px;color:#C9A46A;letter-spacing:0.12em;text-transform:uppercase;">Risk Analysis Lead</p>
         <p style="margin:4px 0 0;font-size:20px;font-weight:600;">${esc(caseRef)} — ${esc(name)}</p>
         ${riskLevel ? `<p style="margin:6px 0 0;font-size:14px;">Indicative risk: <strong style="color:${riskColor}">${esc(riskLevel)}</strong>${score != null ? ` (score ${esc(String(score))})` : ""}</p>` : ""}
