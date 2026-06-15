@@ -1,0 +1,8 @@
+[build]
+  command = "next build"
+
+# Netlify's Next.js runtime handles the .next output, server routes,
+# image optimization, and edge functions. Listing it explicitly so the
+# build doesn't depend on auto-detection.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
