@@ -4,8 +4,8 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
-const FROM_EMAIL = process.env.FROM_EMAIL || "hello@propersafe.ng";
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "hello@propersafe.ng";
+const FROM_EMAIL = process.env.FROM_EMAIL || "hello@propersafe.co";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "hello@propersafe.co";
 const APP_URL =
   process.env.NEXT_PUBLIC_APP_URL ||
   "https://propersafe-production.up.railway.app";
@@ -58,7 +58,7 @@ export async function sendEnquiryConfirmation(args: {
       </div>
       <div style="padding:20px 24px;border-top:1px solid #E8E6E1;font-size:12px;color:#6B6B6B;">
         <p style="margin:0;">Propersafe · Abuja property verification for diaspora Nigerians</p>
-        <p style="margin:4px 0 0;"><a href="mailto:hello@propersafe.ng" style="color:#A07840;text-decoration:none;">hello@propersafe.ng</a></p>
+        <p style="margin:4px 0 0;"><a href="mailto:hello@propersafe.co" style="color:#A07840;text-decoration:none;">hello@propersafe.co</a></p>
       </div>
     </div>
   `;
@@ -158,7 +158,7 @@ export async function sendTriageConfirmation(args: {
       </div>
       <div style="padding:20px 24px;border-top:1px solid #E8E6E1;font-size:12px;color:#6B6B6B;">
         <p style="margin:0;">Propersafe · Abuja property verification for diaspora Nigerians</p>
-        <p style="margin:4px 0 0;"><a href="mailto:hello@propersafe.ng" style="color:#A07840;text-decoration:none;">hello@propersafe.ng</a></p>
+        <p style="margin:4px 0 0;"><a href="mailto:hello@propersafe.co" style="color:#A07840;text-decoration:none;">hello@propersafe.co</a></p>
       </div>
     </div>
   `;
