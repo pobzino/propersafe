@@ -6,3 +6,58 @@
 # build doesn't depend on auto-detection.
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Netlify's Next.js runtime does NOT apply next.config `beforeFiles`
+# rewrites that point at static files in public/, so the marketing pages
+# (served as plain .html) 404 on Netlify. Re-declare those rewrites here as
+# Netlify-native rewrites (status 200 keeps the pretty URL). These run before
+# the Next.js catch-all. Kept in sync with the rewrites() in next.config.ts,
+# which still drive local dev and any non-Netlify host.
+#
+# status = 200 => rewrite (proxy, URL unchanged); non-forced => a real file at
+# the request path is served first (so e.g. /guides/guide.css passes through).
+
+[[redirects]]
+  from = "/"
+  to = "/landing.html"
+  status = 200
+
+[[redirects]]
+  from = "/risk-calculator"
+  to = "/triage.html"
+  status = 200
+
+[[redirects]]
+  from = "/risk-analysis"
+  to = "/triage.html"
+  status = 200
+
+[[redirects]]
+  from = "/enquire"
+  to = "/enquire.html"
+  status = 200
+
+[[redirects]]
+  from = "/sample-report"
+  to = "/sample-report.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy.html"
+  status = 200
+
+[[redirects]]
+  from = "/terms"
+  to = "/terms.html"
+  status = 200
+
+[[redirects]]
+  from = "/guides"
+  to = "/guides.html"
+  status = 200
+
+[[redirects]]
+  from = "/guides/:slug"
+  to = "/guides/:slug.html"
+  status = 200
