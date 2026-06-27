@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Consent Mode defaults (before GTM) -->
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('consent','default',{ad_storage:'denied',analytics_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});
+  try{if(localStorage.getItem('ps_consent')==='granted'){gtag('consent','update',{ad_storage:'granted',analytics_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});}}catch(e){}</script>
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -8,6 +12,9 @@
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-PBV93Q4G');</script>
   <!-- End Google Tag Manager -->
+  <script src="/consent-banner.js" defer></script>
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0d1b2a">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy | Propersafe</title>
@@ -115,7 +122,7 @@
     <p>We do not sell your information, and we do not share it with sellers, agents, developers, or contractors connected to your transaction.</p>
 
     <h2>Where it's stored</h2>
-    <p>Your data is stored on secure cloud infrastructure (Supabase for case records and documents). Emails are delivered via Resend, WhatsApp messages via Twilio, and analytics processed by PostHog (US Cloud). Each provider processes data only as needed to deliver their service.</p>
+    <p>Your data is stored on secure cloud infrastructure (Supabase for case records and documents). Emails are delivered via Resend, and analytics are processed by PostHog (US Cloud) and Google (via Google Tag Manager / Google Analytics). Each provider processes data only as needed to deliver their service.</p>
 
     <h2>How long we keep it</h2>
     <p>We keep enquiry and case records for as long as needed to provide the service and meet our legal and professional obligations. If you never become a client, you can ask us to delete your enquiry data at any time.</p>

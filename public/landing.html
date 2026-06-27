@@ -1,6 +1,10 @@
 <!doctype html>
 <html lang="en">
   <head>
+  <!-- Consent Mode defaults (before GTM) -->
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('consent','default',{ad_storage:'denied',analytics_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});
+  try{if(localStorage.getItem('ps_consent')==='granted'){gtag('consent','update',{ad_storage:'granted',analytics_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});}}catch(e){}</script>
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -8,6 +12,9 @@
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-PBV93Q4G');</script>
   <!-- End Google Tag Manager -->
+  <script src="/consent-banner.js" defer></script>
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0d1b2a">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Propersafe | Land &amp; Property Verification in Abuja for Diaspora Buyers</title>
@@ -92,6 +99,20 @@
       rel="stylesheet"
     />
     <style>
+      .skip-link {
+        position: absolute;
+        left: 12px;
+        top: -48px;
+        z-index: 10000;
+        background: #0d1b2a;
+        color: #fff;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        text-decoration: none;
+        transition: top 0.15s ease;
+      }
+      .skip-link:focus { top: 12px; }
       :root {
         --paper: #f6efe2;
         --paper-soft: #fff9ef;
@@ -2047,6 +2068,7 @@
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBV93Q4G"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
+    <a class="skip-link" href="#top">Skip to content</a>
     <nav class="nav" aria-label="Primary navigation">
       <div class="container">
         <div class="nav__inner">
@@ -2067,7 +2089,7 @@
     <div class="page-wrap" id="pageWrap">
     <main id="top">
       <section class="hero">
-        <video class="hero__video" autoplay muted loop playsinline poster="hero-poster.jpg">
+        <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster="hero-poster.jpg">
           <source src="hero-video.mp4" type="video/mp4" />
         </video>
         <div class="hero__overlay"></div>
