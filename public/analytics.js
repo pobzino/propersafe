@@ -1,9 +1,9 @@
 /*
  * Propersafe analytics loader.
- * PostHog project: "Propersafe" (id 463759, US Cloud).
+ * PostHog project: "Propersafe" (id 489885, US Cloud).
  */
 (function () {
-  var POSTHOG_KEY = "phc_uMnqZ7d4TcJSY4xP74GyFBjp9ftehW66gouPxHYWCg4A";
+  var POSTHOG_KEY = "phc_z4Rw9zTmWxezCsZtHAQFD7Zz5gkGuTJm4EY9hjnrcheB";
   var POSTHOG_HOST = "https://us.i.posthog.com";
 
   window.psTrack = function (event, props) {
