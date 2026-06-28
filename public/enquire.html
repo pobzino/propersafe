@@ -1549,6 +1549,7 @@ html, body {
       document.getElementById('success-ref').textContent = 'Ref: ' + (data.caseRef || '—');
       clearDraft();
       track('enquiry_submitted', { service: state.service });
+      if (window.fbq) fbq('track', 'CompleteRegistration', { content_name: 'Enquiry', content_category: state.service || 'general' });
     } catch (err) {
       showGlobalError(err.message);
       btn.disabled = false;
