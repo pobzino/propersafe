@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { CASE_STATUSES, CASE_STATUS_LABELS, CaseStatus } from "@/lib/utils/checks";
 import StatusBadge from "@/components/shared/StatusBadge";
 import Link from "next/link";
@@ -45,7 +45,10 @@ function caseHealth(
 }
 
 export default async function DashboardPage() {
-  const supabase = await createClient();
+  // Staff dashboard: layout already gates to allowlisted staff, so read with the
+  // admin client. RLS on cases is client-portal only, so the RLS client returns
+  // nothing for staff.
+  const supabase = createAdminClient();
 
   const { data: cases } = await supabase
     .from("cases")
