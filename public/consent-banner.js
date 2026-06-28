@@ -1,6 +1,7 @@
 /* Propersafe cookie consent — pairs with the Consent Mode defaults set before GTM.
- * Stores the choice in localStorage ('ps_consent' = 'granted' | 'denied') and
- * sends a Google Consent Mode v2 update so GTM/GA only measure after opt-in. */
+ * Stores the choice in localStorage ('ps_consent' = 'granted' | 'denied'),
+ * sends a Google Consent Mode v2 update so GTM/GA only measure after opt-in, and
+ * loads the Meta Pixel only after consent (Meta isn't covered by Consent Mode). */
 (function () {
   function gtag() {
     window.dataLayer = window.dataLayer || [];
@@ -22,7 +23,28 @@
     });
   }
 
-  if (stored()) return; // already chose; defaults snippet already re-applied it
+  /* Meta Pixel — loaded only after the visitor grants consent (Meta isn't governed
+   * by Google Consent Mode, so it's gated here). Idempotent: safe to call twice. */
+  function loadMetaPixel() {
+    if (window.__psMetaPixel) return;
+    window.__psMetaPixel = true;
+    !(function (f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = [];
+      t = b.createElement(e); t.async = !0; t.src = v;
+      s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+    })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+    fbq("init", "1024632820076738");
+    fbq("track", "PageView");
+  }
+
+  var choice = stored();
+  if (choice === "granted") loadMetaPixel(); // returning visitor who already opted in
+  if (choice) return; // already chose; defaults snippet already re-applied it
 
   var bar = document.createElement("div");
   bar.setAttribute("role", "dialog");
@@ -72,7 +94,7 @@
     if (bar.parentNode) bar.parentNode.removeChild(bar);
   }
   reject.addEventListener("click", function () { save("denied"); apply(false); close(); });
-  accept.addEventListener("click", function () { save("granted"); apply(true); close(); });
+  accept.addEventListener("click", function () { save("granted"); apply(true); loadMetaPixel(); close(); });
 
   btns.appendChild(reject);
   btns.appendChild(accept);
