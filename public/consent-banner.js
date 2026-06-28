@@ -28,31 +28,40 @@
   bar.setAttribute("role", "dialog");
   bar.setAttribute("aria-label", "Cookie consent");
   bar.style.cssText =
-    "position:fixed;left:0;right:0;bottom:0;z-index:2147483647;background:#0d1b2a;" +
-    "color:#e8eef5;padding:16px 20px;display:flex;flex-wrap:wrap;gap:14px;" +
-    "align-items:center;justify-content:center;font-size:14px;line-height:1.5;" +
-    "font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;" +
-    "box-shadow:0 -2px 18px rgba(0,0,0,.35)";
+    "position:fixed;left:0;right:0;bottom:0;z-index:2147483647;" +
+    "background:rgba(21,18,14,0.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);" +
+    "border-top:1px solid rgba(196,145,56,0.30);color:rgba(255,249,239,0.82);" +
+    "padding:16px 24px;display:flex;flex-wrap:wrap;gap:16px;" +
+    "align-items:center;justify-content:center;font-size:14px;line-height:1.55;" +
+    "font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;" +
+    "box-shadow:0 -8px 30px rgba(0,0,0,.35)";
 
   var msg = document.createElement("p");
   msg.style.cssText = "margin:0;flex:1 1 320px;max-width:640px";
   msg.innerHTML =
-    "We use cookies to measure traffic and improve the site. You can accept or " +
+    "We use cookies to measure traffic and improve Propersafe. You can accept or " +
     'reject analytics cookies — see our <a href="/privacy" ' +
-    'style="color:#9ec5ff;text-decoration:underline">Privacy Policy</a>.';
+    'style="color:#c49138;text-decoration:underline;font-weight:500">Privacy Policy</a>.';
 
   var btns = document.createElement("div");
-  btns.style.cssText = "display:flex;gap:8px;flex:0 0 auto";
+  btns.style.cssText = "display:flex;gap:10px;flex:0 0 auto";
 
   function mkBtn(label, primary) {
     var b = document.createElement("button");
     b.type = "button";
     b.textContent = label;
     b.style.cssText =
-      "cursor:pointer;border-radius:8px;padding:10px 18px;font-size:14px;" +
-      "font-weight:600;border:1px solid " + (primary ? "#2f6fed" : "#3a4a5e") +
-      ";background:" + (primary ? "#2f6fed" : "transparent") +
-      ";color:" + (primary ? "#fff" : "#e8eef5") + ";";
+      "cursor:pointer;border-radius:999px;padding:11px 24px;font-size:13px;" +
+      "font-weight:600;letter-spacing:0.02em;transition:background .2s ease,border-color .2s ease;" +
+      "border:1px solid " + (primary ? "#fff9ef" : "rgba(255,249,239,0.30)") +
+      ";background:" + (primary ? "#fff9ef" : "transparent") +
+      ";color:" + (primary ? "#15120e" : "rgba(255,249,239,0.82)") + ";";
+    b.onmouseenter = function () {
+      b.style.background = primary ? "#e8dcc8" : "rgba(255,249,239,0.08)";
+    };
+    b.onmouseleave = function () {
+      b.style.background = primary ? "#fff9ef" : "transparent";
+    };
     return b;
   }
 
