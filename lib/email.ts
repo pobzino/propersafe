@@ -5,7 +5,11 @@ const resend = process.env.RESEND_API_KEY
   : null;
 
 const FROM_EMAIL = process.env.FROM_EMAIL || "hello@propersafe.co";
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "hello@propersafe.co";
+// Comma-separated list supported, so lead alerts can hit multiple inboxes.
+const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || "hello@propersafe.co")
+  .split(",")
+  .map((e) => e.trim())
+  .filter(Boolean);
 const APP_URL =
   process.env.NEXT_PUBLIC_APP_URL ||
   "https://propersafe-production.up.railway.app";
