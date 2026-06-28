@@ -979,7 +979,7 @@
             }
 
             track('triage_submitted', { risk_level: riskLevel, score: score, files: selectedFiles.length });
-            if (window.fbq) fbq('track', 'Lead', { content_name: 'Risk Calculator', content_category: riskLevel });
+            if (window.fbq) fbq('track', 'CompleteRegistration', { content_name: 'Risk Calculator', content_category: riskLevel });
             loading.style.display = 'none';
             showResults(score, riskLevel, data.caseRef);
         } catch (err) {
