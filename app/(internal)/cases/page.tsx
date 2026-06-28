@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import StatusBadge from "@/components/shared/StatusBadge";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
@@ -10,7 +10,9 @@ export default async function CasesPage({
   searchParams: Promise<{ status?: string; q?: string }>;
 }) {
   const { status, q } = await searchParams;
-  const supabase = await createClient();
+  // Staff page (layout gates to staff). RLS on cases is client-portal only, so
+  // read with the admin client or staff sees nothing.
+  const supabase = createAdminClient();
 
   let query = supabase
     .from("cases")

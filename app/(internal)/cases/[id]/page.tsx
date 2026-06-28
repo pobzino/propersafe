@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { notFound } from "next/navigation";
 import CaseDetail from "@/components/internal/CaseDetail";
 
@@ -8,7 +8,8 @@ export default async function CaseDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const supabase = await createClient();
+  // Staff page (layout gates to staff). Read with admin client; RLS is client-only.
+  const supabase = createAdminClient();
 
   const { data: caseData } = await supabase
     .from("cases")
